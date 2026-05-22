@@ -8,17 +8,13 @@
     color="secondary"
     theme="dark"
   >
-    <div class="pa-4 d-flex align-center">
-      <template v-if="companyStore.logoUrl">
-        <img
-          :src="companyStore.logoUrl"
-          :alt="companyStore.companyName"
-          style="height: 32px; width: auto; max-width: 32px; object-fit: contain; border-radius: 8px;"
-          class="mr-3"
-        />
-      </template>
-      <v-avatar v-else color="primary" size="32" class="mr-3 rounded-lg font-weight-black text-white">{{ companyStore.companyName.charAt(0) }}</v-avatar>
-      <span v-if="!sidebarStore.isCollapsed" class="text-h6 font-weight-bold text-white">{{ companyStore.companyName }}</span>
+    <div class="pa-4 d-flex align-center justify-center" style="min-height: 72px;">
+      <img
+        src="/images/logo/ftl-white-logo.webp"
+        alt="FTL Logo"
+        style="width: 100%; object-fit: contain; transition: max-width 0.3s ease;"
+        :style="{ maxWidth: sidebarStore.isCollapsed ? '40px' : '140px' }"
+      />
     </div>
 
     <v-divider class="border-opacity-25"></v-divider>
@@ -67,10 +63,13 @@ const menuItems = computed(() => {
   // Core Section
   const coreItems = [
     { title: 'Dashboard', to: '/', mdi: 'mdi-view-dashboard-outline' },
-    { title: 'Leads', to: '/leads', mdi: 'mdi-account-group-outline' },
-    { title: 'Courses', to: '/courses', mdi: 'mdi-school-outline' },
-    { title: 'My Leaves', to: '/leaves', mdi: 'mdi-calendar-check-outline' },
   ]
+
+  if (hasPermission('leads.view')) {
+    coreItems.push({ title: 'Leads', to: '/leads', mdi: 'mdi-account-group-outline' })
+  }
+
+  coreItems.push({ title: 'My Leaves', to: '/leaves', mdi: 'mdi-calendar-check-outline' })
 
   if (hasPermission('leads.bulk_email') || hasPermission('leads.bulk_email_history')) {
     coreItems.push({ title: 'Send Bulk Emails', to: '/bulk-emails', mdi: 'mdi-email-multiple-outline' })
@@ -99,6 +98,9 @@ const menuItems = computed(() => {
   const manageItems = []
   if (hasPermission('expenses.view')) {
     manageItems.push({ title: 'Expenses', to: '/expenses', mdi: 'mdi-receipt-outline' })
+  }
+  if (hasPermission('departments.view') || authStore.isAdmin) {
+    manageItems.push({ title: 'Departments', to: '/departments', mdi: 'mdi-domain' })
   }
   if (hasPermission('users.view') || hasPermission('roles.view')) {
     manageItems.push({ title: 'Users & Roles', to: '/settings', mdi: 'mdi-cog-outline' })
@@ -144,14 +146,6 @@ const menuItems = computed(() => {
   if (reportItems.length > 0) {
     sections.push({ label: 'Reports', items: reportItems })
   }
-
-  // Careers Section
-  const careerItems = [
-    { title: 'Placement Board', to: '/placements', mdi: 'mdi-briefcase-check-outline' },
-    { title: 'Success Gallery', to: '/placements/gallery', mdi: 'mdi-star-face' },
-    { title: 'Hiring Companies', to: '/placements/companies', mdi: 'mdi-office-building-outline' },
-  ]
-  sections.push({ label: 'Careers', items: careerItems })
 
   return sections
 })

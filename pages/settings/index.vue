@@ -174,7 +174,7 @@
           
           <v-row>
             <v-col cols="12" sm="6">
-              <v-text-field v-model="userForm.department" label="DEPARTMENT" variant="outlined"></v-text-field>
+              <v-select v-model="userForm.department_id" :items="departments" item-title="name" item-value="id" label="DEPARTMENT" variant="outlined" clearable></v-select>
             </v-col>
             <v-col cols="12" sm="6">
               <v-text-field v-model="userForm.designation" label="DESIGNATION" variant="outlined"></v-text-field>
@@ -285,6 +285,7 @@ const savingPermission = ref(false)
 
 const users = ref<any[]>([])
 const roles = ref<any[]>([])
+const departments = ref<any[]>([])
 const allPermissions = ref<any>({})
 const selectedRole = ref<any>(null)
 const selectedRolePermissions = ref<number[]>([])
@@ -297,7 +298,7 @@ const userForm = reactive({
   name: '',
   email: '',
   password: '',
-  department: '',
+  department_id: null as number | null,
   designation: '',
   status: 'active',
   role_id: null as number | null
@@ -329,6 +330,7 @@ const fetchData = async () => {
     if (authStore.isAdmin || authStore.hasPermission('users.view')) requests.push(api.get('/users'))
     if (authStore.isAdmin || authStore.hasPermission('roles.view')) requests.push(api.get('/roles'))
     if (authStore.isAdmin || authStore.isSuperAdmin) requests.push(api.get('/permissions'))
+    if (authStore.isAdmin || authStore.hasPermission('departments.view') || authStore.hasPermission('users.view')) requests.push(api.get('/departments'))
     
     const results: any[] = await Promise.all(requests)
     
@@ -336,6 +338,7 @@ const fetchData = async () => {
     if (authStore.isAdmin || authStore.hasPermission('users.view')) users.value = results[idx++].data
     if (authStore.isAdmin || authStore.hasPermission('roles.view')) roles.value = results[idx++].data
     if (authStore.isAdmin || authStore.isSuperAdmin) allPermissions.value = results[idx++]
+    if (authStore.isAdmin || authStore.hasPermission('departments.view') || authStore.hasPermission('users.view')) departments.value = results[idx++].data
   } catch (err: any) {
     console.error('Failed to fetch settings data', err)
   } finally {
@@ -372,7 +375,7 @@ const openAddUser = () => {
   userForm.name = ''
   userForm.email = ''
   userForm.password = ''
-  userForm.department = ''
+  userForm.department_id = null
   userForm.designation = ''
   userForm.status = 'active'
   userForm.role_id = null
@@ -385,7 +388,7 @@ const openEditUser = (user: any) => {
   userForm.name = user.name
   userForm.email = user.email
   userForm.password = ''
-  userForm.department = user.department || ''
+  userForm.department_id = user.department_id || null
   userForm.designation = user.designation || ''
   userForm.status = user.status || 'active'
   userForm.role_id = user.roles?.[0]?.id || null

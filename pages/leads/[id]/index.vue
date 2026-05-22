@@ -130,10 +130,6 @@
               <span class="text-caption text-muted font-weight-bold uppercase">Experience</span>
               <span class="text-caption font-weight-black uppercase">{{ lead.experience_years ? `${lead.experience_years} Years` : 'Fresh' }}</span>
             </div>
-            <div class="d-flex justify-space-between pt-1">
-              <span class="text-caption text-muted font-weight-bold uppercase">Interested In</span>
-              <span class="text-caption font-weight-black uppercase text-success">{{ lead.interested_course?.name || 'GENERIC INQUIRY' }}</span>
-            </div>
           </v-card>
 
           <!-- Documents Card -->

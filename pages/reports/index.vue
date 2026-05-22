@@ -101,28 +101,8 @@
     </v-row>
 
     <v-row class="mb-6">
-      <!-- Revenue by Course -->
-      <v-col cols="12" lg="5">
-        <v-card class="rounded-xl border-thin elevation-0 pa-6 bg-surface h-100">
-           <h2 class="text-h6 font-weight-bold mb-1">Revenue by Course</h2>
-           <p class="text-[10px] text-muted uppercase font-weight-black tracking-widest mb-6">Distribution across products</p>
-           
-           <div class="d-flex flex-column align-center justify-center pt-4">
-              <client-only>
-                <apexchart
-                  type="donut"
-                  width="100%"
-                  height="350"
-                  :options="courseChartOptions"
-                  :series="courseSeries"
-                ></apexchart>
-              </client-only>
-           </div>
-        </v-card>
-      </v-col>
-
       <!-- Revenue by BDE -->
-      <v-col cols="12" lg="7">
+      <v-col cols="12">
         <v-card class="rounded-xl border-thin elevation-0 pa-6 bg-surface h-100">
            <h2 class="text-h6 font-weight-bold mb-1">BDE Performance</h2>
            <p class="text-[10px] text-muted uppercase font-weight-black tracking-widest mb-6">Revenue contributions per agent</p>
@@ -222,7 +202,6 @@ const summaryData = ref<any>({
     summary: {},
     monthly_breakdown: []
 })
-const courseData = ref<any[]>([])
 const bdeData = ref<any[]>([])
 
 const kpiCards = computed(() => [
@@ -251,18 +230,6 @@ const trendChartOptions: any = {
     tooltip: { theme: 'dark', y: { formatter: (val: number) => '₹' + val.toLocaleString() } }
 }
 
-const courseSeries = computed(() => courseData.value.map(c => parseFloat(c.revenue)))
-const courseChartOptions: any = computed(() => ({
-    chart: { type: 'donut' },
-    labels: courseData.value.map(c => c.course_name),
-    colors: ['#ef6125', '#3b82f6', '#22c55e', '#f59e0b', '#6366f1', '#e11d48'],
-    plotOptions: { pie: { donut: { size: '75%', labels: { show: true, name: { show: true, fontSize: '12px', fontWeight: 'bold' }, value: { show: true, fontSize: '20px', fontWeight: 'black', color: '#fff', formatter: (val: any) => '₹' + (val / 1000).toFixed(0) + 'K' }, total: { show: true, label: 'TOTAL', color: 'rgba(255,255,255,0.5)', formatter: () => '₹' + (summaryData.value.summary.total_revenue / 1000).toFixed(0) + 'K' } } } } },
-    legend: { position: 'bottom', labels: { colors: '#fff' } },
-    dataLabels: { enabled: false },
-    stroke: { show: false },
-    tooltip: { theme: 'dark', y: { formatter: (val: any) => '₹' + val.toLocaleString() } }
-}))
-
 const bdeSeries = computed(() => [{ name: 'Revenue', data: bdeData.value.map(b => parseFloat(b.revenue)) }])
 const bdeChartOptions: any = computed(() => ({
     chart: { type: 'bar', toolbar: { show: false } },
@@ -278,13 +245,11 @@ const bdeChartOptions: any = computed(() => ({
 const fetchAllData = async () => {
     loading.value = true
     try {
-        const [summaryRes, courseRes, bdeRes]: any = await Promise.all([
+        const [summaryRes, bdeRes]: any = await Promise.all([
             api.get('/reports/financial-summary', { params: { year: selectedYear.value } }),
-            api.get('/reports/revenue-by-course', { params: { year: selectedYear.value } }),
             api.get('/reports/revenue-by-bde', { params: { year: selectedYear.value } })
         ])
         summaryData.value = summaryRes.data
-        courseData.value = courseRes.data
         bdeData.value = bdeRes.data
     } catch (err) {
         uiStore.error('Failed to fetch reports')

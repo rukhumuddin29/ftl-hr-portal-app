@@ -1,13 +1,13 @@
 <template>
   <v-container fluid class="animate-fade py-8 px-lg-12 px-6 bg-surface">
     <!-- Header -->
-    <v-row align="center" class="mb-10">
+    <v-row align="center" class="mb-4">
       <v-col cols="12" lg="6">
-        <h1 class="text-h4 font-weight-black d-flex align-center ga-4 mb-2">
+        <h1 class="text-h4 font-weight-black d-flex align-center ga-4 mb-2" style="font-size: 1.2rem !important;">
           <v-icon color="primary" size="48">mdi-trophy-outline</v-icon>
           BDE PERFORMANCE SCORECARD
         </h1>
-        <p class="text-subtitle-1 text-muted uppercase tracking-widest font-weight-bold opacity-70">
+        <p class="text-muted uppercase tracking-widest font-weight-bold opacity-70" style="font-size: 0.85rem;">
            Evaluate team effectiveness and drive high-performance sales cultures
         </p>
       </v-col>
@@ -32,8 +32,8 @@
 
     <!-- Leaderboard -->
     <v-card class="rounded-xl border-thin elevation-0 mb-10 overflow-hidden bg-surface">
-      <div class="pa-8 border-b d-flex justify-space-between align-center bg-card">
-         <h2 class="text-h5 font-weight-black uppercase d-flex align-center ga-2">
+      <div class="pa-4 border-b d-flex justify-space-between align-center bg-card">
+         <h2 class="uppercase d-flex align-center ga-2" style="font-weight: 600; font-size: 0.8rem;">
             <v-icon size="24" color="secondary">mdi-format-list-numbered</v-icon>
             Rankings & Core KPIs
          </h2>

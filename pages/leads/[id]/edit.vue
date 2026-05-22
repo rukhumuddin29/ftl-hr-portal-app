@@ -177,7 +177,7 @@
             </h2>
             <v-row dense>
               <v-col cols="12" md="6">
-                <v-select v-model="form.interested_course_id" label="INTERESTED COURSE" :items="courses" item-title="name" item-value="id" variant="outlined" density="compact" hide-details="auto" class="mb-4"></v-select>
+                <!-- Course removed -->
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field v-model="form.source" label="LEAD SOURCE" variant="outlined" density="compact" hide-details="auto" class="mb-4" placeholder="e.g. Facebook"></v-text-field>
@@ -209,7 +209,6 @@ const api = useApi()
 const uiStore = useUiStore()
 const loadingLead = ref(true)
 const saving = ref(false)
-const courses = ref<any[]>([])
 
 const form = reactive({
   name: '',
@@ -262,20 +261,13 @@ const form = reactive({
   current_skills: '',
   
   // Interest
-  interested_course_id: null,
   notes: '',
   follow_up_date: ''
 })
 
 onMounted(async () => {
   try {
-    // Parallel fetch
-    const [coursesRes, leadRes]: any[] = await Promise.all([
-      api.get('/courses?active=1'),
-      api.get(`/leads/${route.params.id}`)
-    ])
-    
-    courses.value = coursesRes.data?.data || []
+    const leadRes: any = await api.get(`/leads/${route.params.id}`)
     
     // Fill form
     if (leadRes.data) {

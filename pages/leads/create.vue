@@ -167,7 +167,7 @@
             </h2>
             <v-row dense>
               <v-col cols="12" md="6">
-                <v-select v-model="form.interested_course_id" label="INTERESTED COURSE" :items="courses" item-title="name" item-value="id" variant="outlined" density="compact" hide-details="auto" class="mb-4"></v-select>
+                <!-- Course removed -->
               </v-col>
               <v-col cols="12" md="6">
                 <v-text-field v-model="form.source" label="LEAD SOURCE" variant="outlined" density="compact" hide-details="auto" class="mb-4" placeholder="e.g. Facebook"></v-text-field>
@@ -234,7 +234,6 @@
 const api = useApi()
 const uiStore = useUiStore()
 const loading = ref(false)
-const courses = ref<any[]>([])
 
 const form = reactive({
   name: '',
@@ -286,7 +285,6 @@ const form = reactive({
   current_skills: '',
   
   // Status & Assignment
-  interested_course_id: null,
   notes: '',
   follow_up_date: null
 })
@@ -296,12 +294,7 @@ const detectedDuplicates = ref<any[]>([])
 const forceCreate = ref(false)
 
 onMounted(async () => {
-  try {
-    const res: any = await api.get('/courses?active=1')
-    courses.value = res.data?.data || []
-  } catch (err) {
-    console.error('Failed to load courses')
-  }
+  // Course fetching removed
 })
 
 const handleSubmit = async () => {

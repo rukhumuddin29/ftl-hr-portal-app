@@ -64,40 +64,10 @@
       <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8 mb-8">
         <h2 class="text-h6 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
           <v-icon>mdi-school-outline</v-icon>
-          Course Selection
+          Enrollment Details
         </h2>
         
         <v-row>
-          <v-col cols="12">
-            <v-select
-              v-model="form.course_id"
-              label="SELECT COURSE *"
-              :items="courses"
-              item-title="name"
-              item-value="id"
-              variant="outlined"
-              @update:model-value="onCourseSelect"
-              required
-              hide-details="auto"
-              class="mb-4"
-            >
-              <template v-slot:item="{ props, item }">
-                <v-list-item v-bind="props" :subtitle="'₹' + item.raw.offer_price"></v-list-item>
-              </template>
-            </v-select>
-          </v-col>
-          
-          <v-col cols="12" md="6">
-            <v-text-field
-              :model-value="selectedCourse?.offer_price || 0"
-              label="COURSE PRICE (STANDARD)"
-              variant="outlined"
-              readonly
-              hide-details="auto"
-              class="mb-4 opacity-70"
-              prefix="₹"
-            ></v-text-field>
-          </v-col>
 
           <v-col cols="12" md="6">
             <v-text-field
@@ -185,7 +155,6 @@ const loadingLead = ref(false)
 
 const form = reactive({
   lead_id: null as number | null,
-  course_id: null as number | null,
   agreed_price: 0,
   start_date: new Date().toISOString().split('T')[0],
   discount_reason: '',
@@ -212,16 +181,6 @@ const fetchLeadDocuments = async (id: number) => {
   } catch {}
 }
 
-const selectedCourse = computed(() => {
-  return courses.value.find(c => c.id === form.course_id)
-})
-
-const onCourseSelect = () => {
-  if (selectedCourse.value) {
-    form.agreed_price = selectedCourse.value.offer_price
-  }
-}
-
 onMounted(async () => {
   const leadId = route.query.lead_id
   if (leadId) {
@@ -230,23 +189,12 @@ onMounted(async () => {
     try {
       const lRes: any = await api.get(`/leads/${leadId}`)
       lead.value = lRes.data
-      if (lead.value.interested_course_id) {
-         form.course_id = lead.value.interested_course_id
-      }
     } catch (err) {
       uiStore.error('Lead not found')
     } finally {
       loadingLead.value = false
     }
     fetchLeadDocuments(parseInt(leadId as string))
-  }
-
-  try {
-    const cRes: any = await api.get('/courses?active=1')
-    courses.value = cRes.data?.data || []
-    if (form.course_id) onCourseSelect()
-  } catch (err) {
-    console.error('Failed to load courses')
   }
 })
 

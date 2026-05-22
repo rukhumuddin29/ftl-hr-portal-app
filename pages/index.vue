@@ -9,9 +9,10 @@
       <v-col cols="12" class="d-flex align-center justify-space-between mb-4">
         <div>
           <h1 class="text-h4 font-weight-black">Welcome back, {{ authStore.user?.name || 'User' }}</h1>
-          <p class="text-body-2 text-muted">Here's a snapshot of your center's performance.</p>
+          <p v-if="['admin', 'super_admin', 'bde'].includes(data.user_role)" class="text-body-2 text-muted">Here's a snapshot of your center's performance.</p>
         </div>
         <v-btn
+          v-if="['admin', 'super_admin', 'bde'].includes(data.user_role)"
           color="primary"
           prepend-icon="mdi-plus"
           height="48"
@@ -21,6 +22,16 @@
           NEW LEAD
         </v-btn>
       </v-col>
+
+      <!-- Minimal Dashboard for Other Roles -->
+      <template v-if="!['admin', 'super_admin', 'bde'].includes(data.user_role)">
+        <v-col cols="12" lg="4" md="6">
+          <DashboardAttendanceWidget class="mb-6" />
+        </v-col>
+      </template>
+
+      <!-- Full Dashboard for Admin / Super Admin / BDE -->
+      <template v-else>
 
       <!-- Stats Grid -->
       <v-col v-for="stat in statCards" :key="stat.label" cols="12" sm="6" lg="3">
@@ -317,6 +328,7 @@
           </div>
         </v-card>
       </v-col>
+      </template>
     </template>
   </v-row>
 </template>

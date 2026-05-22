@@ -1,76 +1,75 @@
 <template>
-  <v-main class="login-bg">
+  <v-main class="login-bg" :style="{ backgroundImage: `url(/images/login-${themeStore.theme}.webp)` }">
     <v-container fluid class="fill-height">
-      <v-row align="center" justify="center" no-gutters class="fill-height">
-        
-        <!-- Left Side: Brand -->
-        <v-col cols="12" md="6" class="d-flex justify-center justify-md-end pr-md-16 py-10 left-pane">
-          <div class="brand-container animate-left">
-            <div class="d-flex align-center justify-center">
-              <template v-if="companyStore.logoUrl">
-                <img
-                  :src="companyStore.logoUrl"
-                  :alt="companyStore.companyName"
-                  class="logo-img"
-                  style="height: 120px; width: auto; max-width: 600px; object-fit: contain;"
-                />
-              </template>
-              <v-sheet
-                v-else
-                width="120"
-                height="120"
-                color="primary"
-                class="logo-sheet rounded-xl d-flex align-center justify-center font-weight-black text-white"
-                style="font-size: 56px;"
-                elevation="10"
-              >
-                {{ companyStore.companyName.charAt(0) }}
-              </v-sheet>
-            </div>
+      <v-row align="center" justify="center" class="fill-height">
+        <v-col cols="12" sm="8" md="6" lg="4" class="d-flex flex-column align-center">
+          
+          <!-- Logo -->
+          <div class="mb-8 animate-fade-in text-center">
+            <img
+              :src="`/images/logo/${themeStore.theme === 'dark' ? 'ftl-white-logo.webp' : 'ftl_logo_dark.webp'}`"
+              alt="FLT Employee Portal"
+              style="height: 120px; width: auto; object-fit: contain;"
+            />
           </div>
-        </v-col>
 
-        <!-- Right Side: Login Form -->
-        <v-col cols="12" md="6" class="d-flex justify-center justify-md-start pl-md-16 py-10">
-          <div class="form-container animate-right w-100" style="max-width: 400px">
-            <div class="mb-10 text-center text-md-left">
-              <h2 class="text-h2 font-weight-light mb-2 tracking-widest" :class="themeStore.theme === 'dark' ? 'text-white' : 'text-primary'">Welcome</h2>
-              <p class="text-overline font-weight-black tracking-widest" :class="themeStore.theme === 'dark' ? 'text-white-50' : 'text-muted'">
-                Please login to admin dashboard.
-              </p>
+          <!-- Login Card -->
+          <v-card class="w-100 rounded-xl pa-8 pa-md-10 animate-slide-up" :class="themeStore.theme === 'dark' ? 'bg-surface-variant dark-card' : 'bg-white'" elevation="10" style="max-width: 480px; backdrop-filter: blur(10px); background-color: rgba(var(--v-theme-surface), 0.95) !important;">
+            <div class="text-center mb-8">
+              <h2 class="text-h5 font-weight-bold mb-2">Welcome Back!</h2>
+              <p class="text-body-2 opacity-70">Please sign in to continue to your dashboard.</p>
             </div>
 
             <v-form @submit.prevent="handleLogin" ref="loginForm">
               <v-text-field
                 v-model="form.email"
-                label="USERNAME"
+                label="Username"
                 placeholder="admin@elements.com"
-                variant="solo"
-                :bg-color="themeStore.theme === 'dark' ? 'white' : 'surface'"
-                class="sleek-field mb-4"
+                persistent-placeholder
+                prepend-inner-icon="mdi-account-outline"
+                variant="outlined"
+                bg-color="transparent"
+                class="mb-4 custom-input"
                 hide-details
                 required
               ></v-text-field>
 
               <v-text-field
                 v-model="form.password"
-                label="PASSWORD"
+                label="Password"
                 placeholder="••••••••"
-                type="password"
-                variant="solo"
-                :bg-color="themeStore.theme === 'dark' ? 'white' : 'surface'"
-                class="sleek-field mb-4"
+                persistent-placeholder
+                :type="showPassword ? 'text' : 'password'"
+                prepend-inner-icon="mdi-lock-outline"
+                :append-inner-icon="showPassword ? 'mdi-eye-outline' : 'mdi-eye-off-outline'"
+                @click:append-inner="showPassword = !showPassword"
+                variant="outlined"
+                bg-color="transparent"
+                class="mb-4 custom-input"
                 hide-details
                 required
               ></v-text-field>
+
+              <div class="d-flex justify-space-between align-center mb-6">
+                <v-checkbox
+                  v-model="form.remember"
+                  label="Remember me"
+                  hide-details
+                  density="compact"
+                  color="primary"
+                  class="font-weight-medium text-body-2 remember-checkbox"
+                ></v-checkbox>
+                <NuxtLink to="/forgot-password" class="text-caption font-weight-bold text-decoration-none" :class="themeStore.theme === 'dark' ? 'text-orange-darken-2' : 'text-primary'">
+                  Forgot Password?
+                </NuxtLink>
+              </div>
 
               <v-alert
                 v-if="error"
                 type="error"
                 variant="tonal"
                 density="compact"
-                class="mb-4 text-uppercase font-weight-black"
-                style="font-size: 10px; letter-spacing: 1px"
+                class="mb-6 font-weight-bold text-caption"
               >
                 {{ error }}
               </v-alert>
@@ -78,40 +77,34 @@
               <v-btn
                 type="submit"
                 block
-                height="52"
-                color="primary"
-                class="text-white font-weight-black tracking-widest rounded-lg elevation-4 mt-6"
+                height="48"
+                :color="themeStore.theme === 'dark' ? 'orange-darken-2' : 'primary'"
+                class="text-white font-weight-bold rounded-lg elevation-2"
                 :loading="loading"
               >
-                LOGIN
+                SIGN IN
               </v-btn>
             </v-form>
+          </v-card>
 
-            <div class="mt-8 text-center text-md-left">
-              <v-btn
-                to="/forgot-password"
-                variant="text"
-                :color="themeStore.theme === 'dark' ? 'white' : 'primary'"
-                class="text-caption font-weight-black tracking-widest opacity-50 px-0"
-                density="compact"
-              >
-                FORGOTTEN YOUR PASSWORD?
-              </v-btn>
-            </div>
+          <!-- Footer -->
+          <div class="mt-8 text-caption text-center opacity-70" :class="themeStore.theme === 'dark' ? 'text-white' : 'text-primary'">
+            © 2024 - {{ new Date().getFullYear() }} FLT Solutions. All rights reserved.
           </div>
+          
         </v-col>
-
       </v-row>
     </v-container>
 
     <!-- Floating Theme Indicator (Optional) -->
-    <div class="fixed-bottom-left pa-8">
+    <div class="fixed-bottom-left pa-4">
       <v-btn
         :icon="themeStore.theme === 'dark' ? 'mdi-white-balance-sunny' : 'mdi-moon-waning-crescent'"
         variant="tonal"
+        size="small"
         :color="themeStore.theme === 'dark' ? 'white' : 'primary'"
         @click="themeStore.toggle()"
-        class="theme-toggle-btn"
+        class="theme-toggle-btn opacity-50"
       ></v-btn>
     </div>
   </v-main>
@@ -121,21 +114,18 @@
 const api = useApi()
 const authStore = useAuthStore()
 const themeStore = useThemeStore()
-const companyStore = useCompanyStore()
 
 definePageMeta({
   layout: false
 })
 
-onMounted(() => {
-  companyStore.fetchCompany()
-})
-
 const form = reactive({
   email: '',
-  password: ''
+  password: '',
+  remember: false
 })
 
+const showPassword = ref(false)
 const loading = ref(false)
 const error = ref('')
 
@@ -148,7 +138,7 @@ const handleLogin = async () => {
     authStore.setUser(res.data.user, res.data.token)
     navigateTo('/')
   } catch (err: any) {
-    error.value = err.data?.message || 'Access Denied'
+    error.value = err.data?.message || err.response?.data?.message || 'Access Denied'
   } finally {
     loading.value = false
   }
@@ -157,26 +147,54 @@ const handleLogin = async () => {
 
 <style scoped>
 .login-bg {
-  background: var(--bg-base) !important;
-  transition: background 0.4s ease;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: background-image 0.4s ease;
+  min-height: 100vh;
 }
 
-.sleek-field :deep(.v-field) {
-  border-radius: 8px !important;
-  box-shadow: none !important;
+.custom-input :deep(.v-field__prepend-inner) {
+  padding-inline-start: 12px !important;
+  padding-inline-end: 12px !important;
+  align-items: center !important;
+  opacity: 0.6;
 }
 
-.sleek-field :deep(input) {
-  font-weight: 600 !important;
-  color: #011a1a !important;
-  letter-spacing: 0.5px;
+.custom-input :deep(.v-field__append-inner) {
+  padding-inline-end: 12px !important;
+  align-items: center !important;
+  opacity: 0.6;
 }
 
-.sleek-field :deep(.v-label) {
-  font-weight: 800;
-  letter-spacing: 1px;
-  font-size: 11px;
-  opacity: 0.7;
+/* Override Browser Autofill Styles */
+.custom-input :deep(input:-webkit-autofill),
+.custom-input :deep(input:-webkit-autofill:hover), 
+.custom-input :deep(input:-webkit-autofill:focus), 
+.custom-input :deep(input:-webkit-autofill:active) {
+  transition: background-color 5000s ease-in-out 0s;
+  -webkit-text-fill-color: currentColor !important;
+}
+
+/* Dark Mode Forced Colors */
+.dark-card h2,
+.dark-card p,
+.dark-card .remember-checkbox,
+.dark-card .remember-checkbox :deep(.v-label) {
+  color: white !important;
+}
+
+.dark-card .custom-input :deep(label),
+.dark-card .custom-input :deep(input),
+.dark-card .custom-input :deep(.v-field__prepend-inner i),
+.dark-card .custom-input :deep(.v-field__append-inner i) {
+  color: white !important;
+  opacity: 1 !important;
+}
+
+.dark-card .custom-input :deep(.v-field__outline) {
+  --v-field-border-opacity: 0.4 !important;
+  color: white !important;
 }
 
 .fixed-bottom-left {
@@ -186,25 +204,21 @@ const handleLogin = async () => {
 }
 
 /* Animations */
-.animate-left {
-  animation: slideLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-fade-in {
+  animation: fadeIn 0.8s ease forwards;
 }
 
-.animate-right {
-  animation: slideRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.animate-slide-up {
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes slideLeft {
-  from { opacity: 0; transform: translateX(-40px); }
-  to { opacity: 1; transform: translateX(0); }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-@keyframes slideRight {
-  from { opacity: 0; transform: translateX(40px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-.white-50 {
-  color: rgba(255, 255, 255, 0.5) !important;
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>

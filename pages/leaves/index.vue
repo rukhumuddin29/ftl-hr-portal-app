@@ -261,7 +261,7 @@
             class="mb-6"
           ></v-textarea>
 
-          <div v-if="estimatedDays > 0" class="mb-6 pa-4 rounded-lg bg-primary opacity-10 border-thin d-flex justify-space-between align-center">
+          <div v-if="estimatedDays > 0" class="mb-6 pa-4 rounded-lg border-thin d-flex justify-space-between align-center" style="background-color: rgba(var(--v-theme-primary), 0.1);">
              <span class="font-weight-black text-primary">ESTIMATED WORKING DAYS:</span>
              <span class="text-h6 font-weight-black text-primary">{{ estimatedDays }}</span>
           </div>
@@ -422,7 +422,7 @@ const submitApplication = async () => {
         fetchHistory()
         fetchBalances()
     } catch (err: any) {
-        uiStore.error(err.response?.data?.message || 'Failed to submit application')
+        uiStore.error(err.data?.message || err.response?.data?.message || 'Failed to submit application')
     } finally {
         submitting.value = false
     }
@@ -441,7 +441,7 @@ const cancelLeave = async (id: number) => {
     }
 }
 
-const getIcon = (type: string) => {
+const getIcon = (type: string | number) => {
     switch (type) {
         case 'sick_leave': return 'mdi-hospital-box-outline'
         case 'casual_leave': return 'mdi-beach'
@@ -464,7 +464,7 @@ const formatTime = (t: string) => {
     if (!t) return '-'
     const [h, m] = t.split(':')
     const d = new Date()
-    d.setHours(parseInt(h), parseInt(m))
+    d.setHours(parseInt(h || '0', 10), parseInt(m || '0', 10))
     return format(d, 'hh:mm a')
 }
 
