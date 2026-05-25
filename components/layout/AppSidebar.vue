@@ -21,7 +21,7 @@
 
     <v-list density="compact" nav>
       <template v-for="section in menuItems" :key="section.label">
-        <v-list-subheader v-if="!sidebarStore.isCollapsed && section.items.length > 0" class="text-overline font-weight-black opacity-50 px-4 mt-4">
+        <v-list-subheader v-if="!sidebarStore.isCollapsed && section.items.length > 0" class="text-overline font-weight-bold opacity-50 px-4 mt-4">
           {{ section.label }}
         </v-list-subheader>
         
@@ -71,13 +71,7 @@ const menuItems = computed(() => {
 
   coreItems.push({ title: 'My Leaves', to: '/leaves', mdi: 'mdi-calendar-check-outline' })
 
-  if (hasPermission('leads.bulk_email') || hasPermission('leads.bulk_email_history')) {
-    coreItems.push({ title: 'Send Bulk Emails', to: '/bulk-emails', mdi: 'mdi-email-multiple-outline' })
-  }
 
-  if (hasPermission('leads.bulk_email_history')) {
-    coreItems.push({ title: 'Email History', to: '/bulk-emails/history', mdi: 'mdi-history' })
-  }
 
   sections.push({ label: 'Core', items: coreItems })
 
@@ -100,6 +94,7 @@ const menuItems = computed(() => {
   if (authStore.isAdmin && hasPermission('leads.view')) {
     manageItems.push({ title: 'Duplicate Leads', to: '/leads/duplicates', mdi: 'mdi-account-multiple-remove' })
     manageItems.push({ title: 'Lead Types', to: '/settings/lead-types', mdi: 'mdi-form-select' })
+    manageItems.push({ title: 'WhatsApp Templates', to: '/settings/whatsapp-templates', mdi: 'mdi-whatsapp' })
   }
   if (hasPermission('leaves.approve')) {
     manageItems.push({ title: 'Leave Approvals', to: '/leaves/approvals', mdi: 'mdi-calendar-clock-outline' })
@@ -129,7 +124,6 @@ const menuItems = computed(() => {
   // Reports Section
   const reportItems = []
   if (hasPermission('reports.view')) {
-    reportItems.push({ title: 'Financial Reports', to: '/reports', mdi: 'mdi-chart-box-outline' })
     reportItems.push({ title: 'BDE Scorecard', to: '/reports/bde-scorecard', mdi: 'mdi-trophy-outline' })
     reportItems.push({ title: 'Activity Log', to: '/activity-log', mdi: 'mdi-history' })
   }

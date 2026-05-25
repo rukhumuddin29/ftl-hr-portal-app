@@ -4,13 +4,13 @@
     <v-col cols="12" class="mb-2">
       <div class="d-flex justify-space-between align-center flex-wrap ga-3">
         <div>
-          <h1 class="text-h4 font-weight-black">PAYROLL</h1>
+          <h1 class="text-h4 font-weight-bold">PAYROLL</h1>
           <p class="text-body-2 text-muted">Generate, approve and pay salaries for employees.</p>
         </div>
         <v-btn
           color="primary"
           prepend-icon="mdi-calculator"
-          class="font-weight-black px-6"
+          class="font-weight-medium px-6"
           height="46"
           @click="generateDialog = true"
         >
@@ -27,8 +27,8 @@
             <v-icon color="white">{{ card.icon }}</v-icon>
           </v-avatar>
           <div>
-            <p class="text-overline font-weight-black text-muted mb-0 opacity-50">{{ card.label }}</p>
-            <p class="text-h5 font-weight-black" :class="`text-${card.color}`">{{ card.value }}</p>
+            <p class="text-overline font-weight-bold text-muted mb-0 opacity-50">{{ card.label }}</p>
+            <p class="text-h5 font-weight-bold" :class="`text-${card.color}`">{{ card.value }}</p>
           </div>
         </div>
       </v-card>
@@ -65,7 +65,7 @@
             <v-btn
               color="success"
               variant="tonal"
-              class="font-weight-black"
+              class="font-weight-medium"
               prepend-icon="mdi-check-all"
               :disabled="!selectedIds.length"
               @click="bulkApprove"
@@ -75,7 +75,7 @@
             <v-btn
               color="primary"
               variant="tonal"
-              class="font-weight-black"
+              class="font-weight-medium"
               prepend-icon="mdi-cash-multiple"
               :disabled="!selectedApprovedIds.length"
               @click="bulkPay"
@@ -104,29 +104,29 @@
         >
           <template #item.user="{ item }">
             <div class="py-2">
-              <div class="font-weight-black text-subtitle-2 uppercase">{{ item.user?.name }}</div>
+              <div class="font-weight-medium text-subtitle-2 uppercase">{{ item.user?.name }}</div>
               <div class="text-[10px] text-muted">{{ item.user?.employee_id }}</div>
             </div>
           </template>
 
           <template #item.month="{ item }">
-            <span class="font-weight-bold text-caption">{{ formatMonth(item.month) }}</span>
+            <span class="font-weight-medium text-caption">{{ formatMonth(item.month) }}</span>
           </template>
 
           <template #item.total_earnings="{ item }">
-            <span class="font-weight-black text-primary">₹{{ formatCurrency(item.total_earnings) }}</span>
+            <span class="font-weight-medium text-primary">₹{{ formatCurrency(item.total_earnings) }}</span>
           </template>
 
           <template #item.total_deductions="{ item }">
-            <span class="font-weight-bold text-error text-caption">-₹{{ formatCurrency(item.total_deductions) }}</span>
+            <span class="font-weight-medium text-error text-caption">-₹{{ formatCurrency(item.total_deductions) }}</span>
           </template>
 
           <template #item.net_salary="{ item }">
-            <span class="font-weight-black text-success">₹{{ formatCurrency(item.net_salary) }}</span>
+            <span class="font-weight-medium text-success">₹{{ formatCurrency(item.net_salary) }}</span>
           </template>
 
           <template #item.effective_working_days="{ item }">
-            <span class="text-caption font-weight-bold">{{ item.effective_working_days }} / 30</span>
+            <span class="text-caption font-weight-medium">{{ item.effective_working_days }} / 30</span>
           </template>
 
           <template #item.status="{ item }">
@@ -134,7 +134,7 @@
               :color="statusColor(item.status)"
               size="x-small"
               label
-              class="font-weight-black px-3"
+              class="font-weight-medium px-3"
             >
               {{ item.status?.toUpperCase() }}
             </v-chip>
@@ -168,7 +168,7 @@
     <!-- Generate Dialog -->
     <v-dialog v-model="generateDialog" max-width="480" persistent>
       <v-card class="rounded-xl pa-6">
-        <h3 class="text-h6 font-weight-black mb-4">GENERATE PAYROLL</h3>
+        <h3 class="text-h6 font-weight-bold mb-4">GENERATE PAYROLL</h3>
         <p class="text-body-2 text-muted mb-4">
           This will calculate salaries for all active employees with salary structures for the selected month.
         </p>
@@ -184,7 +184,7 @@
         <div class="d-flex ga-2">
           <v-btn
             color="primary"
-            class="font-weight-black flex-grow-1"
+            class="font-weight-medium flex-grow-1"
             :loading="generating"
             @click="generatePayroll"
           >
@@ -192,7 +192,7 @@
           </v-btn>
           <v-btn
             variant="text"
-            class="font-weight-bold"
+            class="font-weight-medium"
             @click="generateDialog = false"
           >
             CANCEL
@@ -205,7 +205,7 @@
     <v-dialog v-model="payslipDialog" max-width="700" scrollable>
       <v-card v-if="viewingPayroll" class="rounded-xl">
         <v-toolbar color="transparent" class="px-6">
-          <v-toolbar-title class="font-weight-black">PAYSLIP — {{ viewingPayroll.month }}</v-toolbar-title>
+          <v-toolbar-title class="font-weight-bold">PAYSLIP — {{ viewingPayroll.month }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon="mdi-close" variant="text" @click="payslipDialog = false"></v-btn>
         </v-toolbar>
@@ -213,14 +213,14 @@
           <!-- Employee info -->
           <div class="d-flex align-center ga-3 mb-6">
             <v-avatar color="primary" size="48" class="rounded-lg">
-              <span class="text-h6 font-weight-black">{{ viewingPayroll.user?.name?.charAt(0) }}</span>
+              <span class="text-h6 font-weight-bold">{{ viewingPayroll.user?.name?.charAt(0) }}</span>
             </v-avatar>
             <div>
-              <h3 class="text-subtitle-1 font-weight-black uppercase">{{ viewingPayroll.user?.name }}</h3>
+              <h3 class="text-subtitle-1 font-weight-bold uppercase">{{ viewingPayroll.user?.name }}</h3>
               <p class="text-caption text-muted">{{ viewingPayroll.user?.employee_id }} · {{ viewingPayroll.user?.designation }}</p>
             </div>
             <v-spacer></v-spacer>
-            <v-chip :color="statusColor(viewingPayroll.status)" label class="font-weight-black">
+            <v-chip :color="statusColor(viewingPayroll.status)" label class="font-weight-medium">
               {{ viewingPayroll.status?.toUpperCase() }}
             </v-chip>
           </div>
@@ -228,25 +228,25 @@
           <v-divider class="mb-4 opacity-25"></v-divider>
 
           <!-- Attendance Summary -->
-          <p class="text-[10px] font-weight-black text-primary uppercase mb-2">Attendance Summary</p>
+          <p class="text-[10px] font-weight-medium text-primary uppercase mb-2">Attendance Summary</p>
           <v-row dense class="mb-4">
             <v-col cols="4" sm="2" v-for="item in attendanceItems" :key="item.label">
               <div class="text-center pa-2 rounded-lg" style="background: rgba(255,255,255,0.03);">
-                <p class="text-h6 font-weight-black" :class="item.colorClass">{{ item.value }}</p>
-                <p class="text-[10px] font-weight-black text-muted uppercase">{{ item.label }}</p>
+                <p class="text-h6 font-weight-bold" :class="item.colorClass">{{ item.value }}</p>
+                <p class="text-[10px] font-weight-medium text-muted uppercase">{{ item.label }}</p>
               </div>
             </v-col>
           </v-row>
 
           <!-- Earnings -->
-          <p class="text-[10px] font-weight-black text-success uppercase mb-2">Earnings</p>
+          <p class="text-[10px] font-weight-medium text-success uppercase mb-2">Earnings</p>
           <v-table density="compact" class="bg-transparent mb-4">
             <tbody>
               <tr v-for="item in earningsItems" :key="item.label">
-                <td class="text-caption font-weight-bold">{{ item.label }}</td>
-                <td class="text-right font-weight-black text-caption">₹{{ formatCurrency(item.value) }}</td>
+                <td class="text-caption font-weight-medium">{{ item.label }}</td>
+                <td class="text-right font-weight-medium text-caption">₹{{ formatCurrency(item.value) }}</td>
               </tr>
-              <tr class="font-weight-black" style="border-top: 2px solid rgba(255,255,255,0.1);">
+              <tr class="font-weight-medium" style="border-top: 2px solid rgba(255,255,255,0.1);">
                 <td>TOTAL EARNINGS</td>
                 <td class="text-right text-success">₹{{ formatCurrency(viewingPayroll.total_earnings) }}</td>
               </tr>
@@ -254,14 +254,14 @@
           </v-table>
 
           <!-- Deductions -->
-          <p class="text-[10px] font-weight-black text-error uppercase mb-2">Deductions</p>
+          <p class="text-[10px] font-weight-medium text-error uppercase mb-2">Deductions</p>
           <v-table density="compact" class="bg-transparent mb-4">
             <tbody>
               <tr v-for="item in deductionItems" :key="item.label">
-                <td class="text-caption font-weight-bold">{{ item.label }}</td>
-                <td class="text-right font-weight-black text-caption">₹{{ formatCurrency(item.value) }}</td>
+                <td class="text-caption font-weight-medium">{{ item.label }}</td>
+                <td class="text-right font-weight-medium text-caption">₹{{ formatCurrency(item.value) }}</td>
               </tr>
-              <tr class="font-weight-black" style="border-top: 2px solid rgba(255,255,255,0.1);">
+              <tr class="font-weight-medium" style="border-top: 2px solid rgba(255,255,255,0.1);">
                 <td>TOTAL DEDUCTIONS</td>
                 <td class="text-right text-error">₹{{ formatCurrency(viewingPayroll.total_deductions) }}</td>
               </tr>
@@ -270,8 +270,8 @@
 
           <!-- Net -->
           <v-card variant="outlined" class="pa-4 rounded-lg text-center" style="background: rgba(var(--v-theme-primary), 0.05);">
-            <p class="text-[10px] font-weight-black text-muted uppercase">Net Salary (Take Home)</p>
-            <p class="text-h4 font-weight-black text-primary">₹{{ formatCurrency(viewingPayroll.net_salary) }}</p>
+            <p class="text-[10px] font-weight-medium text-muted uppercase">Net Salary (Take Home)</p>
+            <p class="text-h4 font-weight-bold text-primary">₹{{ formatCurrency(viewingPayroll.net_salary) }}</p>
           </v-card>
         </v-card-text>
       </v-card>

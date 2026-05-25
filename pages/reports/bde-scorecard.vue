@@ -3,11 +3,11 @@
     <!-- Header -->
     <v-row align="center" class="mb-4">
       <v-col cols="12" lg="6">
-        <h1 class="text-h4 font-weight-black d-flex align-center ga-4 mb-2" style="font-size: 1.2rem !important;">
+        <h1 class="text-h4 font-weight-bold d-flex align-center ga-4 mb-2" style="font-size: 1.2rem !important;">
           <v-icon color="primary" size="48">mdi-trophy-outline</v-icon>
           BDE PERFORMANCE SCORECARD
         </h1>
-        <p class="text-muted uppercase tracking-widest font-weight-bold opacity-70" style="font-size: 0.85rem;">
+        <p class="text-muted uppercase tracking-widest font-weight-medium opacity-70" style="font-size: 0.85rem;">
            Evaluate team effectiveness and drive high-performance sales cultures
         </p>
       </v-col>
@@ -21,10 +21,10 @@
             density="comfortable"
             @update:model-value="fetchLeaderboard"
          >
-            <v-btn value="this_month" class="px-6 font-weight-black uppercase text-caption">THIS MONTH</v-btn>
-            <v-btn value="last_month" class="px-6 font-weight-black uppercase text-caption">LAST MONTH</v-btn>
-            <v-btn value="this_quarter" class="px-6 font-weight-black uppercase text-caption">QUARTER</v-btn>
-            <v-btn value="this_year" class="px-6 font-weight-black uppercase text-caption">YEAR</v-btn>
+            <v-btn value="this_month" class="px-6 font-weight-medium uppercase text-caption">THIS MONTH</v-btn>
+            <v-btn value="last_month" class="px-6 font-weight-medium uppercase text-caption">LAST MONTH</v-btn>
+            <v-btn value="this_quarter" class="px-6 font-weight-medium uppercase text-caption">QUARTER</v-btn>
+            <v-btn value="this_year" class="px-6 font-weight-medium uppercase text-caption">YEAR</v-btn>
          </v-btn-toggle>
          <v-btn icon="mdi-refresh" variant="text" :loading="loading" @click="fetchLeaderboard"></v-btn>
       </v-col>
@@ -54,7 +54,7 @@
               <span v-if="item.rank === 1" class="text-h5">🥇</span>
               <span v-else-if="item.rank === 2" class="text-h5">🥈</span>
               <span v-else-if="item.rank === 3" class="text-h5">🥉</span>
-              <span v-else class="font-weight-black text-muted ml-1">#{{ item.rank }}</span>
+              <span v-else class="font-weight-medium text-muted ml-1">#{{ item.rank }}</span>
            </div>
         </template>
 
@@ -62,9 +62,9 @@
            <div class="d-flex align-center ga-3 py-4">
               <v-avatar size="40" :color="item.rank <= 3 ? 'primary' : 'surface-light'" border>
                  <v-img v-if="item.avatar" :src="item.avatar"></v-img>
-                 <span v-else class="font-weight-black">{{ item.name.charAt(0) }}</span>
+                 <span v-else class="font-weight-medium">{{ item.name.charAt(0) }}</span>
               </v-avatar>
-              <div class="font-weight-black text-subtitle-1 uppercase">{{ item.name }}</div>
+              <div class="font-weight-bold text-subtitle-1 uppercase">{{ item.name }}</div>
            </div>
         </template>
 
@@ -72,7 +72,7 @@
            <v-chip
              :color="getScoreColor(item.composite_score)"
              variant="flat"
-             class="font-weight-black px-6"
+             class="font-weight-medium px-6"
              label
              rounded="lg"
            >
@@ -81,11 +81,11 @@
         </template>
 
         <template v-slot:item.conversion_rate="{ item }">
-           <span class="font-weight-black text-primary">{{ item.conversion_rate }}%</span>
+           <span class="font-weight-medium text-primary">{{ item.conversion_rate }}%</span>
         </template>
 
         <template v-slot:item.revenue="{ item }">
-           <span class="font-weight-black text-success">{{ formatCurrency(item.revenue) }}</span>
+           <span class="font-weight-medium text-success">{{ formatCurrency(item.revenue) }}</span>
         </template>
 
         <!-- Expanded Individual Scorecard -->
@@ -96,16 +96,16 @@
                    <!-- Metric Cards -->
                    <v-col v-for="metric in getDetailMetrics(item)" :key="metric.label" cols="12" sm="6" md="3">
                       <v-card variant="outlined" class="rounded-xl pa-5 bg-card border-dashed">
-                         <div class="text-overline font-weight-black text-muted mb-2 tracking-widest">{{ metric.label }}</div>
-                         <div class="text-h4 font-weight-black mb-1">{{ metric.value }}</div>
-                         <div class="text-caption font-weight-bold opacity-60">{{ metric.subtitle }}</div>
+                         <div class="text-overline font-weight-bold text-muted mb-2 tracking-widest">{{ metric.label }}</div>
+                         <div class="text-h4 font-weight-bold mb-1">{{ metric.value }}</div>
+                         <div class="text-caption font-weight-medium opacity-60">{{ metric.subtitle }}</div>
                       </v-card>
                    </v-col>
 
                    <!-- Trend & Pipeline -->
                    <v-col cols="12" md="8" class="mt-6">
                       <v-card variant="outlined" class="rounded-xl bg-card border-none pa-8 h-100 shadow-sm">
-                         <h3 class="text-subtitle-1 font-weight-black uppercase mb-8 ml-2 text-primary d-flex align-center ga-2">
+                         <h3 class="text-subtitle-1 font-weight-bold uppercase mb-8 ml-2 text-primary d-flex align-center ga-2">
                            <v-icon size="20">mdi-chart-line</v-icon>
                            Performance Trajectory (6 MONTHS)
                          </h3>
@@ -119,7 +119,7 @@
                            line-width="3"
                            auto-draw
                          ></v-sparkline>
-                         <div class="mt-8 d-flex justify-space-between px-4 text-caption font-weight-black opacity-30">
+                         <div class="mt-8 d-flex justify-space-between px-4 text-caption font-weight-medium opacity-30">
                             <span v-for="m in trendData[item.id]?.labels" :key="m">{{ m }}</span>
                          </div>
                       </v-card>
@@ -127,14 +127,14 @@
 
                    <v-col cols="12" md="4" class="mt-6">
                       <v-card variant="outlined" class="rounded-xl bg-card border-none pa-8 h-100 shadow-sm">
-                         <h3 class="text-subtitle-1 font-weight-black uppercase mb-8 text-primary d-flex align-center ga-2">
+                         <h3 class="text-subtitle-1 font-weight-bold uppercase mb-8 text-primary d-flex align-center ga-2">
                             <v-icon size="20">mdi-filter-variant</v-icon>
                             Pipeline Health
                          </h3>
                          <div v-for="(count, status) in pipelineData[item.id]" :key="status" class="mb-5">
                             <div class="d-flex justify-space-between mb-2">
-                               <span class="text-caption font-weight-black uppercase opacity-60 leading-none">{{ String(status).replace('_', ' ') }}</span>
-                               <span class="text-caption font-weight-black leading-none">{{ count }}</span>
+                               <span class="text-caption font-weight-medium uppercase opacity-60 leading-none">{{ String(status).replace('_', ' ') }}</span>
+                               <span class="text-caption font-weight-medium leading-none">{{ count }}</span>
                             </div>
                             <v-progress-linear
                               :model-value="getPipelinePercent(item.id, count)"

@@ -3,7 +3,7 @@
     <v-row>
       <!-- Page Header -->
       <v-col cols="12" class="mb-6">
-        <h1 class="text-h4 font-weight-black uppercase">Company Information</h1>
+        <h1 class="text-h4 font-weight-bold uppercase">Company Information</h1>
         <p class="text-body-2 text-muted">Manage your organization's core details and branding.</p>
       </v-col>
 
@@ -13,7 +13,7 @@
             <!-- Left Column: Branding -->
             <v-col cols="12" md="4">
               <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8 mb-6 text-center">
-                <h3 class="text-overline font-weight-black text-primary mb-6 tracking-widest">COMPANY LOGO</h3>
+                <h3 class="text-overline font-weight-bold text-primary mb-6 tracking-widest">COMPANY LOGO</h3>
                 
                 <div class="position-relative d-inline-block mb-6">
                   <v-avatar size="180" class="rounded-xl elevation-10 border-4 border-surface bg-secondary overflow-hidden">
@@ -46,7 +46,7 @@
               </v-card>
 
               <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8">
-                <h3 class="text-overline font-weight-black text-primary mb-6 tracking-widest">SOCIAL PROFILES</h3>
+                <h3 class="text-overline font-weight-bold text-primary mb-6 tracking-widest">SOCIAL PROFILES</h3>
                 
                 <v-text-field
                   v-model="form.facebook"
@@ -93,7 +93,7 @@
             <!-- Right Column: Business Details -->
             <v-col cols="12" md="8">
               <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8 mb-6">
-                <h3 class="text-h6 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+                <h3 class="text-h6 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
                   <v-icon>mdi-information-outline</v-icon>
                   Basic Information
                 </h3>
@@ -141,7 +141,7 @@
               </v-card>
 
               <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8 mb-6">
-                <h3 class="text-h6 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+                <h3 class="text-h6 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
                   <v-icon>mdi-map-marker-outline</v-icon>
                   Registered Address
                 </h3>
@@ -199,7 +199,7 @@
               <div class="d-flex justify-end ga-4">
                 <v-btn
                   variant="text"
-                  class="font-weight-black px-8"
+                  class="font-weight-medium px-8"
                   @click="resetForm"
                   :disabled="saving"
                 >
@@ -208,7 +208,7 @@
                 <v-btn
                   color="primary"
                   size="large"
-                  class="font-weight-black px-12 rounded-lg"
+                  class="font-weight-medium px-12 rounded-lg"
                   type="submit"
                   :loading="saving"
                 >

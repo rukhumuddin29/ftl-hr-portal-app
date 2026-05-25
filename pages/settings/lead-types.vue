@@ -2,10 +2,10 @@
   <div class="pa-4 pa-md-8 max-w-7xl mx-auto">
     <div class="d-flex align-center justify-space-between mb-8">
       <div>
-        <h1 class="text-h4 font-weight-black tracking-tight mb-2">Lead Types & Forms</h1>
+        <h1 class="text-h4 font-weight-bold tracking-tight mb-2">Lead Types & Forms</h1>
         <p class="text-body-1 text-muted">Configure dynamic lead categories and build custom forms for each.</p>
       </div>
-      <v-btn color="primary" prepend-icon="mdi-plus" height="48" class="font-weight-bold px-6 rounded-lg" @click="openDialog()">
+      <v-btn color="primary" prepend-icon="mdi-plus" height="48" class="font-weight-medium px-6 rounded-lg" @click="openDialog()">
         NEW LEAD TYPE
       </v-btn>
     </div>
@@ -13,7 +13,7 @@
     <v-card class="rounded-xl border-thin bg-surface elevation-0">
       <v-table class="bg-transparent">
         <thead>
-          <tr class="text-overline font-weight-black opacity-50">
+          <tr class="text-overline font-weight-bold opacity-50">
             <th class="px-6 text-left">NAME</th>
             <th class="px-6 text-left">SLUG</th>
             <th class="px-6 text-left">FORM FIELDS</th>
@@ -27,13 +27,13 @@
             </td>
           </tr>
           <tr v-else-if="!leadTypes.length" class="text-center">
-            <td colspan="4" class="pa-8 opacity-50 font-weight-bold">No Lead Types found. Create one above!</td>
+            <td colspan="4" class="pa-8 opacity-50 font-weight-medium">No Lead Types found. Create one above!</td>
           </tr>
           <tr v-else v-for="type in leadTypes" :key="type.id">
-            <td class="px-6 py-4 font-weight-black text-subtitle-2 text-uppercase">{{ type.name }}</td>
-            <td class="px-6 py-4 text-caption text-muted font-weight-bold">{{ type.slug }}</td>
+            <td class="px-6 py-4 font-weight-medium text-subtitle-2 text-uppercase">{{ type.name }}</td>
+            <td class="px-6 py-4 text-caption text-muted font-weight-medium">{{ type.slug }}</td>
             <td class="px-6 py-4">
-              <v-chip size="small" color="primary" variant="tonal" class="font-weight-black">
+              <v-chip size="small" color="primary" variant="tonal" class="font-weight-medium">
                 {{ type.form_schema ? type.form_schema.length : 0 }} FIELDS
               </v-chip>
             </td>
@@ -50,7 +50,7 @@
     <v-dialog v-model="dialog" max-width="900" persistent>
       <v-card class="rounded-xl border-thin bg-surface">
         <v-toolbar color="transparent" class="px-4">
-          <v-toolbar-title class="font-weight-black">{{ form.id ? 'Edit Lead Type' : 'New Lead Type' }}</v-toolbar-title>
+          <v-toolbar-title class="font-weight-bold">{{ form.id ? 'Edit Lead Type' : 'New Lead Type' }}</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon="mdi-close" variant="text" @click="closeDialog"></v-btn>
         </v-toolbar>
@@ -60,7 +60,7 @@
         <v-card-text class="pa-6">
           <v-row>
             <v-col cols="12" md="4">
-              <div class="text-subtitle-1 font-weight-black mb-4">Basic Info</div>
+              <div class="text-subtitle-1 font-weight-bold mb-4">Basic Info</div>
               <v-text-field
                 v-model="form.name"
                 label="Lead Type Name (e.g. Interior Design)"
@@ -73,15 +73,15 @@
 
             <v-col cols="12" md="8">
               <div class="d-flex align-center justify-space-between mb-4">
-                <div class="text-subtitle-1 font-weight-black">Form Builder</div>
-                <v-btn color="success" size="small" variant="tonal" prepend-icon="mdi-plus" class="font-weight-black" @click="addField">
+                <div class="text-subtitle-1 font-weight-bold">Form Builder</div>
+                <v-btn color="success" size="small" variant="tonal" prepend-icon="mdi-plus" class="font-weight-medium" @click="addField">
                   ADD FIELD
                 </v-btn>
               </div>
 
               <div v-if="!form.form_schema.length" class="pa-8 text-center border-thin rounded-lg bg-black-thin opacity-50">
                 <v-icon size="32" class="mb-2">mdi-form-dropdown</v-icon>
-                <div class="text-caption font-weight-bold">No custom fields added yet.</div>
+                <div class="text-caption font-weight-medium">No custom fields added yet.</div>
               </div>
 
               <div v-else>
@@ -94,7 +94,7 @@
                         variant="outlined"
                         density="compact"
                         hide-details
-                        class="custom-input font-weight-bold"
+                        class="custom-input font-weight-medium"
                         @input="field.name = field.label.toLowerCase().replace(/[^a-z0-9]/g, '_')"
                       ></v-text-field>
                     </v-col>
@@ -106,13 +106,13 @@
                         variant="outlined"
                         density="compact"
                         hide-details
-                        class="custom-input font-weight-bold"
+                        class="custom-input font-weight-medium"
                       ></v-select>
                     </v-col>
                     <v-col cols="12" sm="3" class="d-flex align-center justify-end">
                       <v-checkbox v-model="field.required" hide-details density="compact" class="mr-2">
                         <template v-slot:label>
-                          <span class="text-error font-weight-black text-h6">*</span>
+                          <span class="text-error font-weight-bold text-h6">*</span>
                         </template>
                       </v-checkbox>
                       <v-btn icon="mdi-delete" color="error" variant="text" size="small" @click="removeField(index)"></v-btn>
@@ -144,8 +144,8 @@
         
         <v-card-actions class="pa-4">
           <v-spacer></v-spacer>
-          <v-btn variant="text" class="font-weight-black px-6" @click="closeDialog">CANCEL</v-btn>
-          <v-btn color="primary" class="font-weight-black px-8 rounded-lg" :loading="saving" @click="save">SAVE CONFIGURATION</v-btn>
+          <v-btn variant="text" class="font-weight-medium px-6" @click="closeDialog">CANCEL</v-btn>
+          <v-btn color="primary" class="font-weight-medium px-8 rounded-lg" :loading="saving" @click="save">SAVE CONFIGURATION</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -173,7 +173,7 @@ const fieldTypes = [
 const fetchLeadTypes = async () => {
   loading.value = true
   try {
-    const res = await api.get('/lead-types')
+    const res = await api.get('/leads/lead-types')
     leadTypes.value = res.data
   } catch (err) {
     console.error(err)
@@ -219,10 +219,10 @@ const save = async () => {
   saving.value = true
   try {
     if (form.value.id) {
-      await api.put(`/lead-types/${form.value.id}`, form.value)
+      await api.put(`/leads/lead-types/${form.value.id}`, form.value)
       useToast().success('Lead Type updated successfully')
     } else {
-      await api.post('/lead-types', form.value)
+      await api.post('/leads/lead-types', form.value)
       useToast().success('Lead Type created successfully')
     }
     closeDialog()
@@ -238,7 +238,7 @@ const save = async () => {
 const confirmDelete = async (type) => {
   if (confirm(`Are you sure you want to delete "${type.name}"?`)) {
     try {
-      await api.delete(`/lead-types/${type.id}`)
+      await api.delete(`/leads/lead-types/${type.id}`)
       useToast().success('Deleted successfully')
       fetchLeadTypes()
     } catch (err) {

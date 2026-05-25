@@ -3,11 +3,11 @@
     <!-- Header Area -->
     <v-row align="center" class="mb-6">
       <v-col cols="12" lg="4">
-        <h1 class="text-h4 font-weight-black d-flex align-center ga-3">
+        <h1 class="text-h4 font-weight-bold d-flex align-center ga-3">
           <v-icon color="primary">mdi-view-column-outline</v-icon>
           LEAD PIPELINE
         </h1>
-        <p class="text-caption text-muted uppercase tracking-widest font-weight-bold">
+        <p class="text-caption text-muted uppercase tracking-widest font-weight-medium">
           Visualize and manage your conversion funnel
         </p>
       </v-col>
@@ -38,7 +38,7 @@
             variant="plain"
             density="compact"
             hide-details
-            class="text-caption font-weight-bold"
+            class="text-caption font-weight-medium"
             @change="fetchPipeline"
           ></v-text-field>
           <span class="text-muted opacity-50">TO</span>
@@ -48,7 +48,7 @@
             variant="plain"
             density="compact"
             hide-details
-            class="text-caption font-weight-bold"
+            class="text-caption font-weight-medium"
             @change="fetchPipeline"
           ></v-text-field>
         </div>
@@ -57,7 +57,7 @@
           variant="outlined"
           prepend-icon="mdi-format-list-bulleted"
           rounded="lg"
-          class="font-weight-bold"
+          class="font-weight-medium"
           @click="navigateTo('/leads')"
         >
           LIST VIEW
@@ -68,7 +68,7 @@
     <!-- Kanban Board -->
     <div v-if="loading" class="d-flex flex-column align-center justify-center py-16">
       <v-progress-circular indeterminate color="primary" size="64" width="6"></v-progress-circular>
-      <p class="mt-4 text-muted uppercase font-weight-black tracking-widest">Constructing Pipeline...</p>
+      <p class="mt-4 text-muted uppercase font-weight-medium tracking-widest">Constructing Pipeline...</p>
     </div>
 
     <div v-else class="pipeline-board-container">
@@ -78,9 +78,9 @@
           <div class="column-header mb-4" :style="{ borderLeftColor: getColorValue(col.color) }">
             <div class="d-flex align-center ga-2 flex-grow-1">
               <v-icon :color="col.color" size="18">{{ col.icon }}</v-icon>
-              <span class="font-weight-black text-caption tracking-widest uppercase">{{ col.label }}</span>
+              <span class="font-weight-medium text-caption tracking-widest uppercase">{{ col.label }}</span>
             </div>
-            <v-chip size="x-small" :color="col.color" variant="tonal" class="font-weight-black">
+            <v-chip size="x-small" :color="col.color" variant="tonal" class="font-weight-medium">
               {{ col.count }}
             </v-chip>
           </div>
@@ -99,7 +99,7 @@
             <template #item="{ element }">
               <v-card class="lead-card mb-4 pa-4 rounded-xl border-thin elevation-0" @click="navigateTo(`/leads/${element.id}`)">
                 <div class="d-flex justify-space-between align-start mb-2">
-                  <h3 class="text-subtitle-2 font-weight-black text-uppercase link-under">{{ element.name }}</h3>
+                  <h3 class="text-subtitle-2 font-weight-bold text-uppercase link-under">{{ element.name }}</h3>
                   <v-avatar size="24" :color="col.color" variant="tonal" class="rounded-lg">
                     <v-icon size="14">{{ col.icon }}</v-icon>
                   </v-avatar>
@@ -111,7 +111,7 @@
 
                 <div class="d-flex align-center ga-2 mb-4">
                   <v-icon size="12" color="primary">mdi-school-outline</v-icon>
-                  <span class="text-[10px] font-weight-black uppercase text-white-70 truncate">
+                  <span class="text-[10px] font-weight-medium uppercase text-white-70 truncate">
                     {{ element.interested_course?.name || 'GENERIC INTEREST' }}
                   </span>
                 </div>
@@ -123,7 +123,7 @@
                     <v-avatar size="18" :image="element.assigned_to?.avatar_url || ''" color="grey-lighten-2">
                        <v-icon v-if="!element.assigned_to?.avatar_url" size="10">mdi-account</v-icon>
                     </v-avatar>
-                    <span class="text-[9px] font-weight-bold text-muted uppercase">
+                    <span class="text-[9px] font-weight-medium text-muted uppercase">
                       {{ element.assigned_to?.name || 'UNASSIGNED' }}
                     </span>
                   </div>
@@ -135,7 +135,7 @@
             <!-- Empty Placeholder -->
             <template #footer>
                 <div v-if="col.leads.length === 0" class="empty-column-placeholder d-flex align-center justify-center">
-                    <span class="text-[10px] font-weight-black opacity-20 uppercase tracking-widest">Drop Leads Here</span>
+                    <span class="text-[10px] font-weight-medium opacity-20 uppercase tracking-widest">Drop Leads Here</span>
                 </div>
             </template>
           </draggable>

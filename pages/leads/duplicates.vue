@@ -3,11 +3,11 @@
     <!-- Header -->
     <v-row align="center" class="mb-8">
       <v-col cols="12" lg="6">
-        <h1 class="text-h4 font-weight-black d-flex align-center ga-3">
+        <h1 class="text-h4 font-weight-bold d-flex align-center ga-3">
           <v-icon color="secondary">mdi-account-multiple-remove</v-icon>
           DUPLICATE LEADS
         </h1>
-        <p class="text-caption text-muted uppercase tracking-widest font-weight-bold">
+        <p class="text-caption text-muted uppercase tracking-widest font-weight-medium">
           Clean your database and resolve redundant student profiles
         </p>
       </v-col>
@@ -28,7 +28,7 @@
           variant="outlined"
           prepend-icon="mdi-refresh"
           rounded="lg"
-          class="font-weight-bold"
+          class="font-weight-medium"
           :loading="loading"
           @click="fetchDuplicates"
         >
@@ -43,10 +43,10 @@
         <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-0 overflow-hidden mb-6">
           <div class="bg-surface-light px-6 py-3 d-flex justify-space-between align-center border-b">
              <div class="d-flex align-center ga-3">
-                <v-chip size="small" :color="group.score >= 80 ? 'error' : 'warning'" class="font-weight-black">
+                <v-chip size="small" :color="group.score >= 80 ? 'error' : 'warning'" class="font-weight-medium">
                    {{ group.score }}% {{ group.score >= 80 ? 'DEFINITE' : 'PROBABLE' }} MATCH
                 </v-chip>
-                <span class="text-caption font-weight-bold opacity-50 uppercase">MATCHING FIELD: {{ group.field.toUpperCase() }} ({{ group.value }})</span>
+                <span class="text-caption font-weight-medium opacity-50 uppercase">MATCHING FIELD: {{ group.field.toUpperCase() }} ({{ group.value }})</span>
              </div>
              <v-btn size="small" variant="text" color="primary" prepend-icon="mdi-check" @click="dismissGroup(idx)">NOT A DUPLICATE</v-btn>
           </div>
@@ -56,10 +56,10 @@
                 <v-card variant="outlined" class="rounded-xl pa-5 bg-card hover-primary transition-all">
                    <div class="d-flex justify-space-between align-start mb-4">
                       <div>
-                        <div class="text-h6 font-weight-black text-primary">{{ lead.name }}</div>
-                        <div class="text-caption text-muted font-weight-bold uppercase">ID: #{{ lead.id }}</div>
+                        <div class="text-h6 font-weight-bold text-primary">{{ lead.name }}</div>
+                        <div class="text-caption text-muted font-weight-medium uppercase">ID: #{{ lead.id }}</div>
                       </div>
-                      <v-chip size="x-small" label class="font-weight-black">{{ lead.status.toUpperCase() }}</v-chip>
+                      <v-chip size="x-small" label class="font-weight-medium">{{ lead.status.toUpperCase() }}</v-chip>
                    </div>
 
                    <v-list density="compact" class="bg-transparent pa-0">
@@ -79,7 +79,7 @@
 
                    <div class="mt-4 pt-4 border-t d-flex justify-space-between align-center">
                       <v-btn size="x-small" variant="tonal" @click="navigateTo(`/leads/${lead.id}`)">VIEW FULL PROFILE</v-btn>
-                      <v-btn size="x-small" color="primary" class="font-weight-black" @click="openMergeDialog(group, lead)">MERGE OTHERS INTO THIS</v-btn>
+                      <v-btn size="x-small" color="primary" class="font-weight-medium" @click="openMergeDialog(group, lead)">MERGE OTHERS INTO THIS</v-btn>
                    </div>
                 </v-card>
              </v-col>
@@ -94,7 +94,7 @@
          <v-card class="rounded-xl border-thin border-dashed bg-transparent pa-12 text-center">
             <v-icon size="64" class="opacity-10 mb-4" color="success">mdi-check-decagram</v-icon>
             <p class="text-h6 font-weight-bold opacity-30 uppercase">NO DUPLICATES DETECTED</p>
-            <p class="text-caption text-muted uppercase font-weight-black tracking-widest mt-2">Your system data is currently clean and unique</p>
+            <p class="text-caption text-muted uppercase font-weight-medium tracking-widest mt-2">Your system data is currently clean and unique</p>
          </v-card>
       </v-col>
     </v-row>
@@ -102,7 +102,7 @@
     <!-- Loading -->
     <div v-if="loading" class="text-center py-12">
         <v-progress-circular indeterminate color="primary" size="40"></v-progress-circular>
-        <p class="text-caption mt-4 font-weight-bold opacity-50 uppercase tracking-widest">Scanning lead database...</p>
+        <p class="text-caption mt-4 font-weight-medium opacity-50 uppercase tracking-widest">Scanning lead database...</p>
     </div>
 
     <!-- Merge Dialog -->
@@ -110,7 +110,7 @@
         <v-card class="rounded-xl border-thin bg-surface">
             <v-card-title class="pa-6 d-flex align-center ga-2 border-b">
                 <v-icon color="primary">mdi-merge</v-icon>
-                <span class="font-weight-black uppercase">Merge Verification</span>
+                <span class="font-weight-medium uppercase">Merge Verification</span>
                 <v-spacer></v-spacer>
                 <v-btn icon="mdi-close" variant="text" size="small" @click="mergeDialog = false"></v-btn>
             </v-card-title>
@@ -120,10 +120,10 @@
                     You are keeping <strong>{{ primaryLead?.name }}</strong>. Other leads in this group will be merged into it and deleted.
                 </v-alert>
 
-                <div class="text-overline font-weight-black opacity-50 mb-3">CONSOLIDATE DATA</div>
+                <div class="text-overline font-weight-bold opacity-50 mb-3">CONSOLIDATE DATA</div>
                 <div class="border rounded-xl overflow-hidden">
                     <table class="w-full text-left text-body-2 border-collapse">
-                        <thead class="bg-surface-light text-[10px] font-weight-black uppercase">
+                        <thead class="bg-surface-light text-[10px] font-weight-medium uppercase">
                            <tr>
                              <th class="pa-3">Field</th>
                              <th class="pa-3">{{ primaryLead?.name }} (KEEPING)</th>
@@ -133,7 +133,7 @@
                         </thead>
                         <tbody>
                            <tr v-for="field in mergeableFields" :key="field.key" class="border-t">
-                              <td class="pa-3 font-weight-bold uppercase text-[10px]">{{ field.label }}</td>
+                              <td class="pa-3 font-weight-medium uppercase text-[10px]">{{ field.label }}</td>
                               <td class="pa-3 opacity-70">{{ primaryLead?.[field.key] || '---' }}</td>
                               <td class="pa-3 opacity-70">{{ secondaryLead?.[field.key] || '---' }}</td>
                               <td class="pa-3 text-center">
@@ -151,7 +151,7 @@
             <v-card-actions class="pa-6 border-t bg-surface-light">
                 <v-btn variant="text" @click="mergeDialog = false">CANCEL</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" class="font-weight-black px-8" rounded="lg" :loading="merging" @click="confirmMerge">EXECUTE MERGE</v-btn>
+                <v-btn color="primary" class="font-weight-medium px-8" rounded="lg" :loading="merging" @click="confirmMerge">EXECUTE MERGE</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>

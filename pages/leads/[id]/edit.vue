@@ -9,7 +9,7 @@
         @click="navigateTo(`/leads/${route.params.id}`)"
       ></v-btn>
       <div>
-        <h1 class="text-h4 font-weight-black uppercase">Edit Lead Profile</h1>
+        <h1 class="text-h4 font-weight-bold uppercase">Edit Lead Profile</h1>
         <p class="text-body-2 text-muted">Update profile details for {{ form.name || 'Loading...' }}.</p>
       </div>
       <v-spacer></v-spacer>
@@ -17,7 +17,7 @@
         <v-btn 
           variant="outlined" 
           rounded="lg" 
-          class="px-8 font-weight-bold" 
+          class="px-8 font-weight-medium" 
           @click="navigateTo(`/leads/${route.params.id}`)"
         >
           CANCEL
@@ -25,7 +25,7 @@
         <v-btn 
           color="primary" 
           rounded="lg" 
-          class="px-8 font-weight-bold" 
+          class="px-8 font-weight-medium" 
           :loading="saving"
           @click="handleSubmit"
         >
@@ -39,7 +39,7 @@
         <!-- LEFT COLUMN: Personal & Address -->
         <v-col cols="12" md="6">
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+            <h2 class="text-subtitle-1 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
               <v-icon size="18">mdi-account-circle-outline</v-icon>
               Basic Information
             </h2>
@@ -80,7 +80,7 @@
           </v-card>
 
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+            <h2 class="text-subtitle-1 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
               <v-icon size="18">mdi-map-marker-outline</v-icon>
               Address Details
             </h2>
@@ -104,7 +104,7 @@
         <!-- RIGHT COLUMN: Dynamic Fields & Interest -->
         <v-col cols="12" md="6">
           <v-card v-if="selectedLeadType" class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+            <h2 class="text-subtitle-1 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
               <v-icon size="18">mdi-form-select</v-icon>
               {{ selectedLeadType.name }} Details
             </h2>
@@ -135,7 +135,7 @@
           </v-card>
 
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+            <h2 class="text-subtitle-1 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
               <v-icon size="18">mdi-bullseye-arrow</v-icon>
               Interest & Remarks
             </h2>

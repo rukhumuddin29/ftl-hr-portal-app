@@ -7,8 +7,8 @@
 
     <div v-else-if="!lead" class="py-16 text-center">
       <v-icon size="64" color="error" class="mb-4">mdi-account-off</v-icon>
-      <h1 class="text-h5 font-weight-black uppercase">Lead Not Found</h1>
-      <v-btn color="primary" variant="text" class="mt-4 font-weight-bold" @click="navigateTo('/leads')">BACK TO LEADS</v-btn>
+      <h1 class="text-h5 font-weight-bold uppercase">Lead Not Found</h1>
+      <v-btn color="primary" variant="text" class="mt-4 font-weight-medium" @click="navigateTo('/leads')">BACK TO LEADS</v-btn>
     </div>
 
     <div v-else>
@@ -23,13 +23,13 @@
             @click="navigateTo('/leads')"
           ></v-btn>
           <div>
-            <h1 class="text-h4 font-weight-black uppercase d-flex align-center ga-2">
+            <h1 class="text-h4 font-weight-bold uppercase d-flex align-center ga-2">
               {{ lead.name }}
-              <v-chip :color="getStatusColor(lead.status)" size="x-small" label class="font-weight-black">
+              <v-chip :color="getStatusColor(lead.status)" size="x-small" label class="font-weight-medium">
                 {{ lead.status.toUpperCase() }}
               </v-chip>
             </h1>
-            <p class="text-caption text-muted uppercase tracking-widest font-weight-bold">
+            <p class="text-caption text-muted uppercase tracking-widest font-weight-medium">
               ID: #{{ lead.id }} • ADDED {{ timeAgo(lead.created_at).toUpperCase() }}
             </p>
           </div>
@@ -41,7 +41,7 @@
             variant="outlined"
             prepend-icon="mdi-pencil-outline"
             rounded="lg"
-            class="font-weight-bold"
+            class="font-weight-medium"
             @click="navigateTo(`/leads/${lead.id}/edit`)"
           >
             EDIT PROFILE
@@ -53,7 +53,7 @@
         <!-- Left Column: Info Cards -->
         <v-col cols="12" md="4">
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
-            <h2 class="text-overline font-weight-black mb-4 text-primary tracking-widest">CONTACT INFORMATION</h2>
+            <h2 class="text-overline font-weight-bold mb-4 text-primary tracking-widest">CONTACT INFORMATION</h2>
             <v-list bg-color="transparent" density="compact" class="pa-0">
               <v-list-item class="px-0 py-2">
                 <template v-slot:prepend>
@@ -108,16 +108,16 @@
           </v-card>
 
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6">
-            <h2 class="text-overline font-weight-black mb-4 text-primary tracking-widest">SPECIFIC DETAILS</h2>
+            <h2 class="text-overline font-weight-bold mb-4 text-primary tracking-widest">SPECIFIC DETAILS</h2>
             <div class="d-flex justify-space-between mb-4 border-b border-opacity-25 pb-2">
-              <span class="text-caption text-muted font-weight-bold uppercase">Category</span>
-              <span class="text-caption font-weight-black uppercase text-primary">{{ lead.lead_type?.name || 'N/A' }}</span>
+              <span class="text-caption text-muted font-weight-medium uppercase">Category</span>
+              <span class="text-caption font-weight-medium uppercase text-primary">{{ lead.lead_type?.name || 'N/A' }}</span>
             </div>
             
             <template v-if="lead.custom_data && Object.keys(lead.custom_data).length > 0">
               <div v-for="(value, key) in lead.custom_data" :key="key" class="d-flex justify-space-between mb-4 border-b border-opacity-25 pb-2">
-                <span class="text-caption text-muted font-weight-bold uppercase">{{ key.replace(/_/g, ' ') }}</span>
-                <span class="text-caption font-weight-black uppercase">{{ value || 'N/A' }}</span>
+                <span class="text-caption text-muted font-weight-medium uppercase">{{ String(key).replace(/_/g, ' ') }}</span>
+                <span class="text-caption font-weight-medium uppercase">{{ value || 'N/A' }}</span>
               </div>
             </template>
             <div v-else class="text-caption text-muted font-style-italic text-center py-2">
@@ -132,7 +132,7 @@
         <v-col cols="12" md="8">
           <!-- Interaction Form -->
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-4 uppercase d-flex align-center ga-2">
+            <h2 class="text-subtitle-1 font-weight-bold mb-4 uppercase d-flex align-center ga-2">
               <v-icon color="primary">mdi-phone-plus-outline</v-icon>
               Log New Interaction
             </h2>
@@ -183,7 +183,7 @@
               <v-btn
                 color="primary"
                 rounded="lg"
-                class="font-weight-bold px-8"
+                class="font-weight-medium px-8"
                 :loading="submittingLog"
                 @click="submitCallLog"
               >
@@ -194,14 +194,14 @@
 
           <!-- Activity History -->
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase d-flex align-center ga-2">
+            <h2 class="text-subtitle-1 font-weight-bold mb-6 uppercase d-flex align-center ga-2">
               <v-icon color="primary">mdi-history</v-icon>
               Activity History
             </h2>
             
             <div v-if="!lead.call_logs?.length" class="text-center py-12 opacity-50">
               <v-icon size="48" class="mb-4">mdi-timer-sand-empty</v-icon>
-              <p class="text-overline font-weight-black">No recorded interactions yet</p>
+              <p class="text-overline font-weight-bold">No recorded interactions yet</p>
             </div>
 
             <div v-else class="timeline-container">
@@ -212,16 +212,16 @@
                     <v-icon size="14" :color="log.channel === 'whatsapp' ? 'green' : 'primary'">
                       {{ log.channel === 'whatsapp' ? 'mdi-whatsapp' : 'mdi-phone' }}
                     </v-icon>
-                    <h4 class="text-subtitle-2 font-weight-black uppercase" :class="log.channel === 'whatsapp' ? 'text-green' : 'text-primary'">
+                    <h4 class="text-subtitle-2 font-weight-bold uppercase" :class="log.channel === 'whatsapp' ? 'text-green' : 'text-primary'">
                       {{ log.call_outcome }}
                     </h4>
                   </div>
-                  <span class="text-[10px] text-muted font-weight-black uppercase">{{ formatDate(log.created_at) }}</span>
+                  <span class="text-[10px] text-muted font-weight-medium uppercase">{{ formatDate(log.created_at) }}</span>
                 </div>
                 <v-card variant="tonal" class="pa-3 rounded-lg mb-2">
                   <p class="text-body-2">{{ log.notes || 'No detailed notes provided.' }}</p>
                 </v-card>
-                <div class="d-flex align-center ga-2 text-[10px] text-muted font-weight-bold uppercase">
+                <div class="d-flex align-center ga-2 text-[10px] text-muted font-weight-medium uppercase">
                   <v-icon size="12">mdi-account-circle</v-icon>
                   Logged by {{ log.called_by_user?.name || 'System' }}
                 </div>
@@ -231,7 +231,7 @@
 
           <!-- Audit Trail -->
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 mt-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase d-flex align-center ga-2">
+            <h2 class="text-subtitle-1 font-weight-bold mb-6 uppercase d-flex align-center ga-2">
               <v-icon color="primary">mdi-shield-check-outline</v-icon>
               Audit Trail (All Changes)
             </h2>
@@ -242,7 +242,7 @@
 
             <div v-else-if="!auditLogs.length" class="text-center py-12 opacity-50">
               <v-icon size="48" class="mb-4 text-primary">mdi-history</v-icon>
-              <p class="text-[10px] font-weight-black uppercase">No structural changes recorded</p>
+              <p class="text-[10px] font-weight-medium uppercase">No structural changes recorded</p>
             </div>
 
             <div v-else class="timeline-container">
@@ -251,9 +251,9 @@
                  <div class="d-flex justify-space-between align-center mb-1">
                    <div class="d-flex align-center ga-2">
                      <v-icon size="14" :color="getActionConfig(log.action).color">{{ getActionConfig(log.action).icon }}</v-icon>
-                     <h4 class="text-[11px] font-weight-black uppercase">{{ getActionConfig(log.action).label }}</h4>
+                     <h4 class="text-[11px] font-weight-bold uppercase">{{ getActionConfig(log.action).label }}</h4>
                    </div>
-                   <span class="text-[9px] text-muted font-weight-black opacity-50">{{ formatDate(log.created_at) }}</span>
+                   <span class="text-[9px] text-muted font-weight-medium opacity-50">{{ formatDate(log.created_at) }}</span>
                  </div>
                  
                  <div v-if="log.old_values || log.new_values" class="text-[10px] bg-white-5 pa-2 rounded-lg border-thin font-medium mt-1">
@@ -267,7 +267,7 @@
                     </div>
                  </div>
 
-                 <div class="text-[9px] text-muted font-weight-bold uppercase mt-1 opacity-50">
+                 <div class="text-[9px] text-muted font-weight-medium uppercase mt-1 opacity-50">
                    By {{ log.user?.name || 'System' }}
                  </div>
                </div>
@@ -285,8 +285,8 @@
             <v-icon color="white">mdi-whatsapp</v-icon>
           </v-avatar>
           <div>
-            <h3 class="text-subtitle-1 font-weight-black uppercase">Send WhatsApp</h3>
-            <p class="text-caption opacity-50 font-weight-bold">to {{ lead.name }} ({{ lead.phone }})</p>
+            <h3 class="text-subtitle-1 font-weight-bold uppercase">Send WhatsApp</h3>
+            <p class="text-caption opacity-50 font-weight-medium">to {{ lead.name }} ({{ lead.phone }})</p>
           </div>
         </div>
 
@@ -314,12 +314,12 @@
         </div>
 
         <v-card-actions class="pa-6 pt-0 d-flex ga-3">
-          <v-btn variant="text" class="font-weight-bold" @click="waDialog = false">CANCEL</v-btn>
+          <v-btn variant="text" class="font-weight-medium" @click="waDialog = false">CANCEL</v-btn>
           <v-spacer></v-spacer>
           <v-btn
             color="green"
             prepend-icon="mdi-whatsapp"
-            class="font-weight-bold px-8"
+            class="font-weight-medium px-8"
             rounded="lg"
             @click="sendWhatsApp"
           >SEND MESSAGE</v-btn>
@@ -355,36 +355,38 @@ const waDialog = ref(false)
 const selectedTemplate = ref('greeting')
 const waMessage = ref('')
 
-const waTemplates = computed(() => [
-  { id: 'greeting', name: '👋 Initial Greeting' },
-  { id: 'followup', name: '🔄 Follow-Up Reminder' },
-  { id: 'demo', name: '🎓 Demo Invitation' },
-  { id: 'details', name: '📚 Course Details' },
-  { id: 'checkin', name: '💬 Quick Check-In' },
-  { id: 'custom', name: '✏️ Custom Message' },
-])
+const waTemplates = ref<any[]>([])
 
-const getTemplateBody = (id: string) => {
+const fetchWaTemplates = async () => {
+  try {
+    const typeQuery = lead.value?.lead_type_id ? `?lead_type_id=${lead.value.lead_type_id}` : ''
+    const res: any = await api.get(`/leads/whatsapp-templates${typeQuery}`)
+    // Filter active ones
+    waTemplates.value = res.data.filter((t: any) => t.is_active)
+    if (waTemplates.value.length > 0) {
+      selectedTemplate.value = waTemplates.value[0].id
+    }
+  } catch (e) {
+    console.error('Failed to load WA templates', e)
+  }
+}
+
+
+
+const getTemplateBody = (id: string | number) => {
   const name = lead.value?.name || 'there'
-  const course = lead.value?.interested_course?.name || 'our courses'
+  const category = lead.value?.lead_type?.name || 'our program'
   const bde = authStore.user?.name || 'Team'
 
-  switch (id) {
-    case 'greeting':
-      return `Hi ${name}! 👋 I'm ${bde} from Elements HR. I noticed your interest in ${course}. Would you like to know more about the program?`
-    case 'followup':
-      return `Hi ${name}, hope you're doing well! Just following up on our previous conversation about ${course}. Do you have any questions I can help with?`
-    case 'demo':
-      return `Hi ${name}! 🎓 We'd love to invite you for a free demo session of our ${course} program. Would you be available this week? Let me know your preferred date and time.`
-    case 'details':
-      return `Hi ${name}, here are the details for ${course}:\n\n📚 Program designed for career growth\n💰 Affordable fee structure\n📅 Next batch starting soon!\n\nShall I reserve a seat for you?`
-    case 'checkin':
-      return `Hi ${name}, quick check-in! 😊 Have you had a chance to think about the ${course} program? Happy to answer any questions.`
-    case 'custom':
-      return ''
-    default:
-      return ''
-  }
+  const template = waTemplates.value.find((t: any) => t.id === id)
+  if (!template) return ''
+
+  let body = template.body
+  body = body.replace(/\{name\}/g, name)
+  body = body.replace(/\{category\}/g, category)
+  body = body.replace(/\{bde\}/g, bde)
+  
+  return body
 }
 
 watch(selectedTemplate, (val) => {
@@ -417,7 +419,7 @@ const sendWhatsApp = async () => {
     uiStore.success('WhatsApp opened & interaction logged!')
     await fetchLead()
   } catch (err) {
-    uiStore.warning('WhatsApp opened but failed to log interaction')
+    uiStore.showToast('WhatsApp opened but failed to log interaction', 'warning')
   }
 
   waDialog.value = false
@@ -459,6 +461,7 @@ const fetchLead = async () => {
   try {
     const res: any = await api.get(`/leads/${route.params.id}`)
     lead.value = res.data
+    fetchWaTemplates()
   } catch (err) {
     uiStore.error('Failed to load lead details')
   } finally {

@@ -4,7 +4,7 @@
     <v-col cols="12" class="mb-2">
       <div class="d-flex justify-space-between align-center flex-wrap ga-3">
         <div>
-          <h1 class="text-h4 font-weight-black">ATTENDANCE</h1>
+          <h1 class="text-h4 font-weight-bold">ATTENDANCE</h1>
           <p class="text-body-2 text-muted">Mark and manage daily attendance for all employees.</p>
         </div>
         <div class="d-flex ga-2">
@@ -12,7 +12,7 @@
             color="primary"
             variant="tonal"
             prepend-icon="mdi-calendar-weekend"
-            class="font-weight-black"
+            class="font-weight-medium"
             :loading="markingSundays"
             @click="autoMarkSundays"
           >
@@ -27,16 +27,16 @@
       <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-4 mb-2">
         <div class="d-flex align-center ga-4 flex-wrap">
           <v-btn icon="mdi-chevron-left" variant="text" size="small" @click="changeMonth(-1)"></v-btn>
-          <h2 class="text-h6 font-weight-black uppercase">{{ monthLabel }}</h2>
+          <h2 class="text-h6 font-weight-bold uppercase">{{ monthLabel }}</h2>
           <v-btn icon="mdi-chevron-right" variant="text" size="small" @click="changeMonth(1)"></v-btn>
           <v-spacer></v-spacer>
           <div class="d-flex ga-3 flex-wrap">
-            <v-chip color="success" size="small" label class="font-weight-bold"><v-icon start size="14">mdi-check-circle</v-icon> P = Present</v-chip>
-            <v-chip color="error" size="small" label class="font-weight-bold"><v-icon start size="14">mdi-close-circle</v-icon> A = Absent</v-chip>
-            <v-chip color="warning" size="small" label class="font-weight-bold"><v-icon start size="14">mdi-circle-half-full</v-icon> H = Half Day</v-chip>
-            <v-chip color="info" size="small" label class="font-weight-bold"><v-icon start size="14">mdi-calendar-check</v-icon> L = Leave</v-chip>
-            <v-chip color="pink" size="small" label class="font-weight-bold"><v-icon start size="14">mdi-star</v-icon> HD = Holiday</v-chip>
-            <v-chip size="small" label class="font-weight-bold opacity-60"><v-icon start size="14">mdi-weather-sunny</v-icon> W = Weekend</v-chip>
+            <v-chip color="success" size="small" label class="font-weight-medium"><v-icon start size="14">mdi-check-circle</v-icon> P = Present</v-chip>
+            <v-chip color="error" size="small" label class="font-weight-medium"><v-icon start size="14">mdi-close-circle</v-icon> A = Absent</v-chip>
+            <v-chip color="warning" size="small" label class="font-weight-medium"><v-icon start size="14">mdi-circle-half-full</v-icon> H = Half Day</v-chip>
+            <v-chip color="info" size="small" label class="font-weight-medium"><v-icon start size="14">mdi-calendar-check</v-icon> L = Leave</v-chip>
+            <v-chip color="pink" size="small" label class="font-weight-medium"><v-icon start size="14">mdi-star</v-icon> HD = Holiday</v-chip>
+            <v-chip size="small" label class="font-weight-medium opacity-60"><v-icon start size="14">mdi-weather-sunny</v-icon> W = Weekend</v-chip>
           </div>
         </div>
       </v-card>
@@ -60,8 +60,8 @@
                   :class="{ 'weekend-col': day.is_weekend, 'holiday-col': !!day.holiday }"
                   :title="day.holiday"
                 >
-                  <div class="text-[10px] font-weight-black opacity-60">{{ day.day }}</div>
-                  <div class="text-caption font-weight-black">{{ day.day_num }}</div>
+                  <div class="text-[10px] font-weight-medium opacity-60">{{ day.day }}</div>
+                  <div class="text-caption font-weight-medium">{{ day.day_num }}</div>
                 </th>
                 <th class="summary-col">P</th>
                 <th class="summary-col">A</th>
@@ -73,10 +73,10 @@
                 <td class="sticky-col employee-col">
                   <div class="d-flex align-center ga-2">
                     <v-avatar color="primary" variant="tonal" size="28" class="rounded">
-                      <span class="text-[10px] font-weight-black">{{ emp.name?.charAt(0) }}</span>
+                      <span class="text-[10px] font-weight-medium">{{ emp.name?.charAt(0) }}</span>
                     </v-avatar>
                     <div>
-                      <div class="text-caption font-weight-black uppercase text-truncate" style="max-width: 120px;">{{ emp.name }}</div>
+                      <div class="text-caption font-weight-medium uppercase text-truncate" style="max-width: 120px;">{{ emp.name }}</div>
                       <div class="text-[10px] text-muted">{{ emp.employee_id }}</div>
                     </div>
                   </div>
@@ -89,16 +89,16 @@
                   @click="cycleStatus(emp, day)"
                   :title="day.holiday || (day.is_weekend ? 'Weekend' : '')"
                 >
-                  <span class="text-[10px] font-weight-black">{{ statusLabel(day.status) }}</span>
+                  <span class="text-[10px] font-weight-medium">{{ statusLabel(day.status) }}</span>
                 </td>
                 <td class="summary-col text-center">
-                  <span class="font-weight-black text-success text-caption">{{ emp.summary?.present || 0 }}</span>
+                  <span class="font-weight-medium text-success text-caption">{{ emp.summary?.present || 0 }}</span>
                 </td>
                 <td class="summary-col text-center">
-                  <span class="font-weight-black text-error text-caption">{{ emp.summary?.absent || 0 }}</span>
+                  <span class="font-weight-medium text-error text-caption">{{ emp.summary?.absent || 0 }}</span>
                 </td>
                 <td class="summary-col text-center">
-                  <span class="font-weight-black text-warning text-caption">{{ emp.summary?.halfDay || 0 }}</span>
+                  <span class="font-weight-medium text-warning text-caption">{{ emp.summary?.halfDay || 0 }}</span>
                 </td>
               </tr>
             </tbody>

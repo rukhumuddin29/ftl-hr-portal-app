@@ -3,14 +3,14 @@
     <v-row>
       <!-- Page Header -->
       <v-col cols="12" class="mb-6">
-        <h1 class="text-h4 font-weight-black uppercase">Workday Setup</h1>
+        <h1 class="text-h4 font-weight-bold uppercase">Workday Setup</h1>
         <p class="text-body-2 text-muted">Configure organization-wide weekends and official holidays.</p>
       </v-col>
 
       <!-- Weekend & Attendance Configuration -->
       <v-col cols="12" md="5">
         <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8 mb-6">
-          <h3 class="text-h6 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+          <h3 class="text-h6 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
             <v-icon>mdi-calendar-week-outline</v-icon>
             Weekend Configuration
           </h3>
@@ -22,7 +22,7 @@
               :key="index"
               :color="selectedWeekends.includes(index) ? 'primary' : 'surface'"
               variant="flat"
-              class="rounded-lg font-weight-black"
+              class="rounded-lg font-weight-medium"
               size="large"
               width="60"
               @click="toggleWeekend(index)"
@@ -35,7 +35,7 @@
         </v-card>
 
         <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8">
-          <h3 class="text-h6 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+          <h3 class="text-h6 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
             <v-icon>mdi-clock-outline</v-icon>
             Attendance Rules
           </h3>
@@ -59,7 +59,7 @@
             color="primary"
             block
             size="large"
-            class="font-weight-black rounded-lg mt-6"
+            class="font-weight-medium rounded-lg mt-6"
             :loading="savingSettings"
             @click="saveGeneralSettings"
           >
@@ -72,7 +72,7 @@
       <v-col cols="12" md="7">
         <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8 mb-6">
           <div class="d-flex align-center justify-space-between mb-6">
-            <h3 class="text-h6 font-weight-black uppercase text-primary d-flex align-center ga-2">
+            <h3 class="text-h6 font-weight-bold uppercase text-primary d-flex align-center ga-2">
               <v-icon>mdi-calendar-star-outline</v-icon>
               Official Holidays
             </h3>
@@ -81,7 +81,7 @@
               variant="tonal"
               size="small"
               prepend-icon="mdi-plus"
-              class="font-weight-black rounded-lg"
+              class="font-weight-medium rounded-lg"
               @click="showAddDialog = true"
             >
               ADD HOLIDAY
@@ -90,7 +90,7 @@
 
           <v-table class="bg-transparent">
             <thead>
-              <tr class="text-overline font-weight-black text-muted">
+              <tr class="text-overline font-weight-bold text-muted">
                 <th class="text-left px-0">HOLIDAY NAME</th>
                 <th class="text-left">DATE</th>
                 <th class="text-center">RECURRING</th>
@@ -99,7 +99,7 @@
             </thead>
             <tbody>
               <tr v-for="holiday in holidays" :key="holiday.id" class="border-b">
-                <td class="font-weight-black uppercase px-0">{{ holiday.name }}</td>
+                <td class="font-weight-medium uppercase px-0">{{ holiday.name }}</td>
                 <td class="text-body-2">{{ formatDate(holiday.holiday_date) }}</td>
                 <td class="text-center">
                   <v-chip
@@ -108,7 +108,7 @@
                     size="x-small"
                     variant="tonal"
                     label
-                    class="font-weight-black"
+                    class="font-weight-medium"
                   >YES</v-chip>
                   <span v-else class="text-muted">No</span>
                 </td>
@@ -134,7 +134,7 @@
     <!-- Add Holiday Dialog -->
     <v-dialog v-model="showAddDialog" max-width="450">
       <v-card class="rounded-xl pa-6 bg-surface">
-        <v-card-title class="text-h6 font-weight-black uppercase mb-4">Add Official Holiday</v-card-title>
+        <v-card-title class="text-h6 font-weight-bold uppercase mb-4">Add Official Holiday</v-card-title>
         <v-card-text class="pa-0">
           <v-text-field
             v-model="newHoliday.name"
@@ -161,8 +161,8 @@
           ></v-switch>
         </v-card-text>
         <v-card-actions class="ga-4 px-0 pb-0 mt-4">
-          <v-btn block variant="text" class="font-weight-bold" @click="showAddDialog = false">CANCEL</v-btn>
-          <v-btn block color="primary" size="large" class="font-weight-black rounded-lg" @click="addHoliday" :loading="addingHoliday">SAVE HOLIDAY</v-btn>
+          <v-btn block variant="text" class="font-weight-medium" @click="showAddDialog = false">CANCEL</v-btn>
+          <v-btn block color="primary" size="large" class="font-weight-medium rounded-lg" @click="addHoliday" :loading="addingHoliday">SAVE HOLIDAY</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -171,7 +171,7 @@
     <v-row class="mt-4">
       <v-col cols="12">
         <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8">
-          <h3 class="text-h6 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+          <h3 class="text-h6 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
             <v-icon>mdi-clipboard-list-outline</v-icon>
             Leave Policy Configuration
           </h3>
@@ -180,7 +180,7 @@
           <v-row>
             <v-col v-for="(policy, key) in leavePolicies" :key="key" cols="12" md="4">
               <v-card variant="outlined" class="rounded-xl pa-6 bg-card">
-                 <div class="text-subtitle-1 font-weight-black uppercase mb-4 text-primary">{{ policy.label }}</div>
+                 <div class="text-subtitle-1 font-weight-bold uppercase mb-4 text-primary">{{ policy.label }}</div>
                  
                  <v-text-field
                    v-model.number="policy.annual_quota"
@@ -227,7 +227,7 @@
           <v-btn
             color="primary"
             size="large"
-            class="font-weight-black rounded-lg mt-8"
+            class="font-weight-medium rounded-lg mt-8"
             :loading="savingPolicy"
             @click="saveLeavePolicy"
           >

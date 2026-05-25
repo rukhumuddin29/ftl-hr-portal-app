@@ -4,14 +4,14 @@
       <!-- Page Header -->
       <v-col cols="12" class="mb-6 d-flex align-center justify-space-between flex-wrap ga-4">
         <div>
-          <h1 class="text-h4 font-weight-black uppercase">My Time & Attendance</h1>
+          <h1 class="text-h4 font-weight-bold uppercase">My Time & Attendance</h1>
           <p class="text-body-2 text-muted">Track your attendance, manage leave balances, and apply for time off.</p>
         </div>
         <v-btn 
           color="primary" 
           size="large" 
           prepend-icon="mdi-plus" 
-          class="font-weight-black rounded-lg"
+          class="font-weight-medium rounded-lg"
           @click="showApplyDialog = true"
         >
           APPLY FOR LEAVE
@@ -23,9 +23,9 @@
         <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 h-100">
           <div class="d-flex justify-space-between align-start mb-4">
             <div>
-              <div class="text-overline font-weight-black text-muted">{{ balance.label }}</div>
-              <div class="text-h4 font-weight-black">{{ balance.available }} <small class="text-body-2 text-muted">/ {{ balance.total }}</small></div>
-              <div class="text-caption font-weight-bold text-primary">DAYS AVAILABLE</div>
+              <div class="text-overline font-weight-bold text-muted">{{ balance.label }}</div>
+              <div class="text-h4 font-weight-bold">{{ balance.available }} <small class="text-body-2 text-muted">/ {{ balance.total }}</small></div>
+              <div class="text-caption font-weight-medium text-primary">DAYS AVAILABLE</div>
             </div>
             <v-icon size="40" color="primary" class="opacity-20">{{ getIcon(key) }}</v-icon>
           </div>
@@ -38,7 +38,7 @@
             class="mb-4"
           ></v-progress-linear>
           
-          <div class="d-flex justify-space-between text-caption font-weight-bold">
+          <div class="d-flex justify-space-between text-caption font-weight-medium">
             <span class="text-muted">USED: {{ balance.used }}</span>
             <span class="text-muted">TOTAL: {{ balance.total }}</span>
           </div>
@@ -48,8 +48,8 @@
       <!-- Tabs for History -->
       <v-col cols="12" class="mt-6">
         <v-tabs v-model="activeTab" color="primary" class="border-b mb-6">
-          <v-tab value="attendance" class="font-weight-black text-none">ATTENDANCE HISTORY</v-tab>
-          <v-tab value="leaves" class="font-weight-black text-none">LEAVE HISTORY</v-tab>
+          <v-tab value="attendance" class="font-weight-bold text-none">ATTENDANCE HISTORY</v-tab>
+          <v-tab value="leaves" class="font-weight-bold text-none">LEAVE HISTORY</v-tab>
         </v-tabs>
 
         <v-window v-model="activeTab">
@@ -57,7 +57,7 @@
           <v-window-item value="attendance">
             <v-card class="rounded-xl border-thin bg-surface elevation-0">
                 <div class="pa-6 border-b d-flex justify-space-between align-center">
-                    <h3 class="text-h6 font-weight-black uppercase d-flex align-center ga-2">
+                    <h3 class="text-h6 font-weight-bold uppercase d-flex align-center ga-2">
                         <v-icon>mdi-calendar-clock</v-icon>
                         My Attendance ({{ format(currentMonth, 'MMMM yyyy') }})
                     </h3>
@@ -69,7 +69,7 @@
 
                 <v-table class="bg-transparent">
                     <thead>
-                        <tr class="text-overline font-weight-black text-muted">
+                        <tr class="text-overline font-weight-bold text-muted">
                             <th class="text-left">DATE</th>
                             <th class="text-left">CHECK IN</th>
                             <th class="text-left">CHECK OUT</th>
@@ -80,17 +80,17 @@
                     </thead>
                     <tbody>
                         <tr v-for="att in attendanceHistory" :key="att.id">
-                            <td class="font-weight-bold">{{ format(new Date(att.date), 'dd MMM, EEE') }}</td>
-                            <td class="text-subtitle-2 font-weight-black">{{ formatTime(att.check_in) }}</td>
-                            <td class="text-subtitle-2 font-weight-black">{{ formatTime(att.check_out) }}</td>
+                            <td class="font-weight-medium">{{ format(new Date(att.date), 'dd MMM, EEE') }}</td>
+                            <td class="text-subtitle-2 font-weight-medium">{{ formatTime(att.check_in) }}</td>
+                            <td class="text-subtitle-2 font-weight-medium">{{ formatTime(att.check_out) }}</td>
                             <td class="text-center">
-                                <v-chip v-if="att.working_hours" size="x-small" color="primary" variant="tonal" class="font-weight-black">
+                                <v-chip v-if="att.working_hours" size="x-small" color="primary" variant="tonal" class="font-weight-medium">
                                     {{ att.working_hours }}h
                                 </v-chip>
                                 <span v-else>-</span>
                             </td>
                             <td>
-                                <v-chip :color="getAttendanceStatusColor(att.status)" size="x-small" label class="font-weight-black uppercase">
+                                <v-chip :color="getAttendanceStatusColor(att.status)" size="x-small" label class="font-weight-medium uppercase">
                                     {{ att.status.replace('_', ' ') }}
                                 </v-chip>
                             </td>
@@ -114,7 +114,7 @@
           <v-window-item value="leaves">
             <v-card class="rounded-xl border-thin bg-surface elevation-0">
           <div class="pa-6 border-b">
-            <h3 class="text-h6 font-weight-black uppercase d-flex align-center ga-2">
+            <h3 class="text-h6 font-weight-bold uppercase d-flex align-center ga-2">
               <v-icon>mdi-history</v-icon>
               Leave History
             </h3>
@@ -122,7 +122,7 @@
 
           <v-table class="bg-transparent">
             <thead>
-              <tr class="text-overline font-weight-black text-muted">
+              <tr class="text-overline font-weight-bold text-muted">
                 <th class="text-left">DATES</th>
                 <th class="text-left">TYPE</th>
                 <th class="text-center">DAYS</th>
@@ -134,15 +134,15 @@
             <tbody>
               <tr v-for="leave in leaves" :key="leave.id">
                 <td>
-                  <div class="font-weight-bold">{{ formatDateRange(leave.start_date, leave.end_date) }}</div>
-                  <div v-if="leave.is_half_day" class="text-[10px] text-primary font-weight-black uppercase">
+                  <div class="font-weight-medium">{{ formatDateRange(leave.start_date, leave.end_date) }}</div>
+                  <div v-if="leave.is_half_day" class="text-[10px] text-primary font-weight-medium uppercase">
                     Half Day ({{ leave.half_day_type?.replace('_', ' ') }})
                   </div>
                 </td>
-                <td class="text-caption font-weight-black uppercase text-secondary">
+                <td class="text-caption font-weight-medium uppercase text-secondary">
                   {{ leave.leave_type.replace('_', ' ') }}
                 </td>
-                <td class="text-center font-weight-black">{{ leave.total_days }}</td>
+                <td class="text-center font-weight-medium">{{ leave.total_days }}</td>
                 <td class="text-body-2 text-truncate max-w-[200px]" :title="leave.reason">
                   {{ leave.reason }}
                 </td>
@@ -152,7 +152,7 @@
                     size="x-small"
                     variant="tonal"
                     label
-                    class="font-weight-black uppercase"
+                    class="font-weight-medium uppercase"
                   >
                     {{ leave.status }}
                   </v-chip>
@@ -163,7 +163,7 @@
                     color="error"
                     variant="text"
                     size="small"
-                    class="font-weight-black"
+                    class="font-weight-medium"
                     @click="cancelLeave(leave.id)"
                   >CANCEL</v-btn>
                   <v-btn
@@ -197,7 +197,7 @@
     <!-- Apply Leave Dialog -->
     <v-dialog v-model="showApplyDialog" max-width="500">
       <v-card class="rounded-xl pa-8 bg-surface">
-        <h2 class="text-h5 font-weight-black uppercase mb-6 text-primary">Apply For Leave</h2>
+        <h2 class="text-h5 font-weight-bold uppercase mb-6 text-primary">Apply For Leave</h2>
         
         <v-form @submit.prevent="submitApplication">
           <v-select
@@ -247,8 +247,8 @@
                variant="tonal"
                class="mt-2 w-100"
              >
-               <v-btn value="first_half" class="flex-grow-1 font-weight-bold">FIRST HALF</v-btn>
-               <v-btn value="second_half" class="flex-grow-1 font-weight-bold">SECOND HALF</v-btn>
+               <v-btn value="first_half" class="flex-grow-1 font-weight-medium">FIRST HALF</v-btn>
+               <v-btn value="second_half" class="flex-grow-1 font-weight-medium">SECOND HALF</v-btn>
              </v-btn-toggle>
           </div>
 
@@ -262,8 +262,8 @@
           ></v-textarea>
 
           <div v-if="estimatedDays > 0" class="mb-6 pa-4 rounded-lg border-thin d-flex justify-space-between align-center" style="background-color: rgba(var(--v-theme-primary), 0.1);">
-             <span class="font-weight-black text-primary">ESTIMATED WORKING DAYS:</span>
-             <span class="text-h6 font-weight-black text-primary">{{ estimatedDays }}</span>
+             <span class="font-weight-medium text-primary">ESTIMATED WORKING DAYS:</span>
+             <span class="text-h6 font-weight-bold text-primary">{{ estimatedDays }}</span>
           </div>
 
           <v-btn
@@ -271,7 +271,7 @@
             color="primary"
             block
             size="large"
-            class="font-weight-black rounded-lg"
+            class="font-weight-medium rounded-lg"
             :loading="submitting"
             :disabled="estimatedDays <= 0"
           >
@@ -280,7 +280,7 @@
           <v-btn
             block
             variant="text"
-            class="mt-4 font-weight-bold"
+            class="mt-4 font-weight-medium"
             @click="showApplyDialog = false"
           >
             CANCEL

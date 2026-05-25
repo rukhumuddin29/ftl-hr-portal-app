@@ -59,7 +59,7 @@
                   color="primary"
                   class="font-weight-medium text-body-2 remember-checkbox"
                 ></v-checkbox>
-                <NuxtLink to="/forgot-password" class="text-caption font-weight-bold text-decoration-none" :class="themeStore.theme === 'dark' ? 'text-orange-darken-2' : 'text-primary'">
+                <NuxtLink to="/forgot-password" class="text-caption font-weight-medium text-decoration-none" :class="themeStore.theme === 'dark' ? 'text-orange-darken-2' : 'text-primary'">
                   Forgot Password?
                 </NuxtLink>
               </div>
@@ -69,7 +69,7 @@
                 type="error"
                 variant="tonal"
                 density="compact"
-                class="mb-6 font-weight-bold text-caption"
+                class="mb-6 font-weight-medium text-caption"
               >
                 {{ error }}
               </v-alert>
@@ -79,7 +79,7 @@
                 block
                 height="48"
                 :color="themeStore.theme === 'dark' ? 'orange-darken-2' : 'primary'"
-                class="text-white font-weight-bold rounded-lg elevation-2"
+                class="text-white font-weight-medium rounded-lg elevation-2"
                 :loading="loading"
               >
                 SIGN IN

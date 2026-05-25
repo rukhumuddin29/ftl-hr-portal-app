@@ -8,7 +8,7 @@
     <template v-else>
       <v-col cols="12" class="d-flex align-center justify-space-between mb-4">
         <div>
-          <h1 class="text-h4 font-weight-black">Welcome back, {{ authStore.user?.name || 'User' }}</h1>
+          <h1 class="text-h4 font-weight-bold">Welcome back, {{ authStore.user?.name || 'User' }}</h1>
           <p v-if="['admin', 'super_admin', 'bde'].includes(data.user_role)" class="text-body-2 text-muted">Here's a snapshot of your center's performance.</p>
         </div>
         <v-btn
@@ -16,7 +16,7 @@
           color="primary"
           prepend-icon="mdi-plus"
           height="48"
-          class="font-weight-bold tracking-widest px-6"
+          class="font-weight-medium tracking-widest px-6"
           @click="navigateTo('/leads/create')"
         >
           NEW LEAD
@@ -41,8 +41,8 @@
               <v-icon color="white">{{ stat.icon }}</v-icon>
             </v-avatar>
             <div>
-              <p class="text-overline font-weight-black text-muted mb-0 opacity-50">{{ stat.label }}</p>
-              <p class="text-h5 font-weight-black text-primary">{{ stat.value }}</p>
+              <p class="text-overline font-weight-bold text-muted mb-0 opacity-50">{{ stat.label }}</p>
+              <p class="text-h5 font-weight-bold text-primary">{{ stat.value }}</p>
             </div>
           </div>
         </v-card>
@@ -62,9 +62,9 @@
                 <v-avatar color="primary" variant="tonal" size="32" class="mr-3">
                   <v-icon color="primary" size="18">mdi-calendar-check</v-icon>
                 </v-avatar>
-                <v-toolbar-title class="text-subtitle-1 font-weight-black uppercase tracking-widest">Today's Tasks</v-toolbar-title>
+                <v-toolbar-title class="text-subtitle-1 font-weight-bold uppercase tracking-widest">Today's Tasks</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-chip v-if="followUps.counts?.overdue > 0" color="error" size="x-small" class="font-weight-black animate-pulse">
+                <v-chip v-if="followUps.counts?.overdue > 0" color="error" size="x-small" class="font-weight-medium animate-pulse">
                   {{ followUps.counts.overdue }} OVERDUE
                 </v-chip>
               </v-toolbar>
@@ -72,21 +72,21 @@
               <v-divider class="border-opacity-25"></v-divider>
 
               <v-tabs v-model="activeTaskTab" color="primary" grow density="compact" class="px-2">
-                <v-tab value="today" class="text-[10px] font-weight-black">TODAY ({{ followUps.counts?.today || 0 }})</v-tab>
-                <v-tab value="overdue" class="text-[10px] font-weight-black">OVERDUE ({{ followUps.counts?.overdue || 0 }})</v-tab>
+                <v-tab value="today" class="text-[10px] font-weight-bold">TODAY ({{ followUps.counts?.today || 0 }})</v-tab>
+                <v-tab value="overdue" class="text-[10px] font-weight-bold">OVERDUE ({{ followUps.counts?.overdue || 0 }})</v-tab>
               </v-tabs>
 
               <v-window v-model="activeTaskTab" class="flex-grow-1 overflow-y-auto">
                 <v-window-item value="today" class="pa-4">
                   <div v-if="!followUps.today?.length" class="text-center py-12 opacity-50">
                     <v-icon size="40" class="mb-2">mdi-check-circle-outline</v-icon>
-                    <p class="text-caption font-weight-bold uppercase">All caught up for today!</p>
+                    <p class="text-caption font-weight-medium uppercase">All caught up for today!</p>
                   </div>
                   <v-list v-else bg-color="transparent" class="pa-0">
                     <v-card v-for="lead in followUps.today" :key="lead.id" variant="tonal" class="mb-3 border-thin rounded-lg pa-3 hover-lift dashboard-task-card">
                       <div class="d-flex justify-space-between align-start mb-1">
-                        <span class="text-subtitle-2 font-weight-black text-uppercase link-hover" @click="navigateTo(`/leads/${lead.id}`)">{{ lead.name }}</span>
-                        <v-chip :color="getStatusColor(lead.status)" size="x-small" label class="text-[9px] font-weight-black">{{ lead.status.toUpperCase() }}</v-chip>
+                        <span class="text-subtitle-2 font-weight-medium text-uppercase link-hover" @click="navigateTo(`/leads/${lead.id}`)">{{ lead.name }}</span>
+                        <v-chip :color="getStatusColor(lead.status)" size="x-small" label class="text-[9px] font-weight-medium">{{ lead.status.toUpperCase() }}</v-chip>
                       </div>
                       <div class="d-flex align-center justify-space-between mt-3">
                         <div class="d-flex ga-1">
@@ -94,7 +94,7 @@
                           <v-btn icon="mdi-clock-outline" size="x-small" color="warning" variant="tonal" @click="snoozeFollowUp(lead.id)"></v-btn>
                           <v-btn icon="mdi-check" size="x-small" color="primary" variant="tonal" @click="completeFollowUp(lead.id)"></v-btn>
                         </div>
-                        <span class="text-[10px] font-weight-bold text-muted uppercase">Today</span>
+                        <span class="text-[10px] font-weight-medium text-muted uppercase">Today</span>
                       </div>
                     </v-card>
                   </v-list>
@@ -103,13 +103,13 @@
                 <v-window-item value="overdue" class="pa-4">
                   <div v-if="!followUps.overdue?.length" class="text-center py-12 opacity-50">
                     <v-icon size="40" class="mb-2">mdi-shield-check-outline</v-icon>
-                    <p class="text-caption font-weight-bold uppercase">No overdue tasks.</p>
+                    <p class="text-caption font-weight-medium uppercase">No overdue tasks.</p>
                   </div>
                   <v-list v-else bg-color="transparent" class="pa-0">
                     <v-card v-for="lead in followUps.overdue" :key="lead.id" variant="tonal" color="error" class="mb-3 border-thin rounded-lg pa-3 hover-lift border-error opacity-100">
                       <div class="d-flex justify-space-between align-start mb-1">
-                        <span class="text-subtitle-2 font-weight-black text-uppercase link-hover" @click="navigateTo(`/leads/${lead.id}`)">{{ lead.name }}</span>
-                        <v-chip color="error" size="x-small" label class="text-[9px] font-weight-black">OVERDUE</v-chip>
+                        <span class="text-subtitle-2 font-weight-medium text-uppercase link-hover" @click="navigateTo(`/leads/${lead.id}`)">{{ lead.name }}</span>
+                        <v-chip color="error" size="x-small" label class="text-[9px] font-weight-medium">OVERDUE</v-chip>
                       </div>
                       <div class="d-flex align-center justify-space-between mt-3">
                         <div class="d-flex ga-1">
@@ -117,7 +117,7 @@
                           <v-btn icon="mdi-clock-outline" size="x-small" color="error" variant="tonal" @click="snoozeFollowUp(lead.id)"></v-btn>
                           <v-btn icon="mdi-check" size="x-small" color="error" variant="tonal" @click="completeFollowUp(lead.id)"></v-btn>
                         </div>
-                        <span class="text-[10px] font-weight-bold text-error uppercase">{{ format(new Date(lead.follow_up_date), 'MMM dd') }}</span>
+                        <span class="text-[10px] font-weight-medium text-error uppercase">{{ format(new Date(lead.follow_up_date), 'MMM dd') }}</span>
                       </div>
                     </v-card>
                   </v-list>
@@ -137,9 +137,9 @@
                   <div>
                     <h2 class="text-h6 font-weight-bold">Lead Distribution</h2>
                     <div class="d-flex align-center ga-1">
-                      <p class="text-[10px] text-muted uppercase font-weight-black tracking-widest">{{ currentMonthName }} {{ currentYear }}</p>
-                      <v-btn variant="text" color="primary" size="x-small" class="font-weight-black ml-2" @click="navigateTo('/leads/pipeline')">VIEW PIPELINE</v-btn>
-                      <v-chip v-if="selectedBde && bdes.length" size="x-small" color="primary" variant="tonal" label class="text-[9px] font-weight-bold ml-2">
+                      <p class="text-[10px] text-muted uppercase font-weight-medium tracking-widest">{{ currentMonthName }} {{ currentYear }}</p>
+                      <v-btn variant="text" color="primary" size="x-small" class="font-weight-medium ml-2" @click="navigateTo('/leads/pipeline')">VIEW PIPELINE</v-btn>
+                      <v-chip v-if="selectedBde && bdes.length" size="x-small" color="primary" variant="tonal" label class="text-[9px] font-weight-medium ml-2">
                         FILTERED BY: {{ bdes.find(b => b.id === selectedBde)?.name?.toUpperCase() }}
                       </v-chip>
                     </div>
@@ -158,7 +158,7 @@
                       variant="outlined"
                       density="compact"
                       hide-details
-                      class="text-caption font-weight-black custom-select"
+                      class="text-caption font-weight-medium custom-select"
                       clearable
                       @update:model-value="handleFilterChange"
                     >
@@ -171,7 +171,7 @@
                   <!-- Month Navigation -->
                   <div class="d-flex align-center ga-2 bg-black-thin pa-1 rounded-pill">
                     <v-btn icon="mdi-chevron-left" variant="text" density="comfortable" size="small" class="rounded-circle" @click="prevMonth"></v-btn>
-                    <span class="text-caption font-weight-black mx-2 text-primary uppercase" style="min-width: 100px; text-align: center;">{{ currentMonthName }}</span>
+                    <span class="text-caption font-weight-medium mx-2 text-primary uppercase" style="min-width: 100px; text-align: center;">{{ currentMonthName }}</span>
                     <v-btn icon="mdi-chevron-right" variant="text" density="comfortable" size="small" class="rounded-circle" @click="nextMonth" :disabled="isCurrentMonth"></v-btn>
                   </div>
                 </div>
@@ -198,12 +198,12 @@
             <div class="d-flex align-center justify-space-between mb-3">
               <div class="d-flex align-center ga-2">
                 <v-icon color="success" size="18">mdi-heart-pulse</v-icon>
-                <span class="text-subtitle-2 font-weight-black uppercase tracking-widest">Hot Leads</span>
-                <v-chip v-if="interestedLeads.length" color="success" size="x-small" variant="tonal" class="font-weight-black">
+                <span class="text-subtitle-2 font-weight-medium uppercase tracking-widest">Hot Leads</span>
+                <v-chip v-if="interestedLeads.length" color="success" size="x-small" variant="tonal" class="font-weight-medium">
                   {{ interestedLeads.length }}
                 </v-chip>
               </div>
-              <v-btn variant="text" color="primary" size="x-small" class="font-weight-black" @click="navigateTo('/leads?status=interested')">VIEW ALL</v-btn>
+              <v-btn variant="text" color="primary" size="x-small" class="font-weight-medium" @click="navigateTo('/leads?status=interested')">VIEW ALL</v-btn>
             </div>
 
             <div v-if="interestedLeadsLoading" class="d-flex justify-center py-6">
@@ -212,7 +212,7 @@
 
             <div v-else-if="!interestedLeads.length" class="text-center py-6 opacity-40">
               <v-icon size="32" class="mb-2">mdi-heart-off-outline</v-icon>
-              <p class="text-caption font-weight-bold uppercase">No interested leads yet</p>
+              <p class="text-caption font-weight-medium uppercase">No interested leads yet</p>
             </div>
 
             <div v-else class="interested-leads-list" style="max-height: 360px; overflow-y: auto;">
@@ -229,17 +229,17 @@
                       <v-icon size="18" :color="getInterestedStatusColor(lead.status)">{{ getInterestedStatusIcon(lead.status) }}</v-icon>
                     </v-avatar>
                     <div style="min-width: 0;">
-                      <div class="text-subtitle-2 font-weight-black text-uppercase text-truncate">{{ lead.name }}</div>
+                      <div class="text-subtitle-2 font-weight-medium text-uppercase text-truncate">{{ lead.name }}</div>
                       <div class="d-flex align-center ga-2 flex-wrap">
-                        <span v-if="lead.interested_course" class="text-[10px] text-muted font-weight-bold">{{ lead.interested_course.name }}</span>
-                        <span v-if="['admin', 'super_admin'].includes(data.user_role) && lead.assigned_to" class="text-[10px] font-weight-bold" style="color: rgb(var(--v-theme-primary))">
+                        <span v-if="lead.interested_course" class="text-[10px] text-muted font-weight-medium">{{ lead.interested_course.name }}</span>
+                        <span v-if="['admin', 'super_admin'].includes(data.user_role) && lead.assigned_to" class="text-[10px] font-weight-medium" style="color: rgb(var(--v-theme-primary))">
                           <v-icon size="10" class="mr-1">mdi-account</v-icon>{{ lead.assigned_to.name }}
                         </span>
                       </div>
                     </div>
                   </div>
                   <div class="d-flex align-center ga-2 flex-shrink-0">
-                    <v-chip :color="getInterestedStatusColor(lead.status)" size="x-small" label class="text-[9px] font-weight-black px-2">
+                    <v-chip :color="getInterestedStatusColor(lead.status)" size="x-small" label class="text-[9px] font-weight-medium px-2">
                       {{ lead.status === 'demo_scheduled' ? 'DEMO' : lead.status.toUpperCase() }}
                     </v-chip>
                     <v-icon size="14" class="opacity-30">mdi-chevron-right</v-icon>
@@ -258,12 +258,12 @@
           <v-toolbar color="transparent" class="px-4">
             <v-toolbar-title class="text-h6 font-weight-bold">Recent Leads</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn variant="text" color="primary" class="font-weight-black text-caption" @click="navigateTo('/leads')">VIEW ALL</v-btn>
+            <v-btn variant="text" color="primary" class="font-weight-medium text-caption" @click="navigateTo('/leads')">VIEW ALL</v-btn>
           </v-toolbar>
           
           <v-table class="bg-transparent">
             <thead>
-              <tr class="text-overline font-weight-black opacity-50">
+              <tr class="text-overline font-weight-bold opacity-50">
                 <th class="px-6 text-left">NAME</th>
                 <th class="px-6 text-left">SOURCE</th>
                 <th class="px-6 text-left">STATUS</th>
@@ -273,14 +273,14 @@
             <tbody>
               <tr v-for="lead in data.recent_leads" :key="lead.id">
                 <td class="px-6 py-4">
-                  <div class="font-weight-black text-subtitle-2 text-uppercase link-hover" @click="navigateTo(`/leads/${lead.id}`)">
+                  <div class="font-weight-medium text-subtitle-2 text-uppercase link-hover" @click="navigateTo(`/leads/${lead.id}`)">
                     {{ lead.name }}
                   </div>
                   <div class="text-caption text-muted">{{ lead.phone }}</div>
                 </td>
                 <td class="px-6 py-4 text-caption font-weight-medium text-muted">{{ lead.source || 'Direct' }}</td>
                 <td class="px-6 py-4">
-                  <v-chip :color="getStatusColor(lead.status)" size="x-small" label class="font-weight-black px-3">
+                  <v-chip :color="getStatusColor(lead.status)" size="x-small" label class="font-weight-medium px-3">
                     {{ lead.status.toUpperCase() }}
                   </v-chip>
                 </td>

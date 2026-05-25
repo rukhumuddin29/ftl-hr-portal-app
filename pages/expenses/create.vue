@@ -8,14 +8,14 @@
         @click="navigateTo('/expenses')"
       ></v-btn>
       <div>
-        <h1 class="text-h4 font-weight-black uppercase">Record Expense</h1>
+        <h1 class="text-h4 font-weight-bold uppercase">Record Expense</h1>
         <p class="text-body-2 text-muted">Log a new operational cost or payout for approval.</p>
       </div>
     </div>
 
     <v-form @submit.prevent="handleSubmit">
       <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8 mb-6">
-        <h2 class="text-h6 font-weight-black mb-6 uppercase text-primary">Expense Details</h2>
+        <h2 class="text-h6 font-weight-bold mb-6 uppercase text-primary">Expense Details</h2>
         
         <v-row>
           <v-col cols="12">
@@ -52,7 +52,7 @@
               variant="outlined"
               required
               hide-details="auto"
-              class="mb-4 font-weight-bold"
+              class="mb-4 font-weight-medium"
               color="error"
             ></v-text-field>
           </v-col>
@@ -102,7 +102,7 @@
         <v-btn
           variant="outlined"
           rounded="lg"
-          class="px-8 font-weight-bold"
+          class="px-8 font-weight-medium"
           @click="navigateTo('/expenses')"
         >
           CANCEL
@@ -110,7 +110,7 @@
         <v-btn
           color="primary"
           rounded="lg"
-          class="px-8 font-weight-bold"
+          class="px-8 font-weight-medium"
           type="submit"
           :loading="loading"
         >

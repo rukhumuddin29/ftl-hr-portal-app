@@ -8,7 +8,7 @@
         @click="navigateTo('/leads')"
       ></v-btn>
       <div>
-        <h1 class="text-h4 font-weight-black uppercase">Create New Lead</h1>
+        <h1 class="text-h4 font-weight-bold uppercase">Create New Lead</h1>
         <p class="text-body-2 text-muted">Complete the profile for the prospect based on their category.</p>
       </div>
       <v-spacer></v-spacer>
@@ -17,7 +17,7 @@
         color="primary"
         prepend-icon="mdi-upload"
         rounded="lg"
-        class="font-weight-bold"
+        class="font-weight-medium"
         @click="navigateTo('/leads/bulk-import')"
       >
         IMPORT BULK
@@ -29,7 +29,7 @@
         <!-- LEFT COLUMN: Personal & Address -->
         <v-col cols="12" md="6">
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+            <h2 class="text-subtitle-1 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
               <v-icon size="18">mdi-account-circle-outline</v-icon>
               Basic Information
             </h2>
@@ -67,7 +67,7 @@
           </v-card>
 
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+            <h2 class="text-subtitle-1 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
               <v-icon size="18">mdi-map-marker-outline</v-icon>
               Address Details
             </h2>
@@ -91,7 +91,7 @@
         <!-- RIGHT COLUMN: Dynamic Fields & Interest -->
         <v-col cols="12" md="6">
           <v-card v-if="selectedLeadType" class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+            <h2 class="text-subtitle-1 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
               <v-icon size="18">mdi-form-select</v-icon>
               {{ selectedLeadType.name }} Details
             </h2>
@@ -122,7 +122,7 @@
           </v-card>
 
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+            <h2 class="text-subtitle-1 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
               <v-icon size="18">mdi-bullseye-arrow</v-icon>
               Interest & Remarks
             </h2>
@@ -146,7 +146,7 @@
         <v-card class="rounded-xl border-thin border-warning-darken-2 bg-surface">
           <v-card-title class="pa-6 d-flex align-center ga-3 border-b text-warning">
             <v-icon>mdi-alert-decagram</v-icon>
-            <span class="font-weight-black uppercase">Conflict Detected</span>
+            <span class="font-weight-medium uppercase">Conflict Detected</span>
           </v-card-title>
 
           <v-card-text class="pa-6">
@@ -154,10 +154,10 @@
             
             <div v-for="dupe in detectedDuplicates" :key="dupe.lead.id" class="border rounded-xl pa-4 mb-4 bg-white-5">
                <div class="d-flex justify-space-between align-start mb-2">
-                  <div class="font-weight-black text-primary">{{ dupe.lead.name }} — {{ dupe.lead.phone }}</div>
-                  <v-chip size="x-small" :color="dupe.score >= 80 ? 'error' : 'warning'" label class="font-weight-black">{{ dupe.score }}% MATCH</v-chip>
+                  <div class="font-weight-medium text-primary">{{ dupe.lead.name }} — {{ dupe.lead.phone }}</div>
+                  <v-chip size="x-small" :color="dupe.score >= 80 ? 'error' : 'warning'" label class="font-weight-medium">{{ dupe.score }}% MATCH</v-chip>
                </div>
-               <div class="text-[10px] text-muted font-weight-bold uppercase mb-3">
+               <div class="text-[10px] text-muted font-weight-medium uppercase mb-3">
                   Status: {{ dupe.lead.status }} | Assigned to: {{ dupe.lead.assigned_to?.name || 'Unassigned' }}
                </div>
                <div class="d-flex ga-2">
@@ -172,17 +172,17 @@
           </v-card-text>
 
           <v-card-actions class="pa-6 border-t bg-surface-light">
-             <v-btn variant="text" class="font-weight-bold" @click="dupeDialog = false">GO BACK</v-btn>
+             <v-btn variant="text" class="font-weight-medium" @click="dupeDialog = false">GO BACK</v-btn>
              <v-spacer></v-spacer>
-             <v-btn color="warning" class="font-weight-black px-6" rounded="lg" @click="submitAnyway">CREATE REGARDLESS</v-btn>
+             <v-btn color="warning" class="font-weight-medium px-6" rounded="lg" @click="submitAnyway">CREATE REGARDLESS</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
 
       <!-- Form Actions -->
       <div class="d-flex justify-end ga-6 mt-8 pb-10">
-        <v-btn variant="outlined" rounded="lg" class="px-8 font-weight-bold" @click="navigateTo('/leads')">CANCEL</v-btn>
-        <v-btn color="primary" rounded="lg" class="px-8 font-weight-bold" type="submit" :loading="loading">CREATE LEAD</v-btn>
+        <v-btn variant="outlined" rounded="lg" class="px-8 font-weight-medium" @click="navigateTo('/leads')">CANCEL</v-btn>
+        <v-btn color="primary" rounded="lg" class="px-8 font-weight-medium" type="submit" :loading="loading">CREATE LEAD</v-btn>
       </div>
     </v-form>
   </v-container>

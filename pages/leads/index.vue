@@ -2,7 +2,7 @@
   <v-row class="animate-fade">
     <v-col cols="12" class="d-flex align-center justify-space-between mb-4">
       <div>
-        <h1 class="text-h4 font-weight-black">LEAD MANAGEMENT</h1>
+        <h1 class="text-h4 font-weight-bold">LEAD MANAGEMENT</h1>
         <p class="text-body-2 text-muted">Track and manage your center's potential students.</p>
       </div>
       <div class="d-flex ga-3">
@@ -12,7 +12,7 @@
           color="primary"
           prepend-icon="mdi-account-arrow-right"
           height="48"
-          class="font-weight-bold tracking-widest px-6"
+          class="font-weight-medium tracking-widest px-6"
           @click="openAssignDialog"
         >
           ASSIGN LEADS
@@ -22,7 +22,7 @@
           color="primary"
           prepend-icon="mdi-view-column-outline"
           height="48"
-          class="font-weight-bold tracking-widest px-6"
+          class="font-weight-medium tracking-widest px-6"
           @click="navigateTo('/leads/pipeline')"
         >
           PIPELINE VIEW
@@ -31,7 +31,7 @@
           color="primary"
           prepend-icon="mdi-plus"
           height="48"
-          class="font-weight-bold tracking-widest px-6"
+          class="font-weight-medium tracking-widest px-6"
           @click="navigateTo('/leads/create')"
         >
           ADD NEW LEAD
@@ -96,7 +96,7 @@
         <v-progress-linear v-if="loading" indeterminate color="primary"></v-progress-linear>
         <v-table class="bg-transparent">
           <thead>
-            <tr class="text-overline font-weight-black opacity-50">
+            <tr class="text-overline font-weight-bold opacity-50">
               <th class="px-6 text-left">NAME</th>
               <th class="px-6 text-left">CONTACT</th>
               <th class="px-6 text-left">LOCATION</th>
@@ -109,16 +109,16 @@
             <tr v-for="lead in leads" :key="lead.id" class="hover-row">
               <td class="px-6 py-4">
                 <div class="d-flex align-center">
-                  <v-avatar color="primary" variant="tonal" size="40" class="mr-3 rounded-lg font-weight-bold">
+                  <v-avatar color="primary" variant="tonal" size="40" class="mr-3 rounded-lg font-weight-medium">
                     {{ lead.name.charAt(0) }}
                   </v-avatar>
-                  <div class="font-weight-black text-subtitle-2 text-uppercase clickable" @click="navigateTo(`/leads/${lead.id}`)">
+                  <div class="font-weight-medium text-subtitle-2 text-uppercase clickable" @click="navigateTo(`/leads/${lead.id}`)">
                     {{ lead.name }}
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4">
-                <div class="text-caption font-weight-bold">{{ lead.phone }}</div>
+                <div class="text-caption font-weight-medium">{{ lead.phone }}</div>
                 <div class="text-[10px] text-muted">{{ lead.email || 'NO EMAIL' }}</div>
               </td>
               <td class="px-6 py-4">
@@ -127,11 +127,11 @@
                 </div>
               </td>
               <td class="px-6 py-4">
-                <div class="text-caption font-weight-bold uppercase text-primary">{{ lead.lead_type?.name || 'UNKNOWN' }}</div>
-                <div class="text-[10px] text-muted font-weight-black uppercase opacity-50">{{ lead.source || 'DIRECT' }}</div>
+                <div class="text-caption font-weight-medium uppercase text-primary">{{ lead.lead_type?.name || 'UNKNOWN' }}</div>
+                <div class="text-[10px] text-muted font-weight-medium uppercase opacity-50">{{ lead.source || 'DIRECT' }}</div>
               </td>
               <td class="px-6 py-4">
-                 <v-chip :color="getStatusColor(lead.status)" size="x-small" label class="font-weight-black px-3">
+                 <v-chip :color="getStatusColor(lead.status)" size="x-small" label class="font-weight-medium px-3">
                     {{ lead.status.toUpperCase() }}
                   </v-chip>
               </td>
@@ -152,7 +152,7 @@
             <tr v-if="leads.length === 0 && !loading">
               <td colspan="5" class="text-center py-16 opacity-50">
                 <v-icon size="48" class="mb-4">mdi-account-search-outline</v-icon>
-                <p class="text-overline font-weight-black">No leads found matching your criteria</p>
+                <p class="text-overline font-weight-bold">No leads found matching your criteria</p>
               </td>
             </tr>
           </tbody>
@@ -161,7 +161,7 @@
         <!-- Pagination Mockup -->
         <v-divider class="border-opacity-25"></v-divider>
         <div class="pa-4 d-flex align-center justify-space-between">
-           <span class="text-caption text-muted uppercase font-weight-bold">Showing {{ leads.length }} Leads</span>
+           <span class="text-caption text-muted uppercase font-weight-medium">Showing {{ leads.length }} Leads</span>
            <div class="d-flex ga-2">
               <v-btn icon="mdi-chevron-left" variant="text" size="small" disabled></v-btn>
               <v-btn icon="mdi-chevron-right" variant="text" size="small" disabled></v-btn>
@@ -175,7 +175,7 @@
     <v-dialog v-model="assignDialog" max-width="500" persistent>
       <v-card class="rounded-xl border-thin bg-surface elevation-24">
         <v-card-title class="pa-6 pb-2 d-flex align-center justify-space-between">
-          <span class="text-h6 font-weight-black uppercase">Assign Leads to Team</span>
+          <span class="text-h6 font-weight-bold uppercase">Assign Leads to Team</span>
           <v-btn icon="mdi-close" variant="text" size="small" @click="assignDialog = false"></v-btn>
         </v-card-title>
 
@@ -185,10 +185,10 @@
               <v-icon color="white">mdi-account-plus</v-icon>
             </v-avatar>
             <div class="flex-grow-1">
-              <p class="text-[10px] font-weight-black opacity-70 uppercase mb-0 text-white">Dynamic Search Inventory</p>
-              <p class="text-h5 font-weight-black mb-0 text-white">{{ currentFilteredCount }} Leads</p>
+              <p class="text-[10px] font-weight-medium opacity-70 uppercase mb-0 text-white">Dynamic Search Inventory</p>
+              <p class="text-h5 font-weight-bold mb-0 text-white">{{ currentFilteredCount }} Leads</p>
             </div>
-            <v-chip size="x-small" label class="bg-white text-primary font-weight-black">UNASSIGNED</v-chip>
+            <v-chip size="x-small" label class="bg-white text-primary font-weight-medium">UNASSIGNED</v-chip>
           </div>
 
           <v-row dense>
@@ -211,13 +211,9 @@
             <v-col cols="12" md="6">
               <v-select
                 v-model="assignForm.lead_type"
-                :items="[
-                  { title: 'STUDENT', value: 'student' },
-                  { title: 'PROFESSIONAL', value: 'professional' },
-                  { title: 'OTHER', value: 'other' }
-                ]"
-                item-title="title"
-                item-value="value"
+                :items="leadTypes"
+                item-title="name"
+                item-value="id"
                 label="LEAD TYPE"
                 variant="outlined"
                 density="compact"
@@ -262,12 +258,12 @@
 
         <v-card-actions class="pa-6">
           <v-spacer></v-spacer>
-          <v-btn variant="text" class="font-weight-black" @click="assignDialog = false">CANCEL</v-btn>
+          <v-btn variant="text" class="font-weight-medium" @click="assignDialog = false">CANCEL</v-btn>
           <v-btn 
             color="primary" 
             variant="elevated" 
             height="44" 
-            class="px-8 font-weight-bold" 
+            class="px-8 font-weight-medium" 
             :disabled="!assignForm.employee_id || !assignForm.count"
             :loading="assigning"
             @click="submitAssignment"
@@ -287,6 +283,7 @@ const leads = ref<any[]>([])
 const loading = ref(true)
 const search = ref('')
 const statusFilter = ref('all')
+const leadTypes = ref<any[]>([])
 
 // Assign Leads Logic
 const assignDialog = ref(false)
@@ -374,6 +371,15 @@ const submitAssignment = async () => {
   }
 }
 
+const fetchLeadTypes = async () => {
+  try {
+    const res: any = await api.get('/leads/lead-types')
+    leadTypes.value = res.data || []
+  } catch (err) {
+    console.error('Failed to load lead types')
+  }
+}
+
 const fetchLeads = async () => {
   loading.value = true
   try {
@@ -452,6 +458,7 @@ watch([statusFilter, search], () => {
 
 onMounted(() => {
   fetchLeads()
+  fetchLeadTypes()
 })
 
 definePageMeta({

@@ -3,7 +3,7 @@
     <v-row>
       <!-- Page Header -->
       <v-col cols="12" class="mb-6">
-        <h1 class="text-h4 font-weight-black uppercase">My Profile</h1>
+        <h1 class="text-h4 font-weight-bold uppercase">My Profile</h1>
         <p class="text-body-2 text-muted">Manage your personal information and account security.</p>
       </v-col>
 
@@ -19,7 +19,7 @@
                   </div>
                 </template>
               </v-img>
-              <span v-else class="text-h2 font-weight-black text-white">{{ authStore.user?.name?.charAt(0) }}</span>
+              <span v-else class="text-h2 font-weight-bold text-white">{{ authStore.user?.name?.charAt(0) }}</span>
             </v-avatar>
             <v-btn
               icon="mdi-pencil"
@@ -38,50 +38,50 @@
               @change="onFileSelected"
             />
           </div>
-          <h2 class="text-h5 font-weight-black uppercase mb-1">{{ authStore.user?.name }}</h2>
-          <p class="text-overline font-weight-black text-primary tracking-widest mb-4">
+          <h2 class="text-h5 font-weight-bold uppercase mb-1">{{ authStore.user?.name }}</h2>
+          <p class="text-overline font-weight-bold text-primary tracking-widest mb-4">
              {{ authStore.user?.roles?.[0]?.display_name || 'MEMBER' }}
           </p>
           <v-chip
             :color="authStore.user?.status === 'active' ? 'success' : 'error'"
             size="small"
             label
-            class="font-weight-black px-4"
+            class="font-weight-medium px-4"
           >
             {{ authStore.user?.status?.toUpperCase() }}
           </v-chip>
         </v-card>
 
         <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6">
-          <h3 class="text-overline font-weight-black text-primary mb-6 tracking-widest d-flex align-center">
+          <h3 class="text-overline font-weight-bold text-primary mb-6 tracking-widest d-flex align-center">
             <v-icon class="mr-2" size="small">mdi-office-building-outline</v-icon>
             ORGANIZATION DETAILS
           </h3>
           
           <div class="mb-4">
-            <p class="text-[10px] text-muted font-weight-black uppercase mb-1">Email Address</p>
-            <p class="text-subtitle-2 font-weight-black">{{ authStore.user?.email }}</p>
+            <p class="text-[10px] text-muted font-weight-medium uppercase mb-1">Email Address</p>
+            <p class="text-subtitle-2 font-weight-medium">{{ authStore.user?.email }}</p>
           </div>
 
           <div class="mb-4">
-            <p class="text-[10px] text-muted font-weight-black uppercase mb-1">Employee ID</p>
-            <p class="text-subtitle-2 font-mono font-weight-black">{{ authStore.user?.employee_id || 'N/A' }}</p>
+            <p class="text-[10px] text-muted font-weight-medium uppercase mb-1">Employee ID</p>
+            <p class="text-subtitle-2 font-mono font-weight-medium">{{ authStore.user?.employee_id || 'N/A' }}</p>
           </div>
 
           <div class="mb-4">
-            <p class="text-[10px] text-muted font-weight-black uppercase mb-1">Department</p>
-            <p class="text-subtitle-2 font-weight-black text-uppercase">{{ authStore.user?.department || 'General' }}</p>
+            <p class="text-[10px] text-muted font-weight-medium uppercase mb-1">Department</p>
+            <p class="text-subtitle-2 font-weight-medium text-uppercase">{{ authStore.user?.department || 'General' }}</p>
           </div>
 
           <div class="mb-4">
-            <p class="text-[10px] text-muted font-weight-black uppercase mb-1">Designation</p>
-            <p class="text-subtitle-2 font-weight-black text-uppercase">{{ authStore.user?.designation || 'Staff' }}</p>
+            <p class="text-[10px] text-muted font-weight-medium uppercase mb-1">Designation</p>
+            <p class="text-subtitle-2 font-weight-medium text-uppercase">{{ authStore.user?.designation || 'Staff' }}</p>
           </div>
 
           <div v-if="authStore.isAdmin">
              <v-divider class="my-4 border-opacity-25"></v-divider>
-             <p class="text-[10px] text-muted font-weight-black uppercase mb-1">Monthly Salary</p>
-             <p class="text-subtitle-1 font-weight-black text-success">₹{{ authStore.user?.salary || 0 }}</p>
+             <p class="text-[10px] text-muted font-weight-medium uppercase mb-1">Monthly Salary</p>
+             <p class="text-subtitle-1 font-weight-bold text-success">₹{{ authStore.user?.salary || 0 }}</p>
           </div>
         </v-card>
       </v-col>
@@ -91,7 +91,7 @@
         <v-form @submit.prevent="handleUpdate">
           <!-- General Information -->
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8 mb-6">
-            <h3 class="text-h6 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+            <h3 class="text-h6 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
               <v-icon>mdi-account-edit-outline</v-icon>
               General Information
             </h3>
@@ -122,7 +122,7 @@
 
           <!-- Address Details -->
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8 mb-6">
-            <h3 class="text-h6 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+            <h3 class="text-h6 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
               <v-icon>mdi-map-marker-outline</v-icon>
               Address Details
             </h3>
@@ -180,7 +180,7 @@
 
           <!-- Contact Details -->
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8 mb-6">
-            <h3 class="text-h6 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
+            <h3 class="text-h6 font-weight-bold mb-6 uppercase text-primary d-flex align-center ga-2">
               <v-icon>mdi-phone-outline</v-icon>
               Contact Details
             </h3>
@@ -210,11 +210,11 @@
           <!-- Bank Details -->
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-8 mb-6">
             <div class="d-flex align-center justify-space-between mb-6">
-              <h3 class="text-h6 font-weight-black uppercase text-primary d-flex align-center ga-2">
+              <h3 class="text-h6 font-weight-bold uppercase text-primary d-flex align-center ga-2">
                 <v-icon>mdi-bank-outline</v-icon>
                 Bank Details
               </h3>
-              <v-chip v-if="isBankDetailsSet" color="warning" size="x-small" label class="font-weight-black">READ ONLY</v-chip>
+              <v-chip v-if="isBankDetailsSet" color="warning" size="x-small" label class="font-weight-medium">READ ONLY</v-chip>
             </div>
             
             <v-row>
@@ -265,7 +265,7 @@
           <div class="d-flex justify-end ga-4">
             <v-btn
               variant="text"
-              class="font-weight-black px-8"
+              class="font-weight-medium px-8"
               @click="resetForm"
               :disabled="loading"
             >
@@ -274,7 +274,7 @@
             <v-btn
               color="primary"
               size="large"
-              class="font-weight-black px-12 rounded-lg"
+              class="font-weight-medium px-12 rounded-lg"
               type="submit"
               :loading="loading"
             >
@@ -288,7 +288,7 @@
     <!-- Avatar Upload Confirmation Dialog -->
     <v-dialog v-model="showAvatarDialog" max-width="450">
       <v-card class="rounded-xl pa-6 text-center">
-        <v-card-title class="text-h6 font-weight-black uppercase mb-2">Confirm New Avatar</v-card-title>
+        <v-card-title class="text-h6 font-weight-bold uppercase mb-2">Confirm New Avatar</v-card-title>
         <v-card-text>
           <div class="d-flex justify-center mb-6">
             <v-avatar size="180" class="elevation-10 border-4 border-primary">
@@ -298,8 +298,8 @@
           <p class="text-body-2 text-muted">Are you sure you want to update your profile picture with this image?</p>
         </v-card-text>
         <v-card-actions class="ga-4 px-0 pb-0 mt-4">
-          <v-btn block variant="text" class="font-weight-bold" @click="cancelUpload" :disabled="uploadingAvatar">CANCEL</v-btn>
-          <v-btn block color="primary" size="large" class="font-weight-black rounded-lg" @click="confirmUpload" :loading="uploadingAvatar">UPLOAD NOW</v-btn>
+          <v-btn block variant="text" class="font-weight-medium" @click="cancelUpload" :disabled="uploadingAvatar">CANCEL</v-btn>
+          <v-btn block color="primary" size="large" class="font-weight-medium rounded-lg" @click="confirmUpload" :loading="uploadingAvatar">UPLOAD NOW</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

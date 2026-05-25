@@ -2,7 +2,7 @@
   <v-container class="max-w-7xl animate-fade">
     <div class="d-flex justify-space-between align-center mb-8">
       <div>
-        <h1 class="text-h4 font-weight-black uppercase">Departments</h1>
+        <h1 class="text-h4 font-weight-bold uppercase">Departments</h1>
         <p class="text-body-2 text-muted">Manage company departments and organizational units.</p>
       </div>
       <v-btn color="primary" prepend-icon="mdi-plus" @click="openDialog()">ADD DEPARTMENT</v-btn>
@@ -17,11 +17,11 @@
         hover
       >
         <template v-slot:item.name="{ item }">
-          <div class="font-weight-black text-subtitle-2 uppercase">{{ item.name }}</div>
+          <div class="font-weight-medium text-subtitle-2 uppercase">{{ item.name }}</div>
         </template>
         
         <template v-slot:item.status="{ item }">
-          <v-chip :color="item.status === 'active' ? 'success' : 'error'" size="x-small" label class="font-weight-black px-3">
+          <v-chip :color="item.status === 'active' ? 'success' : 'error'" size="x-small" label class="font-weight-medium px-3">
             {{ item.status.toUpperCase() }}
           </v-chip>
         </template>
@@ -38,7 +38,7 @@
     <!-- Dialog -->
     <v-dialog v-model="dialog" max-width="500">
       <v-card class="rounded-xl pa-4">
-        <v-card-title class="text-h6 font-weight-black uppercase">{{ isEditing ? 'EDIT DEPARTMENT' : 'NEW DEPARTMENT' }}</v-card-title>
+        <v-card-title class="text-h6 font-weight-bold uppercase">{{ isEditing ? 'EDIT DEPARTMENT' : 'NEW DEPARTMENT' }}</v-card-title>
         <v-card-text>
           <v-form @submit.prevent="save">
             <v-text-field v-model="form.name" label="DEPARTMENT NAME" variant="outlined" class="mb-4" required></v-text-field>
@@ -48,8 +48,8 @@
         </v-card-text>
         <v-card-actions class="ga-6 px-6 pb-6">
           <v-spacer></v-spacer>
-          <v-btn variant="outlined" rounded="lg" class="px-8 font-weight-bold" @click="dialog = false">CANCEL</v-btn>
-          <v-btn color="primary" rounded="lg" class="px-8 font-weight-bold" :loading="saving" @click="save">SAVE</v-btn>
+          <v-btn variant="outlined" rounded="lg" class="px-8 font-weight-medium" @click="dialog = false">CANCEL</v-btn>
+          <v-btn color="primary" rounded="lg" class="px-8 font-weight-medium" :loading="saving" @click="save">SAVE</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>

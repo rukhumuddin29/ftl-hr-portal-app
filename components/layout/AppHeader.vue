@@ -13,7 +13,7 @@
     </template>
     
     <v-app-bar-title 
-      class="text-subtitle-1 font-weight-black uppercase tracking-widest"
+      class="text-subtitle-1 font-weight-bold uppercase tracking-widest"
     >
       {{ currentPageTitle }}
     </v-app-bar-title>
@@ -62,8 +62,8 @@
         <!-- Header -->
         <div class="pa-5 d-flex justify-space-between align-center border-b">
           <div>
-            <h3 class="text-subtitle-1 font-weight-black uppercase tracking-wider">Notifications</h3>
-            <p class="text-[10px] text-muted font-weight-bold uppercase opacity-50">
+            <h3 class="text-subtitle-1 font-weight-bold uppercase tracking-wider">Notifications</h3>
+            <p class="text-[10px] text-muted font-weight-medium uppercase opacity-50">
               You have {{ notificationStore.unreadCount }} unread messages
             </p>
           </div>
@@ -72,7 +72,7 @@
             size="x-small"
             variant="text"
             color="primary"
-            class="font-weight-black tracking-widest"
+            class="font-weight-medium tracking-widest"
             @click="notificationStore.markAllAsRead()"
           >
             MARK ALL READ
@@ -101,13 +101,13 @@
                 </v-avatar>
               </div>
             </template>
-            <v-list-item-title class="font-weight-black text-body-2 mb-1" :class="{ 'text-primary': !notif.read_at }">
+            <v-list-item-title class="font-weight-bold text-body-2 mb-1" :class="{ 'text-primary': !notif.read_at }">
               {{ notif.title }}
             </v-list-item-title>
             <v-list-item-subtitle class="text-caption opacity-70 mb-2 line-height-1-4">
               {{ notif.message }}
             </v-list-item-subtitle>
-            <div class="text-[10px] font-weight-black opacity-40 uppercase">
+            <div class="text-[10px] font-weight-medium opacity-40 uppercase">
               {{ formatTimeAgo(notif.created_at) }}
             </div>
           </v-list-item>
@@ -115,14 +115,14 @@
           <v-list-item v-if="notificationStore.notifications.length === 0 && !notificationStore.loading">
             <div class="text-center py-12 px-6">
               <v-icon size="64" class="mb-4 opacity-10">mdi-bell-off-outline</v-icon>
-              <p class="text-overline font-weight-black opacity-50">Quiet for now...</p>
+              <p class="text-overline font-weight-bold opacity-50">Quiet for now...</p>
               <p class="text-caption opacity-40">No notifications to display</p>
             </div>
           </v-list-item>
         </v-list>
         
         <div class="pa-3 text-center border-t bg-surface-variant bg-opacity-10 pointer-events-none">
-           <span class="text-[10px] font-weight-black opacity-30 uppercase tracking-widest">End of Notifications</span>
+           <span class="text-[10px] font-weight-medium opacity-30 uppercase tracking-widest">End of Notifications</span>
         </div>
       </v-card>
     </v-menu>
@@ -134,12 +134,12 @@
           variant="text"
           class="text-none"
         >
-          <v-avatar size="32" color="primary" class="mr-2 rounded-lg font-weight-black text-white" style="font-size: 10px">
+          <v-avatar size="32" color="primary" class="mr-2 rounded-lg font-weight-medium text-white" style="font-size: 10px">
             {{ authStore.user?.name?.charAt(0) || '' }}
           </v-avatar>
           <div class="text-left d-none d-sm-block">
-            <p class="text-caption font-weight-black mb-0 line-height-1">{{ authStore.user?.name || '' }}</p>
-            <p class="text-[10px] opacity-50 uppercase font-weight-bold">{{ authStore.user?.roles?.[0]?.name?.replace('_', ' ') || '' }}</p>
+            <p class="text-caption font-weight-medium mb-0 line-height-1">{{ authStore.user?.name || '' }}</p>
+            <p class="text-[10px] opacity-50 uppercase font-weight-medium">{{ authStore.user?.roles?.[0]?.name?.replace('_', ' ') || '' }}</p>
           </div>
           <v-icon size="small" class="ml-1">mdi-chevron-down</v-icon>
         </v-btn>

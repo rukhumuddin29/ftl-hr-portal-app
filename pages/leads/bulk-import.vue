@@ -8,7 +8,7 @@
         @click="navigateTo('/leads/create')"
       ></v-btn>
       <div>
-        <h1 class="text-h4 font-weight-black uppercase">Bulk Import Leads</h1>
+        <h1 class="text-h4 font-weight-bold uppercase">Bulk Import Leads</h1>
         <p class="text-body-2 text-muted">Upload a CSV file to import multiple leads at once.</p>
       </div>
     </div>
@@ -22,7 +22,7 @@
           prepend-icon="mdi-download"
           rounded="lg"
           size="large"
-          class="font-weight-bold px-8"
+          class="font-weight-medium px-8"
           @click="downloadSample"
         >
           EXPORT SAMPLE
@@ -33,7 +33,7 @@
           prepend-icon="mdi-file-upload-outline"
           rounded="lg"
           size="large"
-          class="font-weight-bold px-8"
+          class="font-weight-medium px-8"
           @click="fileInput?.click()"
         >
           IMPORT LEADS
@@ -47,7 +47,7 @@
         />
       </div>
       
-      <p class="text-caption text-muted uppercase font-weight-black tracking-widest">
+      <p class="text-caption text-muted uppercase font-weight-medium tracking-widest">
         Support .csv files only • Max 10,000 records per upload
       </p>
     </v-card>
@@ -55,14 +55,14 @@
     <!-- Preview Table -->
     <v-card v-if="previewData.length > 0" class="rounded-xl border-thin bg-surface elevation-0 overflow-hidden mb-8">
       <div class="pa-6 border-b d-flex align-center justify-space-between bg-primary-lighten-5">
-        <h2 class="text-h6 font-weight-black uppercase text-primary d-flex align-center ga-2">
+        <h2 class="text-h6 font-weight-bold uppercase text-primary d-flex align-center ga-2">
           <v-icon>mdi-table-eye</v-icon>
           Preview Data ({{ previewData.length }} Records)
         </h2>
         <v-btn
           color="primary"
           rounded="lg"
-          class="px-8 font-weight-bold"
+          class="px-8 font-weight-medium"
           :loading="importing"
           @click="confirmImport"
         >
@@ -72,7 +72,7 @@
 
       <v-table density="compact">
         <thead>
-          <tr class="text-overline font-weight-black opacity-50">
+          <tr class="text-overline font-weight-bold opacity-50">
             <th class="px-4">NAME</th>
             <th class="px-4">PHONE</th>
             <th class="px-4">EMAIL</th>
@@ -83,7 +83,7 @@
         </thead>
         <tbody>
           <tr v-for="(row, i) in paginatedData" :key="i">
-            <td class="px-4 font-weight-bold">{{ row.name }}</td>
+            <td class="px-4 font-weight-medium">{{ row.name }}</td>
             <td class="px-4">{{ row.phone }}</td>
             <td class="px-4 text-muted">{{ row.email || '-' }}</td>
             <td class="px-4"><v-chip size="x-small" label>{{ row.lead_type }}</v-chip></td>

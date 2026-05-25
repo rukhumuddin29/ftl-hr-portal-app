@@ -2,14 +2,14 @@
   <v-row class="animate-fade">
     <v-col cols="12" class="d-flex align-center justify-space-between mb-4">
       <div>
-        <h1 class="text-h4 font-weight-black">EXPENSES & VENDORS</h1>
+        <h1 class="text-h4 font-weight-bold">EXPENSES & VENDORS</h1>
         <p class="text-body-2 text-muted">Track operational costs and payroll payouts.</p>
       </div>
       <v-btn
         color="rose-darken-1"
         prepend-icon="mdi-receipt-plus-outline"
         height="48"
-        class="font-weight-bold tracking-widest px-6"
+        class="font-weight-medium tracking-widest px-6"
         @click="navigateTo('/expenses/create')"
       >
         LOG EXPENSE
@@ -21,7 +21,7 @@
         <v-progress-linear v-if="loading" indeterminate color="primary"></v-progress-linear>
         <v-table class="bg-transparent">
           <thead>
-            <tr class="text-overline font-weight-black opacity-50">
+            <tr class="text-overline font-weight-bold opacity-50">
               <th class="px-6 text-left">REFERENCE / DATE</th>
               <th class="px-6 text-left">TITLE & CATEGORY</th>
               <th class="px-6 text-left">STATUS</th>
@@ -33,22 +33,22 @@
             <tr v-for="ex in expenses" :key="ex.id" class="hover-row">
               <td class="px-6 py-4">
                 <div class="text-[10px] font-mono text-primary font-bold">{{ ex.expense_number }}</div>
-                <div class="text-caption font-weight-bold">{{ formatDate(ex.expense_date) }}</div>
+                <div class="text-caption font-weight-medium">{{ formatDate(ex.expense_date) }}</div>
               </td>
               <td class="px-6 py-4">
-                <div class="font-weight-black text-subtitle-2 text-uppercase">
+                <div class="font-weight-medium text-subtitle-2 text-uppercase">
                   {{ ex.title }}
                 </div>
-                <div class="text-[10px] text-muted uppercase font-weight-black opacity-50">{{ ex.category?.name }}</div>
+                <div class="text-[10px] text-muted uppercase font-weight-medium opacity-50">{{ ex.category?.name }}</div>
               </td>
               <td class="px-6 py-4">
-                 <v-chip :color="getStatusColor(ex.status)" size="x-small" label class="font-weight-black px-3">
+                 <v-chip :color="getStatusColor(ex.status)" size="x-small" label class="font-weight-medium px-3">
                     {{ ex.status.toUpperCase() }}
                   </v-chip>
               </td>
               <td class="px-6 py-4 text-right">
-                <div class="text-h6 font-weight-black text-rose-400">₹{{ Math.round(ex.amount) }}</div>
-                <div class="text-[10px] text-muted uppercase font-weight-black opacity-50">{{ ex.payment_mode }}</div>
+                <div class="text-h6 font-weight-bold text-rose-400">₹{{ Math.round(ex.amount) }}</div>
+                <div class="text-[10px] text-muted uppercase font-weight-medium opacity-50">{{ ex.payment_mode }}</div>
               </td>
               <td class="px-6 py-4 text-right">
                 <v-btn 
@@ -66,7 +66,7 @@
             <tr v-if="expenses.length === 0 && !loading">
               <td colspan="5" class="text-center py-16 opacity-50">
                 <v-icon size="48" class="mb-4">mdi-receipt-text-minus-outline</v-icon>
-                <p class="text-overline font-weight-black">No expenses logged yet</p>
+                <p class="text-overline font-weight-bold">No expenses logged yet</p>
               </td>
             </tr>
           </tbody>

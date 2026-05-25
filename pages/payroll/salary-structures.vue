@@ -4,7 +4,7 @@
     <v-col cols="12" class="mb-2">
       <div class="d-flex justify-space-between align-center">
         <div>
-          <h1 class="text-h4 font-weight-black">SALARY STRUCTURES</h1>
+          <h1 class="text-h4 font-weight-bold">SALARY STRUCTURES</h1>
           <p class="text-body-2 text-muted">Define CTC breakup and compensation for each employee.</p>
         </div>
       </div>
@@ -14,7 +14,7 @@
     <v-col cols="12" lg="5">
       <v-card class="rounded-xl border-thin bg-surface elevation-0">
         <v-toolbar color="transparent" class="px-4">
-          <v-toolbar-title class="text-subtitle-1 font-weight-black uppercase">Employees</v-toolbar-title>
+          <v-toolbar-title class="text-subtitle-1 font-weight-bold uppercase">Employees</v-toolbar-title>
         </v-toolbar>
         <div class="px-4 pb-2">
           <v-text-field
@@ -39,7 +39,7 @@
           >
             <template v-slot:prepend>
               <v-avatar color="primary" variant="tonal" size="36" class="rounded-lg mr-3">
-                <span class="text-caption font-weight-black">{{ emp.name?.charAt(0) }}</span>
+                <span class="text-caption font-weight-medium">{{ emp.name?.charAt(0) }}</span>
               </v-avatar>
             </template>
             <v-list-item-title class="font-weight-bold text-subtitle-2 uppercase">{{ emp.name }}</v-list-item-title>
@@ -53,11 +53,11 @@
                   color="success"
                   size="x-small"
                   label
-                  class="font-weight-black"
+                  class="font-weight-medium"
                 >
                   ₹{{ formatCurrency(emp.salary_structure.ctc_annual) }}
                 </v-chip>
-                <v-chip v-else color="warning" size="x-small" label class="font-weight-black">
+                <v-chip v-else color="warning" size="x-small" label class="font-weight-medium">
                   NOT SET
                 </v-chip>
               </div>
@@ -65,7 +65,7 @@
           </v-list-item>
           <div v-if="employees.length === 0 && !loading" class="text-center py-8 opacity-50">
             <v-icon size="40" class="mb-3">mdi-account-search</v-icon>
-            <p class="text-caption font-weight-bold uppercase">No employees found</p>
+            <p class="text-caption font-weight-medium uppercase">No employees found</p>
           </div>
         </v-list>
         <div v-if="loading" class="d-flex justify-center py-6">
@@ -79,10 +79,10 @@
       <v-card v-if="selectedEmployee" class="rounded-xl border-thin bg-surface elevation-0 pa-6">
         <div class="d-flex align-center ga-3 mb-6">
           <v-avatar color="primary" size="48" class="rounded-lg">
-            <span class="text-h6 font-weight-black">{{ selectedEmployee.name?.charAt(0) }}</span>
+            <span class="text-h6 font-weight-bold">{{ selectedEmployee.name?.charAt(0) }}</span>
           </v-avatar>
           <div>
-            <h2 class="text-subtitle-1 font-weight-black uppercase">{{ selectedEmployee.name }}</h2>
+            <h2 class="text-subtitle-1 font-weight-bold uppercase">{{ selectedEmployee.name }}</h2>
             <p class="text-caption text-muted">{{ selectedEmployee.employee_id }} · {{ selectedEmployee.designation || 'N/A' }}</p>
           </div>
         </div>
@@ -92,7 +92,7 @@
         <v-form @submit.prevent="saveSalaryStructure">
           <!-- CTC -->
           <div class="mb-6">
-            <p class="text-[10px] font-weight-black text-primary uppercase mb-2">Annual Cost to Company</p>
+            <p class="text-[10px] font-weight-medium text-primary uppercase mb-2">Annual Cost to Company</p>
             <v-text-field
               v-model.number="form.ctc_annual"
               label="CTC (ANNUAL) ₹"
@@ -103,13 +103,13 @@
               @update:model-value="autoCalculateBreakup"
             ></v-text-field>
             <p class="text-[10px] text-muted mt-1">
-              Monthly Gross: <span class="font-weight-black text-primary">₹{{ formatCurrency(monthlyGross) }}</span>
-              &nbsp;·&nbsp; Per Day (÷30): <span class="font-weight-black text-primary">₹{{ formatCurrency(perDaySalary) }}</span>
+              Monthly Gross: <span class="font-weight-medium text-primary">₹{{ formatCurrency(monthlyGross) }}</span>
+              &nbsp;·&nbsp; Per Day (÷30): <span class="font-weight-medium text-primary">₹{{ formatCurrency(perDaySalary) }}</span>
             </p>
           </div>
 
           <!-- Breakup -->
-          <p class="text-[10px] font-weight-black text-primary uppercase mb-3">Monthly Salary Breakup</p>
+          <p class="text-[10px] font-weight-medium text-primary uppercase mb-3">Monthly Salary Breakup</p>
           <v-row dense>
             <v-col cols="6">
               <v-text-field
@@ -205,16 +205,16 @@
           <v-card variant="outlined" class="pa-4 rounded-lg mt-4 mb-6 bg-primary-lighten">
             <v-row dense>
               <v-col cols="4" class="text-center">
-                <p class="text-[10px] font-weight-black text-muted uppercase">Monthly Gross</p>
-                <p class="text-h6 font-weight-black text-primary">₹{{ formatCurrency(monthlyGross) }}</p>
+                <p class="text-[10px] font-weight-medium text-muted uppercase">Monthly Gross</p>
+                <p class="text-h6 font-weight-bold text-primary">₹{{ formatCurrency(monthlyGross) }}</p>
               </v-col>
               <v-col cols="4" class="text-center">
-                <p class="text-[10px] font-weight-black text-muted uppercase">PF Employee (12%)</p>
-                <p class="text-h6 font-weight-black text-error">₹{{ formatCurrency(pfEmployee) }}</p>
+                <p class="text-[10px] font-weight-medium text-muted uppercase">PF Employee (12%)</p>
+                <p class="text-h6 font-weight-bold text-error">₹{{ formatCurrency(pfEmployee) }}</p>
               </v-col>
               <v-col cols="4" class="text-center">
-                <p class="text-[10px] font-weight-black text-muted uppercase">Net Take Home</p>
-                <p class="text-h6 font-weight-black text-success">₹{{ formatCurrency(netTakeHome) }}</p>
+                <p class="text-[10px] font-weight-medium text-muted uppercase">Net Take Home</p>
+                <p class="text-h6 font-weight-bold text-success">₹{{ formatCurrency(netTakeHome) }}</p>
               </v-col>
             </v-row>
           </v-card>
@@ -225,7 +225,7 @@
             block
             size="large"
             rounded="lg"
-            class="font-weight-black"
+            class="font-weight-medium"
             :loading="saving"
             :disabled="!isFormValid"
           >
@@ -238,7 +238,7 @@
       <v-card v-else class="rounded-xl border-thin bg-surface elevation-0 d-flex align-center justify-center" style="min-height: 400px;">
         <div class="text-center opacity-40">
           <v-icon size="64" class="mb-4">mdi-account-cash-outline</v-icon>
-          <p class="text-subtitle-1 font-weight-black uppercase">Select an employee</p>
+          <p class="text-subtitle-1 font-weight-bold uppercase">Select an employee</p>
           <p class="text-caption">Choose an employee from the list to view or set their salary structure.</p>
         </div>
       </v-card>

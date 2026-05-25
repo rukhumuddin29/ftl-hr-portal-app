@@ -6,12 +6,12 @@
           <v-icon color="primary">mdi-clock-check-outline</v-icon>
         </v-avatar>
         <div>
-          <h3 class="text-subtitle-1 font-weight-black uppercase tracking-widest">Attendance</h3>
-          <p class="text-[10px] text-muted font-weight-bold uppercase">{{ todayDate }}</p>
+          <h3 class="text-subtitle-1 font-weight-bold uppercase tracking-widest">Attendance</h3>
+          <p class="text-[10px] text-muted font-weight-medium uppercase">{{ todayDate }}</p>
         </div>
       </div>
       <div class="text-right">
-        <div class="text-h6 font-weight-black tabular-nums">{{ currentTime }}</div>
+        <div class="text-h6 font-weight-bold tabular-nums">{{ currentTime }}</div>
       </div>
     </div>
 
@@ -24,21 +24,21 @@
       <!-- Checked Out State -->
       <div v-else-if="attendance && attendance.check_out" class="text-center py-2 animate-fade">
         <v-icon color="success" size="48" class="mb-2">mdi-check-decagram</v-icon>
-        <h4 class="text-h6 font-weight-black uppercase">Clocked Out</h4>
-        <p class="text-caption text-muted font-weight-bold mb-4">Great work! You've completed your day.</p>
+        <h4 class="text-h6 font-weight-bold uppercase">Clocked Out</h4>
+        <p class="text-caption text-muted font-weight-medium mb-4">Great work! You've completed your day.</p>
         
         <v-row dense class="bg-black-thin rounded-lg pa-3 mt-2">
             <v-col cols="4">
-                <div class="text-[9px] text-muted font-weight-black uppercase">IN</div>
-                <div class="text-subtitle-2 font-weight-black">{{ formatTime(attendance.check_in) }}</div>
+                <div class="text-[9px] text-muted font-weight-medium uppercase">IN</div>
+                <div class="text-subtitle-2 font-weight-medium">{{ formatTime(attendance.check_in) }}</div>
             </v-col>
             <v-col cols="4" class="border-x border-opacity-25">
-                <div class="text-[9px] text-muted font-weight-black uppercase">OUT</div>
-                <div class="text-subtitle-2 font-weight-black">{{ formatTime(attendance.check_out) }}</div>
+                <div class="text-[9px] text-muted font-weight-medium uppercase">OUT</div>
+                <div class="text-subtitle-2 font-weight-medium">{{ formatTime(attendance.check_out) }}</div>
             </v-col>
             <v-col cols="4">
-                <div class="text-[9px] text-muted font-weight-black uppercase">TOTAL</div>
-                <div class="text-subtitle-2 font-weight-black text-primary">{{ attendance.working_hours }}h</div>
+                <div class="text-[9px] text-muted font-weight-medium uppercase">TOTAL</div>
+                <div class="text-subtitle-2 font-weight-medium text-primary">{{ attendance.working_hours }}h</div>
             </v-col>
         </v-row>
       </div>
@@ -51,8 +51,8 @@
                 <v-icon color="white" size="32">mdi-run</v-icon>
             </v-avatar>
         </div>
-        <h4 class="text-h6 font-weight-black uppercase">At Work</h4>
-        <p class="text-caption text-muted font-weight-bold mb-4">Started at {{ formatTime(attendance.check_in) }}</p>
+        <h4 class="text-h6 font-weight-bold uppercase">At Work</h4>
+        <p class="text-caption text-muted font-weight-medium mb-4">Started at {{ formatTime(attendance.check_in) }}</p>
         
         <v-btn
           color="error"
@@ -60,7 +60,7 @@
           block
           height="52"
           rounded="xl"
-          class="font-weight-black tracking-widest"
+          class="font-weight-medium tracking-widest"
           prepend-icon="mdi-logout-variant"
           :loading="processing"
           @click="handleCheckOut"
@@ -74,15 +74,15 @@
         <v-avatar color="grey-darken-3" variant="tonal" size="64" class="mb-4">
             <v-icon size="32">mdi-login-variant</v-icon>
         </v-avatar>
-        <h4 class="text-h6 font-weight-black uppercase">Not Clocked In</h4>
-        <p class="text-caption text-muted font-weight-bold mb-4">Ready to start your day?</p>
+        <h4 class="text-h6 font-weight-bold uppercase">Not Clocked In</h4>
+        <p class="text-caption text-muted font-weight-medium mb-4">Ready to start your day?</p>
         
         <v-btn
           color="primary"
           block
           height="52"
           rounded="xl"
-          class="font-weight-black tracking-widest shadow-primary-20"
+          class="font-weight-medium tracking-widest shadow-primary-20"
           prepend-icon="mdi-login-variant"
           :loading="processing"
           @click="handleCheckIn"

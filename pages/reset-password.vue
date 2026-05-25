@@ -11,12 +11,12 @@
                 width="64"
                 height="64"
                 color="primary"
-                class="logo-sheet rounded-xl mr-4 d-flex align-center justify-center font-weight-black text-h3 text-white"
+                class="logo-sheet rounded-xl mr-4 d-flex align-center justify-center font-weight-bold text-h3 text-white"
                 elevation="10"
               >
                 E
               </v-sheet>
-              <h1 class="text-h3 font-weight-black text-uppercase tracking-tighter" :class="themeStore.theme === 'dark' ? 'text-white' : 'text-secondary'">
+              <h1 class="text-h3 font-weight-bold text-uppercase tracking-tighter" :class="themeStore.theme === 'dark' ? 'text-white' : 'text-secondary'">
                 Elements HR
               </h1>
             </div>
@@ -28,16 +28,16 @@
           <div class="form-container animate-right w-100" style="max-width: 400px">
             <div class="mb-10 text-center text-md-left">
               <h2 class="text-h2 font-weight-light mb-2 tracking-widest" :class="themeStore.theme === 'dark' ? 'text-white' : 'text-primary'">Security</h2>
-              <p class="text-overline font-weight-black tracking-widest" :class="themeStore.theme === 'dark' ? 'text-white-50' : 'text-muted'">
+              <p class="text-overline font-weight-bold tracking-widest" :class="themeStore.theme === 'dark' ? 'text-white-50' : 'text-muted'">
                 Set your new secure password.
               </p>
             </div>
 
             <div v-if="success" class="text-center text-md-left animate-fade">
               <v-icon size="64" color="success" class="mb-4">mdi-lock-check-outline</v-icon>
-              <h3 class="text-h5 font-weight-black mb-2">Password Reset!</h3>
+              <h3 class="text-h5 font-weight-bold mb-2">Password Reset!</h3>
               <p class="text-body-2 text-muted mb-8">Your password has been updated successfully. You can now login with your new credentials.</p>
-              <v-btn to="/login" block height="52" color="primary" class="font-weight-black tracking-widest rounded-lg elevation-4">GO TO LOGIN</v-btn>
+              <v-btn to="/login" block height="52" color="primary" class="font-weight-medium tracking-widest rounded-lg elevation-4">GO TO LOGIN</v-btn>
             </div>
 
             <v-form v-else @submit.prevent="handleResetPassword" ref="form">
@@ -70,7 +70,7 @@
                 type="error"
                 variant="tonal"
                 density="compact"
-                class="mb-4 text-uppercase font-weight-black"
+                class="mb-4 text-uppercase font-weight-medium"
                 style="font-size: 10px; letter-spacing: 1px"
               >
                 {{ error }}
@@ -81,7 +81,7 @@
                 block
                 height="52"
                 color="primary"
-                class="text-white font-weight-black tracking-widest rounded-lg elevation-4 mt-6"
+                class="text-white font-weight-medium tracking-widest rounded-lg elevation-4 mt-6"
                 :loading="loading"
               >
                 UPDATE PASSWORD

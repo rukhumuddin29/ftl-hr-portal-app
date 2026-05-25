@@ -3,11 +3,11 @@
     <!-- Header -->
     <v-row align="center" class="mb-6">
       <v-col cols="12" lg="6">
-        <h1 class="text-h4 font-weight-black d-flex align-center ga-3">
+        <h1 class="text-h4 font-weight-bold d-flex align-center ga-3">
           <v-icon color="primary">mdi-history</v-icon>
           ACTIVITY LOG
         </h1>
-        <p class="text-caption text-muted uppercase tracking-widest font-weight-bold">
+        <p class="text-caption text-muted uppercase tracking-widest font-weight-medium">
           Complete Audit Trail of All System Actions
         </p>
       </v-col>
@@ -17,7 +17,7 @@
           variant="outlined"
           prepend-icon="mdi-refresh"
           rounded="lg"
-          class="font-weight-bold"
+          class="font-weight-medium"
           :loading="loading"
           @click="fetchLogs(1)"
         >
@@ -110,7 +110,7 @@
               width="100%"
             >
               <template v-slot:opposite>
-                <div class="text-[11px] font-weight-black opacity-40 text-uppercase tracking-widest pr-8 text-right leading-relaxed flex flex-col ga-1" style="min-width: 100px;">
+                <div class="text-[11px] font-weight-medium opacity-40 text-uppercase tracking-widest pr-8 text-right leading-relaxed flex flex-col ga-1" style="min-width: 100px;">
                   <span class="text-primary opacity-100 whitespace-nowrap">{{ formatTime(log.created_at) }}</span>
                   <span class="opacity-100 whitespace-nowrap">{{ formatDate(log.created_at) }}</span>
                 </div>
@@ -119,15 +119,15 @@
               <v-card class="log-entry-card rounded-xl border-thin bg-surface elevation-0 pa-4 mb-4">
                  <div class="d-flex justify-space-between align-start mb-2">
                     <div class="d-flex align-center ga-2">
-                       <span class="font-weight-black text-primary text-subtitle-2">{{ log.user?.name || 'SYSTEM' }}</span>
+                       <span class="font-weight-medium text-primary text-subtitle-2">{{ log.user?.name || 'SYSTEM' }}</span>
                        <span class="text-caption text-muted font-weight-medium">
                          {{ getActionConfig(log.action).label }}
                        </span>
-                       <v-chip v-if="log.model_type" size="x-small" label color="white-50" variant="tonal" class="font-weight-black text-[9px]">
+                       <v-chip v-if="log.model_type" size="x-small" label color="white-50" variant="tonal" class="font-weight-medium text-[9px]">
                          {{ log.model_type }} #{{ log.model_id }}
                        </v-chip>
                     </div>
-                    <div class="text-[10px] text-muted opacity-30 font-weight-bold">
+                    <div class="text-[10px] text-muted opacity-30 font-weight-medium">
                        IP: {{ log.ip_address }}
                     </div>
                  </div>
@@ -136,11 +136,11 @@
                  <div v-if="log.old_values || log.new_values" class="mt-3">
                     <div class="change-grid rounded-lg overflow-hidden border">
                        <div v-if="log.old_values" class="change-side bg-error-darken-4 pa-3">
-                          <div class="text-[9px] font-weight-black uppercase opacity-50 mb-1">Old Values</div>
+                          <div class="text-[9px] font-weight-medium uppercase opacity-50 mb-1">Old Values</div>
                           <pre class="text-[11px] font-mono highlight-json text-white">{{ JSON.stringify(log.old_values, null, 2) }}</pre>
                        </div>
                        <div class="change-side bg-success-darken-4 pa-3">
-                          <div class="text-[9px] font-weight-black uppercase opacity-50 mb-1">New Values / Data</div>
+                          <div class="text-[9px] font-weight-medium uppercase opacity-50 mb-1">New Values / Data</div>
                           <pre class="text-[11px] font-mono highlight-json text-white">{{ JSON.stringify(log.new_values, null, 2) }}</pre>
                        </div>
                     </div>
@@ -152,7 +152,7 @@
                       variant="tonal" 
                       color="primary" 
                       prepend-icon="mdi-account-eye"
-                      class="font-weight-black"
+                      class="font-weight-medium"
                       @click="navigateTo(`/leads/${log.model_id}`)"
                     >
                       VIEW LEAD BROWSER
@@ -183,7 +183,7 @@
          <v-card class="rounded-xl border-thin border-dashed bg-transparent pa-12 text-center">
             <v-icon size="64" class="opacity-10 mb-4">mdi-history-off</v-icon>
             <p class="text-h6 font-weight-bold opacity-30">NO ACTIVITY LOGS FOUND</p>
-            <p class="text-caption text-muted uppercase font-weight-black tracking-widest mt-2">Adjust your filters to see more actions</p>
+            <p class="text-caption text-muted uppercase font-weight-medium tracking-widest mt-2">Adjust your filters to see more actions</p>
          </v-card>
       </v-col>
     </v-row>
@@ -191,7 +191,7 @@
     <!-- Loading State -->
     <div v-if="loading" class="text-center py-12">
         <v-progress-circular indeterminate color="primary" size="40"></v-progress-circular>
-        <p class="text-caption mt-4 font-weight-bold opacity-50 uppercase tracking-widest">Compiling Audit Trail...</p>
+        <p class="text-caption mt-4 font-weight-medium opacity-50 uppercase tracking-widest">Compiling Audit Trail...</p>
     </div>
   </v-container>
 </template>

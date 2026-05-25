@@ -1,7 +1,7 @@
 <template>
     <v-row class="animate-fade">
     <v-col cols="12" class="mb-4">
-      <h1 class="text-h4 font-weight-black">SETTINGS & ADMINISTRATION</h1>
+      <h1 class="text-h4 font-weight-bold">SETTINGS & ADMINISTRATION</h1>
       <p class="text-body-2 text-muted">Configure system preferences, user access, and role permissions.</p>
     </v-col>
 
@@ -29,7 +29,7 @@
 
             <v-table class="bg-transparent">
               <thead>
-                <tr class="text-overline font-weight-black opacity-50">
+                <tr class="text-overline font-weight-bold opacity-50">
                   <th class="px-6 text-left">Name & ID</th>
                   <th class="px-6 text-left">Email / Role</th>
                   <th class="px-6 text-left">Status</th>
@@ -39,19 +39,19 @@
               <tbody>
                 <tr v-for="user in users" :key="user.id" class="hover-row">
                   <td class="px-6 py-4">
-                    <div class="font-weight-black text-subtitle-2 text-uppercase">{{ user.name }}</div>
+                    <div class="font-weight-medium text-subtitle-2 text-uppercase">{{ user.name }}</div>
                     <div class="text-[10px] text-primary font-mono font-bold">{{ user.employee_id || 'N/A' }}</div>
                   </td>
                   <td class="px-6 py-4">
-                    <div class="text-caption font-weight-bold uppercase">{{ user.email }}</div>
+                    <div class="text-caption font-weight-medium uppercase">{{ user.email }}</div>
                     <div class="d-flex ga-1 mt-1">
-                       <v-chip v-for="role in user.roles" :key="role.id" size="x-small" label color="indigo" class="font-weight-black">
+                       <v-chip v-for="role in user.roles" :key="role.id" size="x-small" label color="indigo" class="font-weight-medium">
                          {{ role.display_name.toUpperCase() }}
                        </v-chip>
                     </div>
                   </td>
                   <td class="px-6 py-4">
-                    <v-chip :color="user.status === 'active' ? 'success' : 'error'" size="x-small" label class="font-weight-black px-3">
+                    <v-chip :color="user.status === 'active' ? 'success' : 'error'" size="x-small" label class="font-weight-medium px-3">
                       {{ user.status.toUpperCase() }}
                     </v-chip>
                   </td>
@@ -74,14 +74,14 @@
               <v-col v-for="role in roles" :key="role.id" cols="12" md="4">
                 <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 h-100 hover-lift">
                   <div class="d-flex justify-space-between items-start mb-4">
-                     <h3 class="text-subtitle-1 font-weight-black text-primary uppercase">{{ role.display_name }}</h3>
+                     <h3 class="text-subtitle-1 font-weight-bold text-primary uppercase">{{ role.display_name }}</h3>
                      <v-icon v-if="role.name === 'super_admin'" size="16" color="primary">mdi-shield-check</v-icon>
                   </div>
                   <p class="text-body-2 text-muted mb-6" style="height: 48px; overflow: hidden;">{{ role.description }}</p>
                   <v-divider class="mb-4 border-opacity-25"></v-divider>
                   <div class="d-flex justify-space-between align-center">
-                     <span class="text-[10px] font-weight-black text-muted uppercase">{{ role.permissions_count || 0 }} Permissions</span>
-                     <v-btn variant="text" color="primary" density="compact" class="text-none font-weight-bold" @click="editPermissions(role)">EDIT ACCESS</v-btn>
+                     <span class="text-[10px] font-weight-medium text-muted uppercase">{{ role.permissions_count || 0 }} Permissions</span>
+                     <v-btn variant="text" color="primary" density="compact" class="text-none font-weight-medium" @click="editPermissions(role)">EDIT ACCESS</v-btn>
                   </div>
                 </v-card>
               </v-col>
@@ -97,7 +97,7 @@
 
             <v-table class="bg-transparent">
               <thead>
-                <tr class="text-overline font-weight-black opacity-50">
+                <tr class="text-overline font-weight-bold opacity-50">
                   <th class="px-6 text-left">Module</th>
                   <th class="px-6 text-left">Permission Name</th>
                   <th class="px-6 text-left">Display Name</th>
@@ -108,13 +108,13 @@
                 <template v-for="(perms, module) in allPermissions" :key="module">
                   <tr v-for="p in perms" :key="p.id" class="hover-row">
                     <td class="px-6 py-4">
-                      <v-chip size="x-small" label class="font-weight-black">{{ String(module).toUpperCase() }}</v-chip>
+                      <v-chip size="x-small" label class="font-weight-medium">{{ String(module).toUpperCase() }}</v-chip>
                     </td>
                     <td class="px-6 py-4">
                       <div class="text-caption font-mono font-bold text-primary">{{ p.name }}</div>
                     </td>
                     <td class="px-6 py-4">
-                      <div class="font-weight-black text-subtitle-2 uppercase">{{ p.display_name }}</div>
+                      <div class="font-weight-medium text-subtitle-2 uppercase">{{ p.display_name }}</div>
                     </td>
                     <td class="px-6 py-4 text-right">
                       <v-btn icon="mdi-pencil-outline" variant="text" size="small" color="primary" @click="editPermission(p)"></v-btn>
@@ -136,7 +136,7 @@
             <v-row>
               <v-col cols="12" md="6">
                 <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6">
-                  <h3 class="text-subtitle-2 font-weight-black mb-4 uppercase">Change Password</h3>
+                  <h3 class="text-subtitle-2 font-weight-bold mb-4 uppercase">Change Password</h3>
                   <v-text-field label="CURRENT PASSWORD" type="password" variant="outlined" density="compact"></v-text-field>
                   <v-text-field label="NEW PASSWORD" type="password" variant="outlined" density="compact"></v-text-field>
                   <v-text-field label="CONFIRM NEW PASSWORD" type="password" variant="outlined" density="compact"></v-text-field>
@@ -145,13 +145,13 @@
               </v-col>
               <v-col cols="12" md="6">
                 <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6">
-                  <h3 class="text-subtitle-2 font-weight-black mb-4 uppercase">Login Sessions</h3>
+                  <h3 class="text-subtitle-2 font-weight-bold mb-4 uppercase">Login Sessions</h3>
                   <v-list class="bg-transparent pa-0">
                     <v-list-item class="px-0">
                       <template v-slot:prepend>
                         <v-icon color="success">mdi-monitor</v-icon>
                       </template>
-                      <v-list-item-title class="text-caption font-weight-black">CHROME ON WINDOWS</v-list-item-title>
+                      <v-list-item-title class="text-caption font-weight-bold">CHROME ON WINDOWS</v-list-item-title>
                       <v-list-item-subtitle class="text-[10px] text-muted uppercase">CURRENT SESSION • 1.1.1.1</v-list-item-subtitle>
                     </v-list-item>
                   </v-list>
@@ -167,7 +167,7 @@
     <!-- Dialogs -->
     <v-dialog v-model="showAddUserManual" max-width="500">
       <v-card class="rounded-xl pa-4">
-        <v-card-title class="text-h6 font-weight-black uppercase">{{ isEditingUser ? 'EDIT USER' : 'ADD NEW USER' }}</v-card-title>
+        <v-card-title class="text-h6 font-weight-bold uppercase">{{ isEditingUser ? 'EDIT USER' : 'ADD NEW USER' }}</v-card-title>
         <v-card-text>
           <v-text-field v-model="userForm.name" label="FULL NAME" variant="outlined"></v-text-field>
           <v-text-field v-model="userForm.email" label="EMAIL ADDRESS" variant="outlined"></v-text-field>
@@ -188,30 +188,30 @@
         </v-card-text>
         <v-card-actions class="ga-6 px-6 pb-6">
           <v-spacer></v-spacer>
-          <v-btn variant="outlined" rounded="lg" class="px-8 font-weight-bold" @click="showAddUserManual = false">CANCEL</v-btn>
-          <v-btn color="primary" rounded="lg" class="px-8 font-weight-bold" :loading="savingUser" @click="saveUser">{{ isEditingUser ? 'UPDATE USER' : 'SAVE USER' }}</v-btn>
+          <v-btn variant="outlined" rounded="lg" class="px-8 font-weight-medium" @click="showAddUserManual = false">CANCEL</v-btn>
+          <v-btn color="primary" rounded="lg" class="px-8 font-weight-medium" :loading="savingUser" @click="saveUser">{{ isEditingUser ? 'UPDATE USER' : 'SAVE USER' }}</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="showAddRoleManual" max-width="500">
       <v-card class="rounded-xl pa-4">
-        <v-card-title class="text-h6 font-weight-black">CREATE NEW ROLE</v-card-title>
+        <v-card-title class="text-h6 font-weight-bold">CREATE NEW ROLE</v-card-title>
         <v-card-text>
           <v-text-field v-model="roleForm.display_name" label="ROLE DISPLAY NAME" variant="outlined" placeholder="e.g. Sales Manager"></v-text-field>
           <v-textarea v-model="roleForm.description" label="DESCRIPTION" variant="outlined"></v-textarea>
         </v-card-text>
         <v-card-actions class="ga-6 px-6 pb-6">
           <v-spacer></v-spacer>
-          <v-btn variant="outlined" rounded="lg" class="px-8 font-weight-bold" @click="showAddRoleManual = false">CANCEL</v-btn>
-          <v-btn color="primary" rounded="lg" class="px-8 font-weight-bold" :loading="savingRole" @click="saveNewRole">CREATE</v-btn>
+          <v-btn variant="outlined" rounded="lg" class="px-8 font-weight-medium" @click="showAddRoleManual = false">CANCEL</v-btn>
+          <v-btn color="primary" rounded="lg" class="px-8 font-weight-medium" :loading="savingRole" @click="saveNewRole">CREATE</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <v-dialog v-model="showAddPermissionManual" max-width="500">
       <v-card class="rounded-xl pa-4">
-        <v-card-title class="text-h6 font-weight-black uppercase">{{ isEditingPermission ? 'EDIT PERMISSION' : 'CREATE NEW PERMISSION' }}</v-card-title>
+        <v-card-title class="text-h6 font-weight-bold uppercase">{{ isEditingPermission ? 'EDIT PERMISSION' : 'CREATE NEW PERMISSION' }}</v-card-title>
         <v-card-text>
           <v-text-field v-model="permissionForm.module" label="MODULE" variant="outlined" placeholder="e.g. leads"></v-text-field>
           <v-text-field v-model="permissionForm.name" label="PERMISSION KEY" variant="outlined" placeholder="e.g. leads.delete"></v-text-field>
@@ -220,8 +220,8 @@
         </v-card-text>
         <v-card-actions class="ga-6 px-6 pb-6">
           <v-spacer></v-spacer>
-          <v-btn variant="outlined" rounded="lg" class="px-8 font-weight-bold" @click="showAddPermissionManual = false">CANCEL</v-btn>
-          <v-btn color="primary" rounded="lg" class="px-8 font-weight-bold" :loading="savingPermission" @click="savePermission">SAVE</v-btn>
+          <v-btn variant="outlined" rounded="lg" class="px-8 font-weight-medium" @click="showAddPermissionManual = false">CANCEL</v-btn>
+          <v-btn color="primary" rounded="lg" class="px-8 font-weight-medium" :loading="savingPermission" @click="savePermission">SAVE</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -229,14 +229,14 @@
     <!-- Permissions Dialog -->
     <v-dialog v-model="showPermissionDialog" max-width="800">
       <v-card class="rounded-xl pa-4 bg-surface">
-        <v-card-title class="text-h6 font-weight-black uppercase pb-0">
+        <v-card-title class="text-h6 font-weight-bold uppercase pb-0">
           Edit Permissions: <span class="text-primary">{{ selectedRole?.display_name }}</span>
         </v-card-title>
         <v-card-subtitle class="text-muted text-caption mb-4">Control exactly what this role can see and do.</v-card-subtitle>
         <v-divider class="mb-4"></v-divider>
         <v-card-text class="pa-0 overflow-auto" style="max-height: 60vh">
           <div v-for="(perms, module) in allPermissions" :key="module" class="mb-6 px-4">
-            <h4 class="text-overline font-weight-black text-primary mb-2">{{ module }}</h4>
+            <h4 class="text-overline font-weight-bold text-primary mb-2">{{ module }}</h4>
             <v-row dense>
               <v-col v-for="p in perms" :key="p.id" cols="12" sm="6" md="4">
                 <v-checkbox
@@ -254,8 +254,8 @@
         <v-divider class="my-4"></v-divider>
         <v-card-actions class="ga-6 px-6 pb-6">
           <v-spacer></v-spacer>
-          <v-btn variant="outlined" rounded="lg" class="font-weight-bold px-8" @click="showPermissionDialog = false">CANCEL</v-btn>
-          <v-btn color="primary" rounded="lg" class="font-weight-bold px-8" :loading="savingRole" @click="savePermissions">SAVE CHANGES</v-btn>
+          <v-btn variant="outlined" rounded="lg" class="font-weight-medium px-8" @click="showPermissionDialog = false">CANCEL</v-btn>
+          <v-btn color="primary" rounded="lg" class="font-weight-medium px-8" :loading="savingRole" @click="savePermissions">SAVE CHANGES</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
