@@ -54,7 +54,7 @@
           <!-- Left Column: Attendance & Tasks -->
           <v-col cols="12" lg="4">
             <!-- Attendance Widget -->
-            <DashboardAttendanceWidget class="mb-6" />
+            <DashboardAttendanceWidget v-if="data.user_role !== 'super_admin'" class="mb-6" />
 
             <!-- Follow-up Tasks -->
             <v-card class="rounded-xl border-thin bg-surface elevation-0 overflow-hidden d-flex flex-column" style="height: 520px">
@@ -148,7 +148,7 @@
                 
                 <div class="d-flex align-center ga-4 flex-wrap">
                   <!-- BDE Filter for Admins -->
-                  <div v-if="data.user_role === 'admin'" style="min-width: 200px">
+                  <div v-if="['admin', 'super_admin'].includes(data.user_role)" style="min-width: 200px">
                     <v-select
                       v-model="selectedBde"
                       :items="bdes"
@@ -232,7 +232,7 @@
                       <div class="text-subtitle-2 font-weight-black text-uppercase text-truncate">{{ lead.name }}</div>
                       <div class="d-flex align-center ga-2 flex-wrap">
                         <span v-if="lead.interested_course" class="text-[10px] text-muted font-weight-bold">{{ lead.interested_course.name }}</span>
-                        <span v-if="data.user_role === 'admin' && lead.assigned_to" class="text-[10px] font-weight-bold" style="color: rgb(var(--v-theme-primary))">
+                        <span v-if="['admin', 'super_admin'].includes(data.user_role) && lead.assigned_to" class="text-[10px] font-weight-bold" style="color: rgb(var(--v-theme-primary))">
                           <v-icon size="10" class="mr-1">mdi-account</v-icon>{{ lead.assigned_to.name }}
                         </span>
                       </div>
@@ -253,7 +253,7 @@
     </v-row>
   </v-col>
 
-      <v-col cols="12" :lg="data.user_role === 'admin' ? 8 : 12">
+      <v-col cols="12">
         <v-card class="rounded-xl border-thin bg-surface elevation-0 overflow-hidden">
           <v-toolbar color="transparent" class="px-4">
             <v-toolbar-title class="text-h6 font-weight-bold">Recent Leads</v-toolbar-title>
@@ -291,43 +291,7 @@
         </v-card>
       </v-col>
 
-      <v-col v-if="data.user_role === 'admin'" cols="12" lg="4">
-        <v-card class="rounded-xl border-thin bg-surface elevation-0 h-100 d-flex flex-column">
-          <v-toolbar color="transparent" class="px-4">
-            <v-toolbar-title class="text-h6 font-weight-bold">Recent Payouts</v-toolbar-title>
-          </v-toolbar>
-          
-          <v-list bg-color="transparent" class="flex-grow-1 px-4">
-            <v-list-item v-for="pay in data.recent_payments" :key="pay.id" class="px-0 py-3 mb-2 rounded-xl transition-all">
-              <template v-slot:prepend>
-                <v-avatar color="success" variant="tonal" size="44" class="rounded-lg mr-3">
-                  <v-icon color="success">mdi-currency-inr</v-icon>
-                </v-avatar>
-              </template>
-              
-              <v-list-item-title class="font-weight-black text-subtitle-2">{{ pay.enrollment?.lead?.name }}</v-list-item-title>
-              <v-list-item-subtitle class="text-caption text-muted">{{ pay.enrollment?.course?.name }}</v-list-item-subtitle>
-              
-              <template v-slot:append>
-                <div class="text-right">
-                  <p class="font-weight-black text-success mb-0">+₹{{ Math.round(pay.amount) }}</p>
-                  <p class="text-[10px] text-white-50 font-weight-bold opacity-50">{{ timeAgo(pay.created_at) }}</p>
-                </div>
-              </template>
-            </v-list-item>
-            
-            <div v-if="!data.recent_payments?.length" class="text-center py-12 opacity-50">
-               <v-icon size="48" color="white-50" class="mb-4">mdi-cash-off</v-icon>
-               <p class="text-caption font-weight-bold tracking-widest text-uppercase">No recent transactions.</p>
-            </div>
-          </v-list>
-          
-          <v-divider class="mx-4 border-opacity-25"></v-divider>
-          <div class="pa-4">
-            <v-btn block color="primary" variant="tonal" class="font-weight-black text-caption" @click="navigateTo('/reports')">FINANCIAL REPORTS</v-btn>
-          </div>
-        </v-card>
-      </v-col>
+
       </template>
     </template>
   </v-row>
@@ -517,7 +481,7 @@ const fetchDashboard = async () => {
   try {
     const res: any = await api.get('/dashboard')
     data.value = res.data
-    if (data.value.user_role === 'admin') {
+    if (['admin', 'super_admin'].includes(data.value.user_role)) {
       fetchBdes()
     }
   } catch (err) {
@@ -528,7 +492,7 @@ const fetchDashboard = async () => {
 }
 
 const statCards = computed(() => {
-  const isAdmin = data.value.user_role === 'admin'
+  const isAdmin = ['admin', 'super_admin'].includes(data.value.user_role)
   const isBde = data.value.user_role === 'bde'
   const stats = data.value.stats || {}
   const followUpCount = (followUps.value.counts?.today || 0) + (followUps.value.counts?.overdue || 0)
@@ -550,7 +514,7 @@ const statCards = computed(() => {
 
   return [
     { label: 'TOTAL LEADS', value: stats.total_leads || 0, icon: 'mdi-account-group', color: 'indigo' },
-    { label: 'MONTH REVENUE', value: `₹${((stats.revenue_this_month || 0) / 1000).toFixed(1)}k`, icon: 'mdi-cash-multiple', color: 'blue' },
+    { label: 'NEW LEADS TODAY', value: stats.new_leads_today || 0, icon: 'mdi-star-outline', color: 'blue' },
     { label: 'MONTH EXPENSES', value: `₹${((stats.expenses_this_month || 0) / 1000).toFixed(1)}k`, icon: 'mdi-receipt-text-outline', color: 'error' },
     { 
       label: "PENDING FOLLOW-UPS", 

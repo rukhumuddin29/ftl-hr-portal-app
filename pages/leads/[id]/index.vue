@@ -35,16 +35,7 @@
           </div>
         </v-col>
         <v-col cols="12" md="4" class="d-flex justify-md-end ga-3">
-          <v-btn
-            v-if="lead.status !== 'converted'"
-            color="primary"
-            prepend-icon="mdi-school-outline"
-            rounded="lg"
-            class="font-weight-bold"
-            @click="navigateTo(`/enrollments/create?lead_id=${lead.id}`)"
-          >
-            ENROLL STUDENT
-          </v-btn>
+
           <v-btn
             v-if="authStore.isAdmin"
             variant="outlined"
@@ -117,56 +108,24 @@
           </v-card>
 
           <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6">
-            <h2 class="text-overline font-weight-black mb-4 text-primary tracking-widest">QUALIFICATION & INTEREST</h2>
+            <h2 class="text-overline font-weight-black mb-4 text-primary tracking-widest">SPECIFIC DETAILS</h2>
             <div class="d-flex justify-space-between mb-4 border-b border-opacity-25 pb-2">
-              <span class="text-caption text-muted font-weight-bold uppercase">Type</span>
-              <span class="text-caption font-weight-black uppercase text-primary">{{ lead.lead_type }}</span>
-            </div>
-            <div class="d-flex justify-space-between mb-4 border-b border-opacity-25 pb-2">
-              <span class="text-caption text-muted font-weight-bold uppercase">Qualification</span>
-              <span class="text-caption font-weight-black uppercase">{{ lead.qualification || 'N/A' }}</span>
-            </div>
-            <div class="d-flex justify-space-between mb-4 border-b border-opacity-25 pb-2">
-              <span class="text-caption text-muted font-weight-bold uppercase">Experience</span>
-              <span class="text-caption font-weight-black uppercase">{{ lead.experience_years ? `${lead.experience_years} Years` : 'Fresh' }}</span>
-            </div>
-          </v-card>
-
-          <!-- Documents Card -->
-          <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 mt-6">
-            <div class="d-flex align-center justify-space-between mb-4">
-              <h2 class="text-overline font-weight-black text-primary tracking-widest mb-0">DOCUMENTS</h2>
-              <v-btn
-                icon="mdi-plus"
-                variant="tonal"
-                color="primary"
-                size="x-small"
-                rounded="lg"
-                @click="docDialog = true"
-              ></v-btn>
+              <span class="text-caption text-muted font-weight-bold uppercase">Category</span>
+              <span class="text-caption font-weight-black uppercase text-primary">{{ lead.lead_type?.name || 'N/A' }}</span>
             </div>
             
-            <div v-if="!leadDocuments.length" class="text-center py-6 opacity-50 border-dashed rounded-xl border-thin">
-               <v-icon size="32" class="mb-2">mdi-file-outline</v-icon>
-               <p class="text-[10px] font-weight-black uppercase">No documents uploaded</p>
+            <template v-if="lead.custom_data && Object.keys(lead.custom_data).length > 0">
+              <div v-for="(value, key) in lead.custom_data" :key="key" class="d-flex justify-space-between mb-4 border-b border-opacity-25 pb-2">
+                <span class="text-caption text-muted font-weight-bold uppercase">{{ key.replace(/_/g, ' ') }}</span>
+                <span class="text-caption font-weight-black uppercase">{{ value || 'N/A' }}</span>
+              </div>
+            </template>
+            <div v-else class="text-caption text-muted font-style-italic text-center py-2">
+              No specific details recorded.
             </div>
-
-            <v-list v-else bg-color="transparent" density="compact" class="pa-0 ga-2 d-flex flex-column">
-              <v-list-item v-for="doc in leadDocuments" :key="doc.id" class="px-3 py-2 rounded-lg bg-white-5 border-thin">
-                 <template v-slot:prepend>
-                   <v-avatar :color="getDocCategoryColor(doc.category)" variant="tonal" size="32" class="mr-3 rounded-lg">
-                     <v-icon size="16">{{ getDocIcon(doc.category) }}</v-icon>
-                   </v-avatar>
-                 </template>
-                 <v-list-item-title class="text-[11px] font-weight-black uppercase truncate">{{ doc.name }}</v-list-item-title>
-                 <v-list-item-subtitle class="text-[9px] uppercase font-weight-bold opacity-50">{{ doc.category.replace('_', ' ') }}</v-list-item-subtitle>
-                 <template v-slot:append>
-                    <v-btn icon="mdi-download" variant="text" size="x-small" @click="downloadDocument(doc)"></v-btn>
-                    <v-btn icon="mdi-delete-outline" variant="text" size="x-small" color="error" @click="deleteDocument(doc)"></v-btn>
-                 </template>
-              </v-list-item>
-            </v-list>
           </v-card>
+
+
         </v-col>
 
         <!-- Right Column: Timeline & Interactions -->
@@ -368,73 +327,7 @@
       </v-card>
     </v-dialog>
 
-    <!-- Document Upload Dialog -->
-    <v-dialog v-model="docDialog" max-width="460">
-      <v-card class="rounded-xl border-thin bg-surface overflow-hidden">
-        <div class="pa-6 border-b d-flex align-center ga-3">
-          <v-avatar color="primary" size="40" class="rounded-lg">
-            <v-icon color="white">mdi-file-upload</v-icon>
-          </v-avatar>
-          <div>
-            <h3 class="text-subtitle-1 font-weight-black uppercase">Upload Document</h3>
-            <p class="text-caption opacity-50 font-weight-bold">Maximum file size: 5MB</p>
-          </div>
-        </div>
 
-        <div class="pa-6">
-          <v-row dense>
-            <v-col cols="12">
-               <v-text-field
-                 v-model="docForm.name"
-                 label="DOCUMENT NAME"
-                 variant="outlined"
-                 density="compact"
-                 hint="e.g. Aadhar Card, Resume 2024"
-                 persistent-hint
-                 class="mb-4"
-               ></v-text-field>
-            </v-col>
-            <v-col cols="12">
-              <v-select
-                v-model="docForm.category"
-                :items="docCategories"
-                item-title="title"
-                item-value="value"
-                label="CATEGORY"
-                variant="outlined"
-                density="compact"
-                class="mb-4"
-              ></v-select>
-            </v-col>
-            <v-col cols="12">
-               <v-file-input
-                 v-model="docForm.file"
-                 label="SELECT FILE"
-                 variant="outlined"
-                 density="compact"
-                 prepend-icon=""
-                 prepend-inner-icon="mdi-paperclip"
-                 accept=".pdf,.jpg,.jpeg,.png,.doc,.docx"
-                 show-size
-               ></v-file-input>
-            </v-col>
-          </v-row>
-        </div>
-
-        <v-card-actions class="pa-6 pt-0 d-flex ga-3">
-          <v-btn variant="text" class="font-weight-bold" @click="closeDocDialog">CANCEL</v-btn>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="primary"
-            variant="elevated"
-            class="font-weight-bold px-8"
-            rounded="lg"
-            :loading="uploadingDoc"
-            @click="handleUpload"
-          >UPLOAD NOW</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-container>
 </template>
 
@@ -530,114 +423,7 @@ const sendWhatsApp = async () => {
   waDialog.value = false
 }
 
-// Document Management Logic
-const docDialog = ref(false)
-const uploadingDoc = ref(false)
-const leadDocuments = ref<any[]>([])
-const docForm = reactive({
-  name: '',
-  category: 'id_proof',
-  file: null as File | null
-})
 
-const docCategories = [
-  { title: 'ID PROOF', value: 'id_proof' },
-  { title: 'CERTIFICATE', value: 'certificate' },
-  { title: 'PHOTO', value: 'photo' },
-  { title: 'RESUME', value: 'resume' },
-  { title: 'OTHER', value: 'other' }
-]
-
-const getDocIcon = (cat: string) => {
-  switch (cat) {
-    case 'id_proof': return 'mdi-card-account-details-outline'
-    case 'certificate': return 'mdi-certificate-outline'
-    case 'photo': return 'mdi-camera-outline'
-    case 'resume': return 'mdi-file-account-outline'
-    default: return 'mdi-file-outline'
-  }
-}
-
-const getDocCategoryColor = (cat: string) => {
-  switch (cat) {
-    case 'id_proof': return 'primary'
-    case 'certificate': return 'amber'
-    case 'photo': return 'purple'
-    case 'resume': return 'success'
-    default: return 'grey'
-  }
-}
-
-const fetchDocuments = async () => {
-    try {
-        const res: any = await api.get(`/leads/${route.params.id}/documents`)
-        leadDocuments.value = res.data || []
-    } catch {}
-}
-
-const closeDocDialog = () => {
-    docDialog.value = false
-    docForm.name = ''
-    docForm.category = 'id_proof'
-    docForm.file = null
-}
-
-const handleUpload = async () => {
-    let finalFile = docForm.file
-    // Handle Vuetify array-like file input behavior
-    if (Array.isArray(finalFile) && finalFile.length > 0) {
-        finalFile = finalFile[0]
-    }
-
-    if (!finalFile || !docForm.name) {
-        uiStore.error('Please provide a name and select a file')
-        return
-    }
-
-    uploadingDoc.value = true
-    try {
-        const formData = new FormData()
-        formData.append('file', finalFile as Blob)
-        formData.append('name', docForm.name)
-        formData.append('category', docForm.category)
-
-        await api.post(`/leads/${route.params.id}/documents`, formData)
-        
-        uiStore.success('Document uploaded successfully')
-        closeDocDialog()
-        fetchDocuments()
-    } catch (err: any) {
-        uiStore.error(err.data?.message || 'Failed to upload document')
-    } finally {
-        uploadingDoc.value = false
-    }
-}
-
-const downloadDocument = async (doc: any) => {
-    try {
-        const res = await api.get(`/documents/${doc.id}/download`, { responseType: 'blob' })
-        const url = window.URL.createObjectURL(new Blob([res as any]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', `${doc.name}.${doc.file_type}`)
-        document.body.appendChild(link)
-        link.click()
-        document.body.removeChild(link)
-    } catch (err) {
-        uiStore.error('Failed to download document')
-    }
-}
-
-const deleteDocument = async (doc: any) => {
-    if (!confirm('Are you sure you want to delete this document?')) return
-    try {
-        await api.delete(`/documents/${doc.id}`)
-        uiStore.success('Document deleted')
-        fetchDocuments()
-    } catch (err) {
-        uiStore.error('Failed to delete document')
-    }
-}
 
 const actionConfig: Record<string, any> = {
   'lead.created':             { icon: 'mdi-plus-circle',        color: 'success',  label: 'created' },
@@ -743,7 +529,6 @@ const timeAgo = (dateStr: string) => {
 onMounted(() => {
   fetchLead()
   fetchAuditLogs()
-  fetchDocuments()
 })
 
 definePageMeta({

@@ -81,18 +81,7 @@ const menuItems = computed(() => {
 
   sections.push({ label: 'Core', items: coreItems })
 
-  // Operations Section
-  const opsItems = []
-  if (hasPermission('enrollments.view')) {
-    opsItems.push({ title: 'Enrollments', to: '/enrollments', mdi: 'mdi-clipboard-check-outline' })
-  }
-  if (hasPermission('payments.view')) {
-    opsItems.push({ title: 'Payments', to: '/payments', mdi: 'mdi-cash-register' })
-  }
-
-  if (opsItems.length > 0) {
-    sections.push({ label: 'Operations', items: opsItems })
-  }
+  // Operations Section removed
 
   // Management Section
   const manageItems = []
@@ -110,6 +99,7 @@ const menuItems = computed(() => {
   }
   if (authStore.isAdmin && hasPermission('leads.view')) {
     manageItems.push({ title: 'Duplicate Leads', to: '/leads/duplicates', mdi: 'mdi-account-multiple-remove' })
+    manageItems.push({ title: 'Lead Types', to: '/settings/lead-types', mdi: 'mdi-form-select' })
   }
   if (hasPermission('leaves.approve')) {
     manageItems.push({ title: 'Leave Approvals', to: '/leaves/approvals', mdi: 'mdi-calendar-clock-outline' })

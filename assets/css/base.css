@@ -116,3 +116,14 @@ body {
 .slide-in-from-top-2 {
     animation-name: slideInFromTop;
 }
+
+/* Dashboard Page Headers & Subtitles */
+h1.text-h4, h1.text-h3, h1.text-h5 {
+    font-size: 1.5rem !important;
+    line-height: 1.2 !important;
+}
+
+h1.text-h4 + p, h1.text-h3 + p, h1.text-h5 + p {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+}

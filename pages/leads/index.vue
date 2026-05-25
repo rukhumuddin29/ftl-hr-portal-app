@@ -97,10 +97,11 @@
         <v-table class="bg-transparent">
           <thead>
             <tr class="text-overline font-weight-black opacity-50">
-              <th class="px-6 text-left">LEAD INFORMATION</th>
-              <th class="px-6 text-left">COURSE INTEREST</th>
+              <th class="px-6 text-left">NAME</th>
+              <th class="px-6 text-left">CONTACT</th>
+              <th class="px-6 text-left">LOCATION</th>
+              <th class="px-6 text-left">LEAD TYPE</th>
               <th class="px-6 text-left">STATUS</th>
-              <th class="px-6 text-left">ASSIGNED TO</th>
               <th class="px-6 text-right">ACTIONS</th>
             </tr>
           </thead>
@@ -111,30 +112,28 @@
                   <v-avatar color="primary" variant="tonal" size="40" class="mr-3 rounded-lg font-weight-bold">
                     {{ lead.name.charAt(0) }}
                   </v-avatar>
-                  <div>
-                    <div class="font-weight-black text-subtitle-2 text-uppercase clickable" @click="navigateTo(`/leads/${lead.id}`)">
-                      {{ lead.name }}
-                    </div>
-                    <div class="text-caption text-muted">{{ lead.phone }} | {{ lead.email || 'NO EMAIL' }}</div>
+                  <div class="font-weight-black text-subtitle-2 text-uppercase clickable" @click="navigateTo(`/leads/${lead.id}`)">
+                    {{ lead.name }}
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4">
-                <div class="text-caption font-weight-bold uppercase">{{ lead.interested_course?.name || 'GENERIC INQUIRY' }}</div>
+                <div class="text-caption font-weight-bold">{{ lead.phone }}</div>
+                <div class="text-[10px] text-muted">{{ lead.email || 'NO EMAIL' }}</div>
+              </td>
+              <td class="px-6 py-4">
+                <div class="text-caption font-weight-medium uppercase">
+                  {{ lead.city || lead.state ? [lead.city, lead.state].filter(Boolean).join(', ') : (lead.custom_data?.Location || lead.custom_data?.['Location / Address'] || 'N/A') }}
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                <div class="text-caption font-weight-bold uppercase text-primary">{{ lead.lead_type?.name || 'UNKNOWN' }}</div>
                 <div class="text-[10px] text-muted font-weight-black uppercase opacity-50">{{ lead.source || 'DIRECT' }}</div>
               </td>
               <td class="px-6 py-4">
                  <v-chip :color="getStatusColor(lead.status)" size="x-small" label class="font-weight-black px-3">
                     {{ lead.status.toUpperCase() }}
                   </v-chip>
-              </td>
-              <td class="px-6 py-4">
-                <div class="d-flex align-center overflow-hidden">
-                   <v-avatar size="24" color="grey" variant="tonal" class="mr-2" v-if="lead.assigned_to">
-                      <v-icon size="14">mdi-account</v-icon>
-                   </v-avatar>
-                   <span class="text-caption text-muted">{{ lead.assigned_to?.name || 'UNASSIGNED' }}</span>
-                </div>
               </td>
               <td class="px-6 py-4 text-right">
                 <v-btn
@@ -146,7 +145,6 @@
                   :href="`https://wa.me/91${lead.phone?.replace(/[^0-9]/g, '')}`"
                   target="_blank"
                 ></v-btn>
-                <v-btn icon="mdi-phone" variant="text" size="small" color="success" class="mr-1"></v-btn>
                 <v-btn icon="mdi-eye-outline" variant="text" size="small" color="info" class="mr-1" @click="navigateTo(`/leads/${lead.id}`)"></v-btn>
                 <v-btn icon="mdi-pencil-outline" variant="text" size="small" color="primary" @click="navigateTo(`/leads/${lead.id}/edit`)"></v-btn>
               </td>
@@ -415,14 +413,15 @@ const exportLeads = () => {
   }
 
   // Define headers for CSV
-  const headers = ['Name', 'Email', 'Phone', 'Lead Type', 'Status', 'Source', 'Assigned To', 'Follow Up Date']
+  const headers = ['Name', 'Email', 'Phone', 'Location', 'Lead Type', 'Status', 'Source', 'Assigned To', 'Follow Up Date']
   
   // Format data
   const rows = leads.value.map(lead => [
     lead.name,
     lead.email || 'N/A',
     `="${lead.phone}"`, // Format phone as string for Excel
-    lead.lead_type,
+    lead.city || lead.state ? [lead.city, lead.state].filter(Boolean).join(', ') : (lead.custom_data?.Location || lead.custom_data?.['Location / Address'] || 'N/A'),
+    lead.lead_type?.name || 'Unknown',
     lead.status.toUpperCase(),
     lead.source || 'Direct',
     lead.assigned_to?.name || 'Unassigned',

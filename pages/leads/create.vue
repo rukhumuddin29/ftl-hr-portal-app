@@ -9,7 +9,7 @@
       ></v-btn>
       <div>
         <h1 class="text-h4 font-weight-black uppercase">Create New Lead</h1>
-        <p class="text-body-2 text-muted">Complete professional and educational profile for the prospect.</p>
+        <p class="text-body-2 text-muted">Complete the profile for the prospect based on their category.</p>
       </div>
       <v-spacer></v-spacer>
       <v-btn
@@ -35,6 +35,20 @@
             </h2>
             <v-row dense>
               <v-col cols="12">
+                <v-select 
+                  v-model="form.lead_type_id" 
+                  label="LEAD CATEGORY *" 
+                  :items="leadTypes" 
+                  item-title="name" 
+                  item-value="id"
+                  variant="outlined" 
+                  density="compact" 
+                  hide-details="auto" 
+                  class="mb-4" 
+                  required
+                ></v-select>
+              </v-col>
+              <v-col cols="12">
                 <v-text-field v-model="form.name" label="FULL NAME *" variant="outlined" density="compact" hide-details="auto" class="mb-4" required></v-text-field>
               </v-col>
               <v-col cols="12" md="6">
@@ -46,10 +60,7 @@
               <v-col cols="12">
                 <v-text-field v-model="form.email" label="EMAIL ADDRESS" type="email" variant="outlined" density="compact" hide-details="auto" class="mb-4"></v-text-field>
               </v-col>
-              <v-col cols="12" md="6">
-                <v-select v-model="form.lead_type" label="LEAD TYPE *" :items="['student', 'professional', 'other']" variant="outlined" density="compact" hide-details="auto" class="mb-4" required></v-select>
-              </v-col>
-              <v-col cols="12" md="6">
+              <v-col cols="12">
                 <v-text-field v-model="form.referred_by" label="REFERRED BY" variant="outlined" density="compact" hide-details="auto" class="mb-4"></v-text-field>
               </v-col>
             </v-row>
@@ -75,88 +86,38 @@
               </v-col>
             </v-row>
           </v-card>
-
-          <v-card v-if="form.lead_type !== 'student'" class="rounded-xl border-thin bg-surface elevation-0 pa-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
-              <v-icon size="18">mdi-briefcase-outline</v-icon>
-              Professional Background
-            </h2>
-            <v-row dense>
-              <v-col cols="12" md="6">
-                <v-text-field v-model="form.current_company" label="CURRENT COMPANY" variant="outlined" density="compact" hide-details="auto" class="mb-4"></v-text-field>
-              </v-col>
-              <v-col cols="12" md="6">
-                <v-text-field v-model="form.current_designation" label="DESIGNATION" variant="outlined" density="compact" hide-details="auto" class="mb-4"></v-text-field>
-              </v-col>
-              <v-col cols="12" md="6">
-                <v-text-field v-model="form.experience_years" label="EXPERIENCE (YEARS)" type="number" variant="outlined" density="compact" hide-details="auto" class="mb-4"></v-text-field>
-              </v-col>
-              <v-col cols="12">
-                <v-textarea v-model="form.current_skills" label="KEY SKILLS" variant="outlined" density="compact" rows="2" hide-details="auto" placeholder="e.g. Java, Python, Sales..."></v-textarea>
-              </v-col>
-            </v-row>
-          </v-card>
         </v-col>
 
-        <!-- RIGHT COLUMN: Education -->
+        <!-- RIGHT COLUMN: Dynamic Fields & Interest -->
         <v-col cols="12" md="6">
-          <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
+          <v-card v-if="selectedLeadType" class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
             <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
-              <v-icon size="18">mdi-school-outline</v-icon>
-              Education History
+              <v-icon size="18">mdi-form-select</v-icon>
+              {{ selectedLeadType.name }} Details
             </h2>
             
-            <!-- 10th Standard -->
-            <div class="mb-4">
-              <div class="text-[10px] font-weight-black text-muted mb-2 uppercase border-b pb-1">10th Standard / School</div>
-              <v-row dense>
-                <v-col cols="12" md="6"><v-text-field v-model="form.school_name" label="SCHOOL NAME" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="6"><v-text-field v-model="form.tenth_board" label="BOARD" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="4"><v-text-field v-model="form.tenth_year" label="YEAR" type="number" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="4"><v-text-field v-model="form.tenth_percentage" label="%" type="number" step="0.01" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="4"><v-text-field v-model="form.tenth_grade" label="GRADE" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-              </v-row>
+            <div v-if="!selectedLeadType.form_schema || !selectedLeadType.form_schema.length" class="text-muted text-caption">
+              No specific fields configured for this lead type.
             </div>
 
-            <!-- Inter/12th -->
-            <div class="mb-4">
-              <div class="text-[10px] font-weight-black text-muted mb-2 uppercase border-b pb-1">Inter / 12th Standard</div>
-              <v-row dense>
-                <v-col cols="12" md="6"><v-text-field v-model="form.inter_college" label="COLLEGE NAME" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="6"><v-text-field v-model="form.inter_stream" label="STREAM" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="4"><v-text-field v-model="form.inter_year" label="YEAR" type="number" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="4"><v-text-field v-model="form.inter_percentage" label="%" type="number" step="0.01" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="4"><v-text-field v-model="form.inter_grade" label="GRADE" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-              </v-row>
-            </div>
-
-            <!-- Degree -->
-            <div class="mb-4">
-              <div class="text-[10px] font-weight-black text-muted mb-2 uppercase border-b pb-1">Undergraduate Degree</div>
-              <v-row dense>
-                <v-col cols="12" md="6"><v-text-field v-model="form.degree_name" label="DEGREE" variant="outlined" density="compact" hide-details="auto" class="mb-2" placeholder="e.g. B.Tech"></v-text-field></v-col>
-                <v-col cols="12" md="6"><v-text-field v-model="form.degree_specialization" label="SPECIALIZATION" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="6"><v-text-field v-model="form.degree_college" label="COLLEGE" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="6"><v-text-field v-model="form.degree_university" label="UNIVERSITY" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="4"><v-text-field v-model="form.degree_year" label="YEAR" type="number" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="4"><v-text-field v-model="form.degree_percentage" label="%" type="number" step="0.01" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-                <v-col cols="12" md="4"><v-text-field v-model="form.degree_grade" label="GRADE" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-              </v-row>
-            </div>
-          </v-card>
-
-          <!-- Post Grad -->
-          <v-card class="rounded-xl border-thin bg-surface elevation-0 pa-6 mb-6">
-            <h2 class="text-subtitle-1 font-weight-black mb-6 uppercase text-primary d-flex align-center ga-2">
-              <v-icon size="18">mdi-school-outline</v-icon>
-              Post Graduation
-            </h2>
-            <v-row dense>
-              <v-col cols="12" md="6"><v-text-field v-model="form.pg_name" label="PG DEGREE" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-              <v-col cols="12" md="6"><v-text-field v-model="form.pg_specialization" label="SPECIALIZATION" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-              <v-col cols="12" md="4"><v-text-field v-model="form.pg_year" label="YEAR" type="number" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-              <v-col cols="12" md="4"><v-text-field v-model="form.pg_percentage" label="%" type="number" step="0.01" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
-              <v-col cols="12" md="4"><v-text-field v-model="form.pg_grade" label="GRADE" variant="outlined" density="compact" hide-details="auto" class="mb-2"></v-text-field></v-col>
+            <v-row v-else dense>
+              <v-col cols="12" v-for="(field, index) in selectedLeadType.form_schema" :key="index">
+                <template v-if="field.type === 'text'">
+                  <v-text-field v-model="form.custom_data[field.name]" :label="field.label + (field.required ? ' *' : '')" variant="outlined" density="compact" hide-details="auto" class="mb-4" :required="field.required"></v-text-field>
+                </template>
+                <template v-else-if="field.type === 'number'">
+                  <v-text-field v-model="form.custom_data[field.name]" :label="field.label + (field.required ? ' *' : '')" type="number" variant="outlined" density="compact" hide-details="auto" class="mb-4" :required="field.required"></v-text-field>
+                </template>
+                <template v-else-if="field.type === 'date'">
+                  <v-text-field v-model="form.custom_data[field.name]" :label="field.label + (field.required ? ' *' : '')" type="date" variant="outlined" density="compact" hide-details="auto" class="mb-4" :required="field.required"></v-text-field>
+                </template>
+                <template v-else-if="field.type === 'textarea'">
+                  <v-textarea v-model="form.custom_data[field.name]" :label="field.label + (field.required ? ' *' : '')" variant="outlined" density="compact" rows="3" hide-details="auto" class="mb-4" :required="field.required"></v-textarea>
+                </template>
+                <template v-else-if="field.type === 'select'">
+                  <v-select v-model="form.custom_data[field.name]" :label="field.label + (field.required ? ' *' : '')" :items="field.options" variant="outlined" density="compact" hide-details="auto" class="mb-4" :required="field.required"></v-select>
+                </template>
+              </v-col>
             </v-row>
           </v-card>
 
@@ -166,9 +127,6 @@
               Interest & Remarks
             </h2>
             <v-row dense>
-              <v-col cols="12" md="6">
-                <!-- Course removed -->
-              </v-col>
               <v-col cols="12" md="6">
                 <v-text-field v-model="form.source" label="LEAD SOURCE" variant="outlined" density="compact" hide-details="auto" class="mb-4" placeholder="e.g. Facebook"></v-text-field>
               </v-col>
@@ -235,6 +193,8 @@ const api = useApi()
 const uiStore = useUiStore()
 const loading = ref(false)
 
+const leadTypes = ref<any[]>([])
+
 const form = reactive({
   name: '',
   email: '',
@@ -244,49 +204,21 @@ const form = reactive({
   city: '',
   state: '',
   pincode: '',
-  lead_type: 'student',
+  lead_type_id: null,
   source: '',
   referred_by: '',
-  
-  // Education
-  school_name: '',
-  tenth_year: null,
-  tenth_board: '',
-  tenth_percentage: null,
-  tenth_grade: '',
-  
-  inter_college: '',
-  inter_year: null,
-  inter_board: '',
-  inter_stream: '',
-  inter_percentage: null,
-  inter_grade: '',
-  
-  degree_college: '',
-  degree_year: null,
-  degree_name: '',
-  degree_specialization: '',
-  degree_university: '',
-  degree_percentage: null,
-  degree_grade: '',
-  
-  pg_college: '',
-  pg_year: null,
-  pg_name: '',
-  pg_specialization: '',
-  pg_university: '',
-  pg_percentage: null,
-  pg_grade: '',
-  
-  // Professional
-  current_company: '',
-  current_designation: '',
-  experience_years: null,
-  current_skills: '',
-  
-  // Status & Assignment
   notes: '',
-  follow_up_date: null
+  follow_up_date: null,
+  custom_data: {} as Record<string, any>
+})
+
+const selectedLeadType = computed(() => {
+  return leadTypes.value.find(t => t.id === form.lead_type_id)
+})
+
+watch(() => form.lead_type_id, () => {
+  // Reset custom data when lead type changes
+  form.custom_data = {}
 })
 
 const dupeDialog = ref(false)
@@ -294,7 +226,15 @@ const detectedDuplicates = ref<any[]>([])
 const forceCreate = ref(false)
 
 onMounted(async () => {
-  // Course fetching removed
+  try {
+    const res = await api.get('/leads/lead-types')
+    leadTypes.value = res.data
+    if (leadTypes.value.length > 0) {
+      form.lead_type_id = leadTypes.value[0].id
+    }
+  } catch (err) {
+    console.error('Failed to fetch lead types')
+  }
 })
 
 const handleSubmit = async () => {
@@ -342,28 +282,5 @@ definePageMeta({
 }
 .border-thin {
   border: 1px solid var(--border-color) !important;
-}
-</style>
-
-<style scoped>
-.form-input {
-  width: 100%;
-  padding: 10px 14px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--input-border);
-  background: var(--input-bg);
-  color: var(--text-primary);
-  outline: none;
-  font-size: 14px;
-  transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-.form-input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
-}
-
-section.card {
-  padding: 28px;
 }
 </style>
